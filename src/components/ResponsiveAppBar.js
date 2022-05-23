@@ -20,10 +20,10 @@ const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
@@ -111,7 +111,7 @@ const ResponsiveAppBar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        INCUBATOR
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
