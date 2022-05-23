@@ -9,8 +9,13 @@ import {ThemeProvider} from "@mui/material";
 import {createTheme} from "@mui/material/styles";
 import axios from "axios";
 
+import Submit from "./components/Submit";
+import ReviewerList from "./components/Reviewer/ReviewerList";
+import {useState} from "react";
+import ReviewerSection from "./components/Reviewer/ReviewerSection";
 
 export default function App() {
+    const [showReviewer, setShowReviewer] = useState(true);
     const theme = createTheme();
 
 
@@ -43,7 +48,7 @@ export default function App() {
         </AppBar>
 
         <Submit/>
-
+            {showReviewer && <ReviewerSection />}
 
 
         <Footer/>

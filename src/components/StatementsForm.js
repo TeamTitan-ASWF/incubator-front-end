@@ -12,8 +12,6 @@ export default function StatementsForm({updateState}) {
                Background/Soldier-Statements
             </Typography>
             <Grid container spacing={3}>
-
-
                 <Grid item xs={12} sm={12}>
                     <TextField
                         id="techBG"
@@ -37,7 +35,6 @@ export default function StatementsForm({updateState}) {
                         variant="filled"
                     />
                 </Grid>
-
             </Grid>
         </React.Fragment>
     );
