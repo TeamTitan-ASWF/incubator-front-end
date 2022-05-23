@@ -1,45 +1,20 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Review from './Review';
 import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
-import ResponsiveAppBar from "./ResponsiveAppBar";
-import {BottomNavigation} from "@mui/material";
-import Footer from "./Footer";
 import axios from "axios";
 import {useState} from "react";
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
-
-
-
-
 
 export default function Submit() {
   const [message,setMessage] = useState("");
@@ -71,7 +46,7 @@ export default function Submit() {
 
 
     function updateState(e){
-let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
+//let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
 
         setApplicationInfo(
             {
@@ -111,7 +86,7 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
             case 1:
                 return <StatementsForm applicationInfo={applicationInfo} updateState={updateState}  />;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  applicationInfo={applicationInfo} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} />;
             case 3:
                 return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
             default:
@@ -168,8 +143,6 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
     };
 
     return (
-
-
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -211,10 +184,7 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
                         )}
                     </React.Fragment>
                 </Paper>
-
             </Container>
-
-
     );
 }
 

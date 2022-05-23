@@ -18,13 +18,12 @@ const ReviewerItem = ({id}) => {
 
 useEffect(() => {
     getApplication(id);
-}, []);
-
+}, [id]);
 
 
     return (
         <Grid container spacing={2}>
-           <Grid item xs={4} sx={{sx}}>
+           <Grid item xs={4} sx={{}}>
                <Typography component={"span"} variant={"h6"}>Last Name<br /></Typography>
                <Typography variant={"subtitle1"} align={"left"}>{application.lName}</Typography>
            </Grid>
@@ -77,7 +76,7 @@ useEffect(() => {
 
             <Grid item xs={12}>
                 <Typography variant={"h5"}>Please describe your technical background</Typography>
-                <Typography variant={"subtitle1"}>{application.techBg}</Typography>
+                <Typography variant={"subtitle1"}>{application.techBG}</Typography>
             </Grid>
 
             <Grid item xs={12}>
