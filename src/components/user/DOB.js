@@ -10,6 +10,7 @@ export default function DOB({updateState, applicationInfo,setApplicationInfo}){
         <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DesktopDatePicker
             label="Date of birth"
+            mask={"____-__-__"}
             id="dob"
             name="dob"
             inputFormat="yyyy-MM-dd"

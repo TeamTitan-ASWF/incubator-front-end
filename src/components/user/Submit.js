@@ -1,45 +1,20 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Review from './Review';
 import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
-import ResponsiveAppBar from "./ResponsiveAppBar";
-import {BottomNavigation} from "@mui/material";
-import Footer from "./Footer";
 import axios from "axios";
 import {useState} from "react";
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import ReviewerItem from "../reviewer/ReviewerItem";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
-
-
-
-
 
 export default function Submit() {
   const [message,setMessage] = useState("");
@@ -52,8 +27,8 @@ export default function Submit() {
         mI : "",
         dodId : "",
         rank : "E1",
-        dob : '2020-10-11',
-        lastACFT :new Date(),
+        dob : '2000-10-11',
+        lastACFT : '2022-05-01',
         acftScore : 0,
         height : 0,
         weight: 0,
@@ -71,7 +46,7 @@ export default function Submit() {
 
 
     function updateState(e){
-let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
+//let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
 
         setApplicationInfo(
             {
@@ -82,7 +57,7 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
                 dodId : (e.target.id === "dodId") ? e.target.value : applicationInfo.dodId ,
                 rank : (e.target.name === "rank") ? e.target.value : applicationInfo.rank ,
                 dob : (e.target.name === "dob") ? e.target.value : applicationInfo.dob ,
-                lastACFT : (e.target.id === "lastACFT") ? e.target.value : applicationInfo.lastACFT ,
+                lastACFT : (e.target.name === "lastACFT") ? e.target.value : applicationInfo.lastACFT ,
                 acftScore : (e.target.id === "acftScore") ? e.target.value : applicationInfo.acftScore ,
                 height : (e.target.id === "height") ? e.target.value : applicationInfo.height ,
                 weight: (e.target.id === "weight") ? e.target.value : applicationInfo.weight ,
@@ -111,9 +86,10 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
             case 1:
                 return <StatementsForm applicationInfo={applicationInfo} updateState={updateState}  />;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  applicationInfo={applicationInfo} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} />;
             case 3:
-                return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
+                //return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
+                return <ReviewerItem applicationInfo={applicationInfo} />
             default:
                 throw new Error('Unknown step');
         }
@@ -141,13 +117,13 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
            referenceRank:  applicationInfo.referenceRank,
            referenceEmail:  applicationInfo.referenceEmail,
            referencePhone:  applicationInfo.referencePhone,
-           status: applicationInfo.status,
+           //status: applicationInfo.status,
            dateSubmitted:  applicationInfo.dateSubmitted
        })
            .then(()=> {
                setMessageTitle("Thank you for applying");
                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-               // setActiveStep(activeStep + 1)
+               setActiveStep(activeStep + 1)
            } )
            .catch((r)=>{
                setMessageTitle("Something went wrong please try again later")
@@ -168,8 +144,6 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
     };
 
     return (
-
-
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -211,10 +185,7 @@ let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
                         )}
                     </React.Fragment>
                 </Paper>
-
             </Container>
-
-
     );
 }
 

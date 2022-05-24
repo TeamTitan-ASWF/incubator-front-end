@@ -1,58 +1,47 @@
 import './App.css';
-import Submit from "./components/Submit";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import Footer from "./components/Footer";
-import Toolbar from "@mui/material/Toolbar";
-import AppBar from "@mui/material/AppBar";
+import Submit from "./components/user/Submit";
+import Footer from "./components/ui/Footer";
 import CssBaseline from "@mui/material/CssBaseline";
 import {ThemeProvider} from "@mui/material";
 import {createTheme} from "@mui/material/styles";
-import axios from "axios";
-
-import Submit from "./components/Submit";
-import ReviewerList from "./components/Reviewer/ReviewerList";
 import {useState} from "react";
-import ReviewerSection from "./components/Reviewer/ReviewerSection";
+import ReviewerSection from "./components/reviewer/ReviewerSection";
+import NavBar from "./components/ui/NavBar";
+import Container from "@mui/material/Container";
+import ApplicationStatus from "./components/user/ApplicationStatus";
 
 export default function App() {
-    const [showReviewer, setShowReviewer] = useState(true);
+    const [showReviewer, setShowReviewer] = useState('newApp');
     const theme = createTheme();
 
+    const currentDisplay = () => {
+        switch (showReviewer) {
+            case 'newApp':
+                return <Submit />
+                break;
+            case 'reviewerList':
+                    return <ReviewerSection />
+                    break;
 
-    // axios.get("http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080")
-    //     .then((r)=> {
-    //         console.log(r)
-    //         // setActiveStep(activeStep + 1)
-    //     } )
-    //     .catch((r)=>{
-    //         console.log(r)
-    //     })
+            case 'checkStatus':
+                    return <ApplicationStatus />
+                    break;
+            default:
+                //should not get here
+        }
+    };
 
-
-  return (
-    <div className="App">
+    return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-        <AppBar
-            position="absolute"
-            color="default"
-            elevation={0}
-            sx={{
-                position: 'relative',
-                borderBottom: (t) => `1px solid ${t.palette.divider}`,
-            }}
-        >
-            <Toolbar>
-                <ResponsiveAppBar/>
-            </Toolbar>
-        </AppBar>
+            <CssBaseline/>
+            <NavBar setShowReviewer={setShowReviewer}/>
 
-        <Submit/>
-            {showReviewer && <ReviewerSection />}
+            <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
+                {currentDisplay()}
+            </Container>
 
 
-        <Footer/>
-            </ThemeProvider>
-    </div>
-  );
+            <Footer/>
+        </ThemeProvider>
+    );
 }
