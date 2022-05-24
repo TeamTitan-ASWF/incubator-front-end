@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // use this to toggle between live server and localhost
 // noinspection DuplicatedCode
-const useRemote = false;
+const useRemote = true;
 
 const SERVER_API_URL_APPLICATIONS = 'http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
 
