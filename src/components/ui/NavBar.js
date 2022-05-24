@@ -46,13 +46,13 @@ const NavBar = ({setShowReviewer}) => {
                         INCUBATOR
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Button key={"Application Status"} onClick={() => {}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <Button key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Application Status
                         </Button>
-                        <Button key={"New Application"} onClick={() => {setShowReviewer(false)}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <Button key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             New Application
                         </Button>
-                        <Button key={"Review Application"} onClick={() => {setShowReviewer(true)}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <Button key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Review Application
                         </Button>
                     </Box>

@@ -17,7 +17,7 @@ const ReviewerItem = ({id, applicationInfo}) => {
     }
 
 useEffect(() => {
-    if(!applicationInfo) {
+    if(!applicationInfo && id) {
         getApplication(id);
     }
 }, [id, applicationInfo]);

@@ -13,6 +13,7 @@ import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
 import axios from "axios";
 import {useState} from "react";
+import ReviewerItem from "../reviewer/ReviewerItem";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
@@ -27,8 +28,8 @@ export default function Submit() {
         mI : "",
         dodId : "",
         rank : "E1",
-        dob : '2020-10-11',
-        lastACFT :new Date(),
+        dob : '2000-10-11',
+        lastACFT : '2022-05-01',
         acftScore : 0,
         height : 0,
         weight: 0,
@@ -88,7 +89,8 @@ export default function Submit() {
             case 2:
                 return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} />;
             case 3:
-                return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
+                //return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
+                return <ReviewerItem applicationInfo={applicationInfo} />
             default:
                 throw new Error('Unknown step');
         }
@@ -116,13 +118,13 @@ export default function Submit() {
            referenceRank:  applicationInfo.referenceRank,
            referenceEmail:  applicationInfo.referenceEmail,
            referencePhone:  applicationInfo.referencePhone,
-           status: applicationInfo.status,
+           //status: applicationInfo.status,
            dateSubmitted:  applicationInfo.dateSubmitted
        })
            .then(()=> {
                setMessageTitle("Thank you for applying");
                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-               // setActiveStep(activeStep + 1)
+               setActiveStep(activeStep + 1)
            } )
            .catch((r)=>{
                setMessageTitle("Something went wrong please try again later")
