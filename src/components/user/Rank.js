@@ -31,10 +31,10 @@ export default function Rank({updateState,applicationInfo,propsID,value}){
             <MenuItem value={"O8"}>O8</MenuItem>
             <MenuItem value={"O9"}>O9</MenuItem>
             <MenuItem value={"WO1"}>WO1</MenuItem>
-            <MenuItem value={"WO2"}>WO2</MenuItem>
-            <MenuItem value={"WO3"}>WO3</MenuItem>
-            <MenuItem value={"WO4"}>WO4</MenuItem>
-            <MenuItem value={"WO5"}>WO5</MenuItem>
+            <MenuItem value={"CW2"}>CW2</MenuItem>
+            <MenuItem value={"CW3"}>CW3</MenuItem>
+            <MenuItem value={"CW4"}>CW4</MenuItem>
+            <MenuItem value={"CW5"}>CW5</MenuItem>
 
 
 

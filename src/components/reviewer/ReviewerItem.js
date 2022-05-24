@@ -4,6 +4,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Divider} from "@mui/material";
 
+
 const ReviewerItem = ({id, applicationInfo}) => {
     const [application, setApplication] = useState(applicationInfo ?? {});
 
@@ -118,7 +119,6 @@ useEffect(() => {
             <Grid item xs={4}>
                 &nbsp;
             </Grid>
-
 
 
         </Grid>
