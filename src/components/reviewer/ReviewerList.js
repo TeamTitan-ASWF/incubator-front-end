@@ -17,8 +17,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
-import axios from "axios";
 import {useEffect, useState} from "react";
+import apiCall from "../api/api";
 
 function descendingComparator(a, b, orderBy) {
 
@@ -152,13 +152,16 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         getApplications();
     }, [])
 
-    const getApplications = () => {
-        axios.get(`${process.env.REACT_APP_API}`)
-            .then(response => {
-                // console debugging
-                console.log(response.data);
-                setApplicants(response.data);
-            })
+    const getApplications = async () => {
+        const response = await apiCall('application', 'list');
+        setApplicants(response.apiData);
+
+        // axios.get(`${process.env.REACT_APP_API}`)
+        //     .then(response => {
+        //         // console debugging
+        //         console.log(response.data);
+        //         setApplicants(response.data);
+        //     })
     }
 
     const handleRequestSort = (event, property) => {

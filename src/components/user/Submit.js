@@ -7,7 +7,6 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Review from './Review';
 import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
