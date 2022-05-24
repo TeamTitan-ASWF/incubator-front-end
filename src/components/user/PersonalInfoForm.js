@@ -76,7 +76,7 @@ export default function PersonalInfoForm({applicationInfo, setApplicationInfo,up
                         type="number"
                         id="acftScore"
                         name="acftScore"
-                        label="Fitness (ACFT) Score"
+                        label="ACFT Score"
                         fullWidth
                         // autoComplete="shipping postal-code"
                         variant="standard"

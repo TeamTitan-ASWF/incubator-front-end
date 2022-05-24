@@ -11,6 +11,8 @@ export default function LastACFT({updateState, applicationInfo,setApplicationInf
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
                 mask={"____-__-__"}
+                id="lastACFT"
+                name="lastACFT"
                 label="Last ACFT"
                 inputFormat="yyyy-MM-dd"
                 value= {applicationInfo.lastACFT}

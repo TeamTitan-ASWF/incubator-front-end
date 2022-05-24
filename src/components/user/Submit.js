@@ -57,7 +57,7 @@ export default function Submit() {
                 dodId : (e.target.id === "dodId") ? e.target.value : applicationInfo.dodId ,
                 rank : (e.target.name === "rank") ? e.target.value : applicationInfo.rank ,
                 dob : (e.target.name === "dob") ? e.target.value : applicationInfo.dob ,
-                lastACFT : (e.target.id === "lastACFT") ? e.target.value : applicationInfo.lastACFT ,
+                lastACFT : (e.target.name === "lastACFT") ? e.target.value : applicationInfo.lastACFT ,
                 acftScore : (e.target.id === "acftScore") ? e.target.value : applicationInfo.acftScore ,
                 height : (e.target.id === "height") ? e.target.value : applicationInfo.height ,
                 weight: (e.target.id === "weight") ? e.target.value : applicationInfo.weight ,

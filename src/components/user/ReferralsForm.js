@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Rank from "./Rank";
 
 export default function ReferralsForm({updateState,applicationInfo}) {
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
