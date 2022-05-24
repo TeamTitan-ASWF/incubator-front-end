@@ -4,8 +4,8 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Divider} from "@mui/material";
 
-const ReviewerItem = ({id}) => {
-    const [application, setApplication] = useState({});
+const ReviewerItem = ({id, applicationInfo}) => {
+    const [application, setApplication] = useState(applicationInfo ?? {});
 
     const getApplication = (appId) => {
         axios.get(`${process.env.REACT_APP_API}/${appId}`)
@@ -17,7 +17,9 @@ const ReviewerItem = ({id}) => {
     }
 
 useEffect(() => {
-    getApplication(id);
+    if(!applicationInfo) {
+        getApplication(id);
+    }
 }, [id]);
 
 
