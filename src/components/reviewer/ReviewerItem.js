@@ -20,7 +20,7 @@ useEffect(() => {
     if(!applicationInfo) {
         getApplication(id);
     }
-}, [id]);
+}, [id, applicationInfo]);
 
 
     return (
