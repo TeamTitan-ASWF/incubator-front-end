@@ -1,6 +1,6 @@
 import {useState} from "react";
 import ReviewerList from "./ReviewerList";
-import ReviewerItem from "./ReviewerItem";
+import ReviewerPage from "./ReviewerPage";
 
 const ReviewerSection = () => {
     const [showList, setShowList] = useState(true);
@@ -8,8 +8,13 @@ const ReviewerSection = () => {
 
     return (
         <>
-            {showList && <ReviewerList setShowList={setShowList} setCurrentApplicationId={setCurrentApplicationId} />}
-            {!showList && <ReviewerItem id={currentApplicationId} />}
+            {showList &&
+                <ReviewerList
+                setShowList={setShowList}
+                setCurrentApplicationId={setCurrentApplicationId}
+                />}
+            {!showList &&
+                <ReviewerPage id={currentApplicationId}/>}
         </>
     );
 };

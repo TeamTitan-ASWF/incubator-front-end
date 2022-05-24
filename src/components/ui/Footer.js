@@ -30,6 +30,7 @@ export default function Footer() {
                             ? theme.palette.grey[200]
                             : theme.palette.grey[800],
                 }}
+                //border="1px solid #000"
             >
                 <Container maxWidth="sm">
                     <Typography variant="body1">
