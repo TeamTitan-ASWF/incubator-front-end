@@ -1,89 +1,135 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import {Divider} from "@mui/material";
 
-const products = [
-    {
-        name: 'Product 1',
-        desc: 'A nice thing',
-        price: '$9.99',
-    },
-    {
-        name: 'Product 2',
-        desc: 'Another thing',
-        price: '$3.45',
-    },
-    {
-        name: 'Product 3',
-        desc: 'Something else',
-        price: '$6.51',
-    },
-    {
-        name: 'Product 4',
-        desc: 'Best thing of all',
-        price: '$14.11',
-    },
-    { name: 'Shipping', desc: '', price: 'Free' },
-];
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-    { name: 'Card type', detail: 'Visa' },
-    { name: 'Card holder', detail: 'Mr John Smith' },
-    { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-    { name: 'Expiry date', detail: '04/2024' },
-];
+export default function Review({applicationInfo}) {
+    const yearAFCT=applicationInfo.lastACFT.getFullYear();
+    const monthAFCT=applicationInfo.lastACFT.getMonth();
+    const dayAFCT=applicationInfo.lastACFT.getDate();
 
-export default function Review() {
+    const dateAFCT=`${yearAFCT}-${monthAFCT}-${dayAFCT}`;
+
+
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-                Order summary
+                Review
             </Typography>
-            <List disablePadding>
-                {products.map((product) => (
-                    <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-                        <ListItemText primary={product.name} secondary={product.desc} />
-                        <Typography variant="body2">{product.price}</Typography>
-                    </ListItem>
-                ))}
 
-                <ListItem sx={{ py: 1, px: 0 }}>
-                    <ListItemText primary="Total" />
-                    <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        $34.06
-                    </Typography>
-                </ListItem>
-            </List>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                        Shipping
-                    </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
-                    <Typography gutterBottom>{addresses.join(', ')}</Typography>
-                </Grid>
-                <Grid item container direction="column" xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                        Payment details
-                    </Typography>
-                    <Grid container>
-                        {payments.map((payment) => (
-                            <React.Fragment key={payment.name}>
-                                <Grid item xs={6}>
-                                    <Typography gutterBottom>{payment.name}</Typography>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Typography gutterBottom>{payment.detail}</Typography>
-                                </Grid>
-                            </React.Fragment>
-                        ))}
-                    </Grid>
-                </Grid>
+            <Grid item xs={12}>
+                <Divider textAlign="left">Personal Information</Divider>
             </Grid>
+
+        <Grid container spacing={2}>
+            <Grid item xs={4} sx={{}}>
+                <Typography component={"span"} variant={"h7"} style={{fontWeight: "bold"}}>Last Name<br /></Typography>
+                <Typography variant={"subtitle1"} align={"left"}>{applicationInfo.lName}</Typography>
+            </Grid>
+
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>First Name</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.fName}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>MI</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.mI}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>DOD ID #</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.dodId}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Rank</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.rank}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Date of Birth</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.dob.substring(0,10)}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Last ACFT Date</Typography>
+                <Typography variant={"subtitle1"}>{dateAFCT}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>ACFT Score</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.acftScore}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Height</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.height}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Weight</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.weight}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                &nbsp;
+            </Grid>
+
+            <Grid item xs={12}>
+                <Divider textAlign="left">Statements</Divider>
+            </Grid>
+
+
+
+
+            <Grid item xs={12}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Please describe your technical background</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.techBG}</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Why would you like to join the Army Software Factory?</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.motivation}</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Divider textAlign="left">Referral</Divider>
+            </Grid>
+
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Name</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.referenceName}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Rank</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.referenceRank}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                &nbsp;
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"}style={{fontWeight: "bold"}} >Phone Number</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.referencePhone}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                <Typography variant={"h7"} style={{fontWeight: "bold"}}>Email</Typography>
+                <Typography variant={"subtitle1"}>{applicationInfo.referenceEmail}</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+                &nbsp;
+            </Grid>
+
+        </Grid>
         </React.Fragment>
-    );
-}
+    )
+};
