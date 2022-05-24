@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 
 const ApplicationStatus = () => {
     const [refNumber, setRefNumber] = useState(0);
-    const [applicationInfo,setApplicationInfo] = useState(null);
+    const [applicationInfo, setApplicationInfo] = useState(null);
 
     const handleClick = () =>{
 

@@ -5,11 +5,8 @@ import {Divider} from "@mui/material";
 import apiCall from "../api/api";
 import * as React from "react";
 
-
 const ReviewerItem = ({id, applicationInfo}) => {
     const [application, setApplication] = useState(applicationInfo ?? {});
-
-
 
     const getApplication = async (appId) => {
         const res = await apiCall('application', 'read', id);
