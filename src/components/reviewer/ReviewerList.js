@@ -156,7 +156,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         axios.get(`${process.env.REACT_APP_API}`)
             .then(response => {
                 // console debugging
-                //console.log(response.data);
+                console.log(response.data);
                 setApplicants(response.data);
             })
     }

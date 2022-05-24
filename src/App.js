@@ -8,18 +8,36 @@ import {useState} from "react";
 import ReviewerSection from "./components/reviewer/ReviewerSection";
 import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
+import ApplicationStatus from "./components/user/ApplicationStatus";
 
 export default function App() {
-    const [showReviewer, setShowReviewer] = useState(false);
+    const [showReviewer, setShowReviewer] = useState('newApp');
     const theme = createTheme();
+
+    const currentDisplay = () => {
+        switch (showReviewer) {
+            case 'newApp':
+                return <Submit />
+                break;
+            case 'reviewerList':
+                    return <ReviewerSection />
+                    break;
+
+            case 'checkStatus':
+                    return <ApplicationStatus />
+                    break;
+            default:
+                //should not get here
+        }
+    };
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <NavBar setShowReviewer={setShowReviewer}/>
 
-            <Container maxWidth={"lg"}>
-                {(showReviewer) ? <ReviewerSection/> : <Submit/>}
+            <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
+                {currentDisplay()}
             </Container>
 
 
