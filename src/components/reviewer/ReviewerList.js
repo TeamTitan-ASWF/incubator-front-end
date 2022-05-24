@@ -21,6 +21,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 
 function descendingComparator(a, b, orderBy) {
+
     if (b[orderBy] < a[orderBy]) {
         return -1;
     }
@@ -31,53 +32,40 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
+
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) {
-            return order;
-        }
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
-
 const headCells = [
     {
-        id: 'name',
+        id: 'lName',
         numeric: false,
         disablePadding: true,
         label: 'Name',
     },
     {
         id: 'rank',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Rank',
     },
     {
         id: 'dob',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Date of Birth',
     },
     {
-        id: 'submitted',
-        numeric: true,
+        id: 'dateSubmitted',
+        numeric: false,
         disablePadding: false,
         label: 'Date Submitted',
     },
     {
         id: 'status',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Status of Application',
     },
@@ -153,7 +141,7 @@ const EnhancedTableToolbar = (props) => {
 
 export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('calories');
+    const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -165,7 +153,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     }, [])
 
     const getApplications = () => {
-        axios.get(`http://localhost:8080`)
+        axios.get(`${process.env.REACT_APP_API}`)
             .then(response => {
                 // console debugging
                 //console.log(response.data);
@@ -218,9 +206,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                             rowCount={applicants.length}
                         />
                         <TableBody>
-                            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(applicants, getComparator(order, orderBy))
+                            {applicants.slice().sort(getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -239,10 +225,10 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                                             >
                                                 {row.fName + " " + row.mI + " " + row.lName}
                                             </TableCell>
-                                            <TableCell align="right">{row.rank}</TableCell>
-                                            <TableCell align="right">{row.dob}</TableCell>
-                                            <TableCell align="right">{row.dateSubmitted}</TableCell>
-                                            <TableCell align="right">{row.status}</TableCell>
+                                            <TableCell align="left">{row.rank}</TableCell>
+                                            <TableCell align="left">{row.dob}</TableCell>
+                                            <TableCell align="left">{row.dateSubmitted}</TableCell>
+                                            <TableCell align="left">{row.status}</TableCell>
                                         </TableRow>
                                     );
                                 })}
