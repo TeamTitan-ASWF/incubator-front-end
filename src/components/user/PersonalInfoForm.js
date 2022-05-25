@@ -6,7 +6,9 @@ import Rank from "./Rank";
 import DOB from "./DOB";
 import LastACFT from "./LastACFT";
 
-export default function PersonalInfoForm({applicationInfo, setApplicationInfo,updateState}) {
+
+export default function PersonalInfoForm({updateFunctionWithValidation, applicationInfo, setApplicationInfo,updateState,errorList}) {
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -14,21 +16,27 @@ export default function PersonalInfoForm({applicationInfo, setApplicationInfo,up
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={5}>
+  
                     <TextField
                         required
+                        error = {errorList.includes("fName")}
                         id="fName"
                         name="firstName"
                         label="First name"
+                        value= {applicationInfo.fName}
                         fullWidth
                         autoComplete="given-name"
                         variant="standard"
                         onChange={updateState}
                     />
+                    
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     <TextField
                         required
                         id="lName"
+                        value={applicationInfo.lName}
+                        error = {errorList.includes("lName")}
                         name="lastName"
                         label="Last name"
                         fullWidth
@@ -39,26 +47,32 @@ export default function PersonalInfoForm({applicationInfo, setApplicationInfo,up
                 </Grid>
                 <Grid item xs={12} sm={2}>
                     <TextField
-                        required
+                        error = {errorList.includes("mI")}
                         id="mI"
                         name="mI"
+                        value={applicationInfo.mI}
                         label="MI"
                         fullWidth
-                        autoComplete="family-name"
+                        autoComplete="middle-initial"
                         variant="standard"
                         onChange={updateState}
                     />
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     <TextField
+                    
                         required
+                        error = {errorList.includes("dodId")}
                         id="dodId"
                         name="dodId"
+                        value={applicationInfo.dodId}
                         label="Dod ID"
+                        type="number"
                         fullWidth
-                        // autoComplete="shipping address-line1"
+                        autoComplete="dodId"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={updateFunctionWithValidation}
+
                     />
                 </Grid>
                 <Grid item xs={12} sm={2}>
@@ -74,13 +88,15 @@ export default function PersonalInfoForm({applicationInfo, setApplicationInfo,up
                     <TextField
                         required
                         type="number"
+                        error = {errorList.includes("acftScore")}
                         id="acftScore"
                         name="acftScore"
                         label="ACFT Score"
                         fullWidth
-                        // autoComplete="shipping postal-code"
+                        value={applicationInfo.acftScore || ""}
+                        autoComplete="acftScore"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={updateFunctionWithValidation}
                     />
 
                 </Grid>
@@ -90,24 +106,29 @@ export default function PersonalInfoForm({applicationInfo, setApplicationInfo,up
                         required
                         type="number"
                         id="height"
+                        error = {errorList.includes("height")}
                         name="height"
                         label="Height in inches"
                         fullWidth
-                        // autoComplete="shipping postal-code"
+                        value={applicationInfo.height || ""}
+                        autoComplete="height"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={updateFunctionWithValidation}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="weight"
+                        error = {errorList.includes("weight")}
                         type="number"
                         name="weight"
                         label="Weight lbs"
+                        autoComplete="weight"
+                        value={applicationInfo.weight || ""}
                         fullWidth
                         variant="standard"
-                        onChange={updateState}
+                        onChange={updateFunctionWithValidation}
                     />
                 </Grid>
 

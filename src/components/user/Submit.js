@@ -10,16 +10,20 @@ import Typography from '@mui/material/Typography';
 import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
-import axios from "axios";
+import apiCall from '../api/api';
 import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
+import inputValidation from '../inputValidation/inputValidation';
+
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function Submit() {
   const [message,setMessage] = useState("");
+  const [isDisabled,setIsDisabled] = useState(false)
   const [ messageTitle,setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
+    const [errorList,setErrorList] = useState("");
     const [applicationInfo,setApplicationInfo] = React.useState({
         refNum : "",
         fName : "",
@@ -42,14 +46,25 @@ export default function Submit() {
         dateSubmitted: ""
     })
 
+    const updateFunctionWithValidation = (e) => {
 
+        updateState(e);
+
+    }
 
 
     function updateState(e){
 //let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
+        
 
-        setApplicationInfo(
+
+      setApplicationInfo(
             {
+
+
+
+
+
                 refNum : (e.target.id === "refNum") ? e.target.value : applicationInfo.refNum ,
                 fName : (e.target.id === "fName") ? e.target.value : applicationInfo.fName ,
                 lName : (e.target.id === "lName") ? e.target.value : applicationInfo.lName ,
@@ -70,8 +85,7 @@ export default function Submit() {
                 status:(e.target.id === "status") ? e.target.value : applicationInfo.status ,
                 dateSubmitted: (e.target.id === "dateSubmitted") ? e.target.value : applicationInfo.dateSubmitted
             }
-
-
+        
 
 
         )
@@ -79,16 +93,16 @@ export default function Submit() {
 
     }
 
+
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} />;
+                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} setIsDisabled={setIsDisabled} updateFunctionWithValidation={updateFunctionWithValidation} errorList={errorList}/>;
             case 1:
-                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState}  />;
+                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState} errorList= {errorList} />;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} updateFunctionWithValidation={updateFunctionWithValidation} errorList={errorList} />;
             case 3:
-                //return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
                 return <ReviewerItem applicationInfo={applicationInfo} />
             default:
                 throw new Error('Unknown step');
@@ -97,40 +111,85 @@ export default function Submit() {
     const handleNext = () => {
 
 
+        // This makes sure steps 1-3 are not empty
+            let continueToNextStep ;
+            let firstStepArray=['fName','lName','dodId','acftScore','height','weight']
+            let secondStepArray=['techBG','motivation']
+            let thirdStepArray=['referenceName','referenceEmail','referencePhone']
 
-        if(activeStep === 3){
-       axios.post("http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080", {
-           refNum : applicationInfo.dodId,
-           fName :  applicationInfo.fName,
-           lName :  applicationInfo.lName,
-           mI :  applicationInfo.mI,
-           dodId :  applicationInfo.dodId,
-           rank : applicationInfo.rank,
-           dob : applicationInfo.dob,
-           lastACFT :  applicationInfo.lastACFT,
-           acftScore :  applicationInfo.acftScore,
-           height :  applicationInfo.height,
-           weight: applicationInfo.weight,
-           techBG :  applicationInfo.techBG,
-           motivation :  applicationInfo.motivation,
-           referenceName :  applicationInfo.referenceName,
-           referenceRank:  applicationInfo.referenceRank,
-           referenceEmail:  applicationInfo.referenceEmail,
-           referencePhone:  applicationInfo.referencePhone,
-           //status: applicationInfo.status,
-           dateSubmitted:  applicationInfo.dateSubmitted
-       })
-           .then(()=> {
-               setMessageTitle("Thank you for applying");
-               setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-               setActiveStep(activeStep + 1)
-           } )
-           .catch((r)=>{
-               setMessageTitle("Something went wrong please try again later")
-               setActiveStep(activeStep + 1)
-               console.log(r)
-           })
 
+            let validatedArray = [];
+            let outputMessage = [] ;  
+            let stepArray = [];
+
+            switch(activeStep){
+
+                case 0:
+                    stepArray = firstStepArray;
+                break;
+
+
+                case 1:
+                    stepArray = secondStepArray;
+                break;
+
+
+                case 2:
+                    stepArray = thirdStepArray;
+                break;
+            }
+
+            stepArray.forEach(element => {
+                try{     
+                    let temp = inputValidation(applicationInfo[element],element).output
+                     if(temp) outputMessage.push (inputValidation(applicationInfo[element],element).output) 
+                   
+                }catch{
+                    outputMessage.push(element)
+                }
+            });
+
+        
+        
+        setErrorList(outputMessage);
+
+
+       if(outputMessage.length > 0) return;
+
+        if(activeStep === 3){ // Submit the form instead of going
+
+
+
+            apiCall('application', 'add',{
+                refNum : applicationInfo.dodId,
+                fName :  applicationInfo.fName,
+                lName :  applicationInfo.lName,
+                mI :  applicationInfo.mI,
+                dodId :  applicationInfo.dodId,
+                rank : applicationInfo.rank,
+                dob : applicationInfo.dob,
+                lastACFT :  applicationInfo.lastACFT,
+                acftScore :  applicationInfo.acftScore,
+                height :  applicationInfo.height,
+                weight: applicationInfo.weight,
+                techBG :  applicationInfo.techBG,
+                motivation :  applicationInfo.motivation,
+                referenceName :  applicationInfo.referenceName,
+                referenceRank:  applicationInfo.referenceRank,
+                referenceEmail:  applicationInfo.referenceEmail,
+                referencePhone:  applicationInfo.referencePhone,
+                //status: applicationInfo.status,
+                dateSubmitted:  applicationInfo.dateSubmitted
+            } ).then((r)=> {
+                setMessageTitle("Thank you for applying");
+                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                setActiveStep(activeStep + 1)
+            } )
+            .catch((r)=>{
+                setMessageTitle("Something went wrong please try again later")
+                setActiveStep(activeStep + 1)
+            })
+   
 
 
         }else{
@@ -172,7 +231,7 @@ export default function Submit() {
                                             Back
                                         </Button>
                                     )}
-
+                   
                                     <Button
                                         variant="contained"
                                         onClick={handleNext}
