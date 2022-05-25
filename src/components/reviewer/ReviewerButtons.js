@@ -1,42 +1,37 @@
 import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import apiCall from "../api/api";
+import Grid from "@mui/material/Grid";
 
-const ReviewerButtons = ({id}) => {
-    //const [status, setStatus] = useState("");
-    const [application, setApplication] = useState({})
-
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/${id}`)
-            .then(response => {
-                setApplication(response.data);
-            })
-    }, [application.status])
-
-    const approveApplication = async (newStatus) => {
-        const res = await apiCall(application, "update", {id: id, status: newStatus})
-        setApplication(res.apiData);
-    }
-
+export default function ReviewerButtons({status, approveApplication, setShowList}) {
     return (
-        <Box maxWidth="100%" sx={{textAlign: "right"}}>
-            <Button
-                sx={{ml: 2}}
-                variant="contained"
-                onClick={() => approveApplication("accepted")}
-            >
-                Approve
-            </Button>
-            <Button variant="contained"
+        <Grid container sx={{m: 1}}>
+            <Grid item xs={6}>
+                <Button
+                    sx={{}}
+                    variant="contained"
+                    onClick={() => {setShowList(true)}}
+                >
+                    Back
+                </Button>
+            </Grid>
+            <Grid item xs={6} sx={{textAlign: "right"}}>
+                <Button
+                    color={status === "approved" ? "warning" : "success"}
+                    variant="contained"
+                    sx={{}}
+                    onClick={() => approveApplication(status === "approved" ? "pending" : "approved")}
+                >
+                    {status === "approved" ? "Pending" : "Approve"}
+                </Button>
+                <Button
+                    color={status === "denied" ? "warning" : "error"}
+                    variant="contained"
                     sx={{ml: 2}}
-                    onClick={() => approveApplication("rejected")}
-            >
-                Deny
-            </Button>
-        </Box>
+                    onClick={() => approveApplication(status === "denied" ? "pending" : "denied")}
+                >
+                    {status === "denied" ? "Pending" : "Deny"}
+                </Button>
+            </Grid>
+        </Grid>
     );
-};
-
-export default ReviewerButtons;
+}
