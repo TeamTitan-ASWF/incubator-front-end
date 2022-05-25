@@ -4,7 +4,7 @@ import axios from 'axios';
 // noinspection DuplicatedCode
 const useRemote = false;
 
-const SERVER_API_URL_APPLICATIONS = 'http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
+const SERVER_API_URL_APPLICATIONS = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
 
 const LOCAL_API_URL_APPLICATIONS = 'http://localhost:8080/';
 
