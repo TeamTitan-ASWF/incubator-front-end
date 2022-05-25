@@ -1,17 +1,14 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {Divider} from "@mui/material";
+import * as moment from 'moment';
 
 const ReviewerItem = ({applicationInfo}) => {
 
     const formatDate = (unformattedDate) => {
         if (unformattedDate) {
-            // const yearAFCT = unformattedDate.getFullYear();
-            // const monthAFCT = unformattedDate.getMonth();
-            // const dayAFCT = unformattedDate.getDate();
-            //
-            // return `${yearAFCT}-${monthAFCT}-${dayAFCT}`;
-            return unformattedDate;
+                return moment(Date.parse(unformattedDate)).format('YYYY-MM-DD');
+
         } else {
             return "";
         }
