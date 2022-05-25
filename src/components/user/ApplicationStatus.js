@@ -6,15 +6,18 @@ import {useState} from "react";
 import axios from "axios";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import Paper from "@mui/material/Paper";
+import apiCall from "../api/api";
 
 const ApplicationStatus = () => {
     const [refNumber, setRefNumber] = useState(0);
     const [applicationInfo, setApplicationInfo] = useState(null);
 
-    const handleClick = () =>{
+    const handleClick = async () =>{
+        const res = await apiCall('application', 'read', refNumber, 'dod/');
+        console.log(res.apiData);
+        setApplicationInfo(res.apiData);
+        //axios.get(`${process.env.REACT_APP_API}/dod/${refNumber}`).then((r) =>{setApplicationInfo(r.data);console.log(r.data) })
 
-        axios.get(`${process.env.REACT_APP_API}/dod/${refNumber}`).then((r) =>{setApplicationInfo(r.data);console.log(r.data) }
-        )
     }
     return (
   <>
