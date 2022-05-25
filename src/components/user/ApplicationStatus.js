@@ -16,7 +16,7 @@ export default function ApplicationStatus() {
 
     const handleClick = async () => {
         const res = await apiCall('application', 'read', refNumber, 'dod/');
-        console.log(res.apiData);
+        //console.log(res.apiData);
         setApplicationInfo(res.apiData);
 
         if (res.wasError) {
