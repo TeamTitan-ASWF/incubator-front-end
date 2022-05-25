@@ -1,32 +1,39 @@
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
-export default function StatusHeader({status}) {
+export default function StatusHeader({applicationInfo}) {
     let pendingStatus;
 
-    if (status === "approved") {
+    if (applicationInfo.status === "approved") {
         pendingStatus = "green";
-    } else if (status === "denied") {
+    } else if (applicationInfo.status === "denied") {
         pendingStatus = "red";
     } else {
         pendingStatus = "orange";
     }
 
     return (
-        <Box maxWidth="100%" sx={{textAlign: "right", my: 2}}>
-            <Typography variant="h6">
-                Application Status:
-                <Button
-                    variant="outlined"
-                    sx={{
-                    ml: 1,
-                    color: pendingStatus,
-                    borderColor: pendingStatus
-                }}>
-                    {status}
-                </Button>
-            </Typography>
-        </Box>
+        <Grid container sx={{my: 2}}>
+            <Grid item xs={6}>
+                <Typography variant="h6">
+                    Application - {applicationInfo.fName + " " + applicationInfo.lName}
+                </Typography>
+            </Grid>
+            <Grid item xs={6} sx={{textAlign: "right"}}>
+                <Typography variant="h6">
+                    Application Status:
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            ml: 1,
+                            color: pendingStatus,
+                            borderColor: pendingStatus
+                        }}>
+                        {applicationInfo.status}
+                    </Button>
+                </Typography>
+            </Grid>
+        </Grid>
     );
 }

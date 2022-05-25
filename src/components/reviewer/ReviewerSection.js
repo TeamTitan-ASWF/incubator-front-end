@@ -10,8 +10,8 @@ const ReviewerSection = () => {
         <>
             {showList &&
                 <ReviewerList
-                setShowList={setShowList}
-                setCurrentApplicationId={setCurrentApplicationId}
+                    setShowList={setShowList}
+                    setCurrentApplicationId={setCurrentApplicationId}
                 />}
             {!showList &&
                 <ReviewerPage

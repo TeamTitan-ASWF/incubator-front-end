@@ -26,7 +26,7 @@ export default function ReviewerPage({id, setShowList}) {
     return (
         <>
             <StatusHeader
-                status={application.status}
+                applicationInfo={application}
             />
             <ReviewerItem
                 applicationInfo={application}
