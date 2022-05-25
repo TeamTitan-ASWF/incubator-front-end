@@ -1,41 +1,24 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import {useEffect, useState} from "react";
 import {Divider} from "@mui/material";
-import apiCall from "../api/api";
-import * as React from "react";
 
-const ReviewerItem = ({id, applicationInfo}) => {
-    const [application, setApplication] = useState(applicationInfo ?? {});
+const ReviewerItem = ({applicationInfo}) => {
 
-    const getApplication = async (appId) => {
-        const res = await apiCall('application', 'read', id);
-        await console.log(res);
-        setApplication(res.apiData);
-    }
-
-    useEffect(() => {
-        if (!applicationInfo && id) {
-            getApplication(id);
-        }
-    }, [id, applicationInfo]);
-
-    const formattedACFT = (unformattedACFTDate) => {
-
-        if (unformattedACFTDate !== '') {
-            const yearAFCT = unformattedACFTDate.getFullYear();
-            const monthAFCT = unformattedACFTDate.getMonth();
-            const dayAFCT = unformattedACFTDate.getDate();
-
-            return `${yearAFCT}-${monthAFCT}-${dayAFCT}`;
-
+    const formatDate = (unformattedDate) => {
+        if (unformattedDate) {
+            // const yearAFCT = unformattedDate.getFullYear();
+            // const monthAFCT = unformattedDate.getMonth();
+            // const dayAFCT = unformattedDate.getDate();
+            //
+            // return `${yearAFCT}-${monthAFCT}-${dayAFCT}`;
+            return unformattedDate;
         } else {
             return "";
         }
     }
 
     return (
-        <React.Fragment>
+        <>
             <Typography variant="h6" gutterBottom>
                 Review
             </Typography>
@@ -48,53 +31,53 @@ const ReviewerItem = ({id, applicationInfo}) => {
                 <Grid item xs={4} sx={{}}>
                     <Typography component={"span"} variant={"h7"} style={{fontWeight: "bold"}}>Last
                         Name<br/></Typography>
-                    <Typography variant={"subtitle1"} align={"left"}>{application?.lName || ''}</Typography>
+                    <Typography variant={"subtitle1"} align={"left"}>{applicationInfo?.lName || ''}</Typography>
                 </Grid>
 
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>First Name</Typography>
-                    <Typography variant={"subtitle1"}>{application?.fName || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.fName || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>MI</Typography>
-                    <Typography variant={"subtitle1"}>{application?.mI || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.mI || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>DOD ID #</Typography>
-                    <Typography variant={"subtitle1"}>{application?.dodId || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.dodId || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Rank</Typography>
-                    <Typography variant={"subtitle1"}>{application?.rank || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.rank || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Date of Birth</Typography>
-                    {/*<Typography variant={"subtitle1"}>{application?.dob.substring(0,10) || ''}</Typography>*/}
+                    <Typography variant={"subtitle1"}>{formatDate(applicationInfo?.dob || '')}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Last ACFT Date</Typography>
-                    {/*<Typography variant={"subtitle1"}>{formattedACFT(application?.lastACFT || '')}</Typography>*/}
+                    <Typography variant={"subtitle1"}>{formatDate(applicationInfo?.lastACFT || '')}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>ACFT Score</Typography>
-                    <Typography variant={"subtitle1"}>{application?.acftScore || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.acftScore || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Height</Typography>
-                    <Typography variant={"subtitle1"}>{application?.height || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.height || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Weight</Typography>
-                    <Typography variant={"subtitle1"}>{application?.weight || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.weight || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -108,13 +91,13 @@ const ReviewerItem = ({id, applicationInfo}) => {
                 <Grid item xs={12}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Please describe your technical
                         background</Typography>
-                    <Typography variant={"subtitle1"}>{application?.techBG || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.techBG || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Why would you like to join the Army Software
                         Factory?</Typography>
-                    <Typography variant={"subtitle1"}>{application?.motivation || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.motivation || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -123,12 +106,12 @@ const ReviewerItem = ({id, applicationInfo}) => {
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Name</Typography>
-                    <Typography variant={"subtitle1"}>{application?.referenceName || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.referenceName || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Rank</Typography>
-                    <Typography variant={"subtitle1"}>{application?.referenceRank || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.referenceRank || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -137,12 +120,12 @@ const ReviewerItem = ({id, applicationInfo}) => {
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Phone Number</Typography>
-                    <Typography variant={"subtitle1"}>{application?.referencePhone || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.referencePhone || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Email</Typography>
-                    <Typography variant={"subtitle1"}>{application?.referenceEmail || ''}</Typography>
+                    <Typography variant={"subtitle1"}>{applicationInfo?.referenceEmail || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={4}>
@@ -150,7 +133,7 @@ const ReviewerItem = ({id, applicationInfo}) => {
                 </Grid>
 
             </Grid>
-        </React.Fragment>
+        </>
     );
 };
 

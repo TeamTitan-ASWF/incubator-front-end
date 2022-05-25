@@ -29,7 +29,7 @@ const NavBar = ({setShowReviewer}) => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <EggIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <EggIcon sx={{ display: { xs: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -45,7 +45,7 @@ const NavBar = ({setShowReviewer}) => {
                     >
                         INCUBATOR
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex' } }}>
                         <Button key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Application Status
                         </Button>
