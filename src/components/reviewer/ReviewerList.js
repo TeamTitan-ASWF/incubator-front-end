@@ -144,7 +144,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const [applicants, setApplicants] = useState([]);
 
@@ -155,13 +155,6 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const getApplications = async () => {
         const response = await apiCall('application', 'list');
         setApplicants(response.apiData);
-
-        // axios.get(`${process.env.REACT_APP_API}`)
-        //     .then(response => {
-        //         // console debugging
-        //         console.log(response.data);
-        //         setApplicants(response.data);
-        //     })
     }
 
     const handleRequestSort = (event, property) => {
@@ -195,7 +188,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     return (
         <Box sx={{width: '100%'}}>
             <Paper sx={{width: '100%', mb: 2}}>
-                <EnhancedTableToolbar />
+                <EnhancedTableToolbar/>
                 <TableContainer>
                     <Table
                         sx={{minWidth: 750}}
@@ -219,7 +212,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                                             hover
                                             onClick={(event) => handleClick(event, row.id)}
                                             tabIndex={-1}
-                                            key={row.id} >
+                                            key={row.id}>
                                             <TableCell
                                                 component="th"
                                                 id={labelId}

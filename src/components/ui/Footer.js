@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import {useTheme} from "@mui/material";
 import swLogo from "./sf_logo.svg";
-import {Image} from "@mui/icons-material";
 import Grid from "@mui/material/Grid";
 import EggIcon from "@mui/icons-material/Egg";
 
@@ -12,7 +10,6 @@ export default function Footer() {
     const theme = useTheme();
 
     return (
-
             <Box
                 bgcolor={theme.palette.primary.main}
                 component="footer"
@@ -34,7 +31,7 @@ export default function Footer() {
                             variant="h6"
                             noWrap
                             sx={{
-                                ml: 2,
+                                ml: 1,
                                 mr: 4,
                                 display: { xs: 'none', md: 'flex' },
                                 fontFamily: 'monospace',
@@ -53,6 +50,5 @@ export default function Footer() {
                     </Grid>
                 </Grid>
             </Box>
-
     );
 }
