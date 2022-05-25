@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import {useState} from "react";
-import axios from "axios";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import Paper from "@mui/material/Paper";
 import apiCall from "../api/api";
@@ -14,10 +13,8 @@ const ApplicationStatus = () => {
 
     const handleClick = async () =>{
         const res = await apiCall('application', 'read', refNumber, 'dod/');
-        console.log(res.apiData);
+        //console.log(res.apiData);
         setApplicationInfo(res.apiData);
-        //axios.get(`${process.env.REACT_APP_API}/dod/${refNumber}`).then((r) =>{setApplicationInfo(r.data);console.log(r.data) })
-
     }
     return (
   <>
