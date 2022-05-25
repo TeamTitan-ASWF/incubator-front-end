@@ -1,27 +1,37 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
-import axios from "axios";
+import Grid from "@mui/material/Grid";
 
-const ReviewerButtons = ({id}) => {
-    const approveApplication = (newStatus)=> {
-
-        axios.patch(`${process.env.REACT_APP_API}/${id}`, {status: newStatus })
-        .then(response => console.log(response));
-
-    }
+export default function ReviewerButtons({status, approveApplication, setShowList}) {
     return (
-        <div>
-            <Button onClick={()=>approveApplication("accepted")}>
-                Approve
-            </Button>
-            <Button onClick={()=>approveApplication("rejected")}>
-                Deny
-            </Button>
-
-
-
-        </div>
+        <Grid container sx={{m: 1}}>
+            <Grid item xs={6}>
+                <Button
+                    sx={{}}
+                    variant="contained"
+                    onClick={() => {setShowList(true)}}
+                >
+                    Back
+                </Button>
+            </Grid>
+            <Grid item xs={6} sx={{textAlign: "right"}}>
+                <Button
+                    color={status === "approved" ? "warning" : "success"}
+                    variant="contained"
+                    sx={{}}
+                    onClick={() => approveApplication(status === "approved" ? "pending" : "approved")}
+                >
+                    {status === "approved" ? "Pending" : "Approve"}
+                </Button>
+                <Button
+                    color={status === "denied" ? "warning" : "error"}
+                    variant="contained"
+                    sx={{ml: 2}}
+                    onClick={() => approveApplication(status === "denied" ? "pending" : "denied")}
+                >
+                    {status === "denied" ? "Pending" : "Deny"}
+                </Button>
+            </Grid>
+        </Grid>
     );
-};
-
-export default ReviewerButtons;
+}

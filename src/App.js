@@ -17,17 +17,16 @@ export default function App() {
     const currentDisplay = () => {
         switch (showReviewer) {
             case 'newApp':
-                return <Submit />
+                return <Submit/>
                 break;
             case 'reviewerList':
-                    return <ReviewerSection />
-                    break;
-
+                return <ReviewerSection/>
+                break;
             case 'checkStatus':
-                    return <ApplicationStatus />
-                    break;
+                return <ApplicationStatus/>
+                break;
             default:
-                //should not get here
+            //should not get here
         }
     };
 

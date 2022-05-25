@@ -19,7 +19,7 @@ const apiCall = async (entity, action, newData, path = '') => {
 
     switch (entity) {
         case "application":
-            apiURL = currentAppAPI;
+            apiURL = currentAppAPI + (path ? path : '');
             break;
         default:
             apiURL = 'should not get here';
@@ -28,7 +28,7 @@ const apiCall = async (entity, action, newData, path = '') => {
     switch (action) {
         case 'list':
             try {
-                const res = await axios.get(apiURL + path);
+                const res = await axios.get(apiURL);
                 apiData = await res.data;
             } catch (err) {
                 wasError = true;
