@@ -18,7 +18,6 @@ export default function Footer() {
                     px: 2,
                     mt: 'auto'
                 }}
-                //border="1px solid #000"
             >
                 <Grid container spacing={0}>
                     <Grid item xs={4} pl={5}>
