@@ -14,7 +14,10 @@ const ReviewerSection = () => {
                 setCurrentApplicationId={setCurrentApplicationId}
                 />}
             {!showList &&
-                <ReviewerPage id={currentApplicationId}/>}
+                <ReviewerPage
+                    id={currentApplicationId}
+                    setShowList={setShowList}
+                />}
         </>
     );
 };

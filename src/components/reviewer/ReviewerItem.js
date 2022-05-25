@@ -14,16 +14,15 @@ const ReviewerItem = ({id, applicationInfo}) => {
         setApplication(res.apiData);
     }
 
-useEffect(() => {
-    if(!applicationInfo && id) {
-        getApplication(id);
-    }
-}, [id, applicationInfo]);
+    useEffect(() => {
+        if (!applicationInfo && id) {
+            getApplication(id);
+        }
+    }, [id, applicationInfo]);
 
+    const formattedACFT = (unformattedACFTDate) => {
 
-    const formattedACFT = (unformattedACFTDate) =>{
-
-        if(unformattedACFTDate !== '') {
+        if (unformattedACFTDate !== '') {
             const yearAFCT = unformattedACFTDate.getFullYear();
             const monthAFCT = unformattedACFTDate.getMonth();
             const dayAFCT = unformattedACFTDate.getDate();
@@ -47,7 +46,8 @@ useEffect(() => {
 
             <Grid container spacing={2}>
                 <Grid item xs={4} sx={{}}>
-                    <Typography component={"span"} variant={"h7"} style={{fontWeight: "bold"}}>Last Name<br /></Typography>
+                    <Typography component={"span"} variant={"h7"} style={{fontWeight: "bold"}}>Last
+                        Name<br/></Typography>
                     <Typography variant={"subtitle1"} align={"left"}>{application?.lName || ''}</Typography>
                 </Grid>
 
@@ -105,23 +105,21 @@ useEffect(() => {
                     <Divider textAlign="left">Statements</Divider>
                 </Grid>
 
-
-
-
                 <Grid item xs={12}>
-                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>Please describe your technical background</Typography>
+                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>Please describe your technical
+                        background</Typography>
                     <Typography variant={"subtitle1"}>{application?.techBG || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>Why would you like to join the Army Software Factory?</Typography>
+                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>Why would you like to join the Army Software
+                        Factory?</Typography>
                     <Typography variant={"subtitle1"}>{application?.motivation || ''}</Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                     <Divider textAlign="left">Referral</Divider>
                 </Grid>
-
 
                 <Grid item xs={4}>
                     <Typography variant={"h7"} style={{fontWeight: "bold"}}>Name</Typography>
@@ -138,7 +136,7 @@ useEffect(() => {
                 </Grid>
 
                 <Grid item xs={4}>
-                    <Typography variant={"h7"}style={{fontWeight: "bold"}} >Phone Number</Typography>
+                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>Phone Number</Typography>
                     <Typography variant={"subtitle1"}>{application?.referencePhone || ''}</Typography>
                 </Grid>
 
