@@ -19,9 +19,8 @@ import inputValidation from '../inputValidation/inputValidation';
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function Submit() {
-  const [message,setMessage] = useState("");
-  const [isDisabled,setIsDisabled] = useState(false)
-  const [ messageTitle,setMessageTitle] = useState("");
+    const [message,setMessage] = useState("");
+    const [ messageTitle,setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList,setErrorList] = useState("");
     const [applicationInfo,setApplicationInfo] = React.useState({
@@ -46,16 +45,11 @@ export default function Submit() {
         dateSubmitted: ""
     })
 
-    const updateFunctionWithValidation = (e) => {
-
-        updateState(e);
-
-    }
-
+    
 
     function updateState(e){
-//let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
-        
+
+
 
 
       setApplicationInfo(
@@ -97,11 +91,11 @@ export default function Submit() {
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} setIsDisabled={setIsDisabled} updateFunctionWithValidation={updateFunctionWithValidation} errorList={errorList}/>;
+                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} errorList={errorList}/>;
             case 1:
                 return <StatementsForm applicationInfo={applicationInfo} updateState={updateState} errorList= {errorList} />;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} updateFunctionWithValidation={updateFunctionWithValidation} errorList={errorList} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  errorList={errorList} />;
             case 3:
                 return <ReviewerItem applicationInfo={applicationInfo} />
             default:
@@ -112,13 +106,11 @@ export default function Submit() {
 
 
         // This makes sure steps 1-3 are not empty
-            let continueToNextStep ;
+
             let firstStepArray=['fName','lName','dodId','acftScore','height','weight']
             let secondStepArray=['techBG','motivation']
             let thirdStepArray=['referenceName','referenceEmail','referencePhone']
 
-
-            let validatedArray = [];
             let outputMessage = [] ;  
             let stepArray = [];
 
@@ -141,8 +133,10 @@ export default function Submit() {
 
             stepArray.forEach(element => {
                 try{     
-                    let temp = inputValidation(applicationInfo[element],element).output
-                     if(temp) outputMessage.push (inputValidation(applicationInfo[element],element).output) 
+        
+                     if(inputValidation(applicationInfo[element],element).output){
+                         outputMessage.push (inputValidation(applicationInfo[element],element).output) //If element is not validated, add the elements name to this list
+                         }
                    
                 }catch{
                     outputMessage.push(element)
@@ -150,9 +144,7 @@ export default function Submit() {
             });
 
         
-        
         setErrorList(outputMessage);
-
 
        if(outputMessage.length > 0) return;
 

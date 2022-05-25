@@ -7,7 +7,7 @@ import DOB from "./DOB";
 import LastACFT from "./LastACFT";
 
 
-export default function PersonalInfoForm({updateFunctionWithValidation, applicationInfo, setApplicationInfo,updateState,errorList}) {
+export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,updateState,errorList}) {
 
     return (
         <React.Fragment>
@@ -71,7 +71,7 @@ export default function PersonalInfoForm({updateFunctionWithValidation, applicat
                         fullWidth
                         autoComplete="dodId"
                         variant="standard"
-                        onChange={updateFunctionWithValidation}
+                        onChange={updateState}
 
                     />
                 </Grid>
@@ -96,7 +96,7 @@ export default function PersonalInfoForm({updateFunctionWithValidation, applicat
                         value={applicationInfo.acftScore || ""}
                         autoComplete="acftScore"
                         variant="standard"
-                        onChange={updateFunctionWithValidation}
+                        onChange={updateState}
                     />
 
                 </Grid>
@@ -113,7 +113,7 @@ export default function PersonalInfoForm({updateFunctionWithValidation, applicat
                         value={applicationInfo.height || ""}
                         autoComplete="height"
                         variant="standard"
-                        onChange={updateFunctionWithValidation}
+                        onChange={updateState}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -128,7 +128,7 @@ export default function PersonalInfoForm({updateFunctionWithValidation, applicat
                         value={applicationInfo.weight || ""}
                         fullWidth
                         variant="standard"
-                        onChange={updateFunctionWithValidation}
+                        onChange={updateState}
                     />
                 </Grid>
 

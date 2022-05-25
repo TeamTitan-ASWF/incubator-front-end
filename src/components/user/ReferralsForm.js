@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Rank from "./Rank";
 
-export default function ReferralsForm({updateFunctionWithValidation, updateState,applicationInfo,errorList}) {
+export default function ReferralsForm({ updateState,applicationInfo,errorList}) {
 
     return (
         <React.Fragment>
