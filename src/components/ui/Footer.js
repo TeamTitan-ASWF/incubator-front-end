@@ -14,9 +14,11 @@ export default function Footer() {
                 bgcolor={theme.palette.primary.main}
                 component="footer"
                 sx={{
-                    py: 3,
-                    px: 2,
-                    mt: 'auto'
+                    p: 1,
+                    mt: 'auto',
+                    position: 'absolute',
+                    bottom: '0',
+                    width: '100%'
                 }}
             >
                 <Grid container spacing={0}>
