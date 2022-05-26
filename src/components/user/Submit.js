@@ -218,50 +218,49 @@ export default function Submit() {
     };
 
     return (
-        <Container component="main" maxWidth="sm" sx={{mb: 4}}>
-            <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}}}>
-                <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
-                    {steps.map((label) => (
-                        <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-                <React.Fragment>
-                    <Button onClick={fillFields}>Auto-populate</Button>
-                    {activeStep === steps.length ? (
-                        <React.Fragment>
-                            <Typography variant="h5" gutterBottom>
-                                {messageTitle}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                {message}
-                            </Typography>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            {getStepContent(activeStep)}
-                            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                                {activeStep !== 0 && (
-                                    <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
-                                        Back
+            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: 20 }}>
+                    <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+                        {steps.map((label) => (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                            </Step>
+                        ))}
+                    </Stepper>
+                    <React.Fragment>
+                        <Button onClick = {fillFields}>Auto-populate</Button>
+                        {activeStep === steps.length ? (
+                            <React.Fragment>
+                                <Typography variant="h5" gutterBottom>
+                                    {messageTitle}
+                                </Typography>
+                                <Typography variant="subtitle1">
+                                    {message}
+                                </Typography>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                {getStepContent(activeStep)}
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    {activeStep !== 0 && (
+                                        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                            Back
+                                        </Button>
+                                    )}
+                   
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleNext}
+                                        sx={{ mt: 3, ml: 1 }}
+                                    >
+                                        {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                                     </Button>
-                                )}
-
-                                <Button
-                                    variant="contained"
-                                    onClick={handleNext}
-                                    sx={{mt: 3, ml: 1}}
-                                >
-                                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                                </Button>
-                            </Box>
-                        </React.Fragment>
-                    )}
-                </React.Fragment>
-            </Paper>
-            <br /><br />
-        </Container>
+                                </Box>
+                            </React.Fragment>
+                        )}
+                    </React.Fragment>
+                </Paper>
+            </Container>
     );
 }
 

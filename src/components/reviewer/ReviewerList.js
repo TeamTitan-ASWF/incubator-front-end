@@ -187,7 +187,9 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
 
     return (
         <Box sx={{width: '100%'}}>
-            <Paper sx={{width: '100%', mb: 2}}>
+            <Paper
+                variant="outlined"
+                sx={{width: '100%', my: 2, p: 2, boxShadow: 20}}>
                 <EnhancedTableToolbar/>
                 <TableContainer>
                     <Table
@@ -249,11 +251,11 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
+                <FormControlLabel
+                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
+                    label="Dense padding"
+                />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense}/>}
-                label="Dense padding"
-            />
         </Box>
     );
 }

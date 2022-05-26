@@ -6,6 +6,7 @@ import {Alert, Snackbar} from "@mui/material";
 import ApplicationStatus from "./ApplicationStatus";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 
 export default function UserPage() {
     const [refNumber, setRefNumber] = useState(0);
@@ -43,22 +44,25 @@ export default function UserPage() {
                     handleClick={handleClick}
                 /> :
                 <>
-                    <StatusHeader
-                        applicationInfo={applicationInfo}
-                    />
-                    <ReviewerItem
-                        applicationInfo={applicationInfo}
-                    />
-                    <Box sx={{p: 2}}>
-                        <Button
-                            sx={{}}
-                            variant="contained"
-                            onClick={() => {setShowStatus(true)}}
-                        >
-                            Back
-                        </Button>
-                        <br /><br /><br /><br /><br /><br /><br />
-                    </Box>
+                    <Paper
+                        variant="outlined"
+                        sx={{my: 3, p: 3, boxShadow: 20}}>
+                        <StatusHeader
+                            applicationInfo={applicationInfo}
+                        />
+                        <ReviewerItem
+                            applicationInfo={applicationInfo}
+                        />
+                        <Box sx={{p: 2}}>
+                            <Button
+                                sx={{}}
+                                variant="contained"
+                                onClick={() => {setShowStatus(true)}}
+                            >
+                                Back
+                            </Button>
+                        </Box>
+                    </Paper>
                 </>
             }
             <Snackbar

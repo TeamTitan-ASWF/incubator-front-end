@@ -12,6 +12,7 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
                 sx={{
                     my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
                     textAlign: "center",
+                    boxShadow: 20
                 }}>
                 <Typography
                     variant="h6"
