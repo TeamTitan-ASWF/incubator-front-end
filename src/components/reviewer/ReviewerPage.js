@@ -28,7 +28,7 @@ export default function ReviewerPage({id, setShowList}) {
         <>
             <Paper
                 variant="outlined"
-                sx={{ m: 3, p: 3, boxShadow: 20 }}
+                sx={{ my: 3, p: 3, boxShadow: 20 }}
             >
                 <StatusHeader
                     applicationInfo={application}
