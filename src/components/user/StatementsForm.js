@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
-export default function StatementsForm({updateState,errorList,applicationInfo}) {
+export default function StatementsForm({updateState,errorList,applicationInfo,onChangeValidate}) {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -19,8 +19,12 @@ export default function StatementsForm({updateState,errorList,applicationInfo}) 
                         value = {applicationInfo.techBG}
                         rows={4}
                         fullWidth
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
                         ariant="filled"
+                        onBlur={onChangeValidate}
                     />
                 </Grid>
 
@@ -33,7 +37,11 @@ export default function StatementsForm({updateState,errorList,applicationInfo}) 
                         multiline
                         rows={4}
                         fullWidth
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
+                        onBlur={onChangeValidate}
                         variant="filled"
                     />
                 </Grid>

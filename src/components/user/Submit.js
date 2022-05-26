@@ -20,10 +20,15 @@ import * as moment from "moment";
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function Submit() {
+    let outputMessage = [];
+    let firstStepArray=['fName','lName','dodId','acftScore','height','weight']
+    let secondStepArray=['techBG','motivation']
+    let thirdStepArray=['referenceName','referenceEmail','referencePhone']
+
     const [message,setMessage] = useState("");
     const [ messageTitle,setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
-    const [errorList,setErrorList] = useState("");
+    const [errorList,setErrorList] = useState([]);
     const [applicationInfo,setApplicationInfo] = React.useState({
         refNum : "",
         fName : "",
@@ -46,11 +51,71 @@ export default function Submit() {
         dateSubmitted: ""
     })
 
-    
+    const fillFields = () => {
+setApplicationInfo({
+    refNum : "1234567890",
+    fName : "Steven",
+    lName : "Rodgers",
+    mI : "G",
+    dodId : "1234567890",
+    rank : "O3",
+    dob : '1918-07-04',
+    lastACFT : '2022-05-01',
+    acftScore : 600,
+    height : 74,
+    weight: 240,
+    techBG : `Steve Rogers was born during the Depression and grew up a frail youth in a poor family. His father died when he was a child, his mother when he was in his late teens. Horrified by newsreel footage of the Nazis in Europe, Rogers was inspired to try to enlist in the Army. However, because of his frailty and sickness, he was rejected. Overhearing the boy's earnest plea to be accepted, General Chester Phillips of the U.S. Army offered Rogers the opportunity to take part in a special experiment called Operation: Rebirth. Rogers agreed and was taken to a secret laboratory in Washington, D.C. where he was introduced to Dr. Abrahan Erskine (code named: Prof. Reinstein), the creator to the Super-Soldier formula
+    After weeks of tests, Rogers was at last administered the Super-Soldier serum. Given part of the compound intravenously and another part orally, Rogers was then bombarded by "vita-rays," a special combination of exotic (in 1941) wavelengths of radiation designed to accelerate and stabilize the serum's effect on his body. Steve Rogers emerged from the vita-ray chamber with a body as perfect as a body can be and still be human. A Nazi spy who observed the experiment murdered Dr. Erskine mere minutes after its conclusion. Erskine died without fully committing the Super-Soldier formula to paper, leaving Steve Rogers the Sole beneficiary of his genius.
+    Roger was then put through an intensive physical and tactical training program,teaching him gymnastics, hand-to-hand combat and military strategy. Three months later, he was given his first assignment, to stop the Nazi agent called the Red Skull. To help him become a symbolic counterpart to the Red Skull, Rogers was given the red, white, and blue costume of Captain America.
+    During the war, he served as both a symbol of freedom and America's most effective special operative. Then, during the final days of the war, he was trying to stop a bomb-loaded drone-plane launched by Nazi technician Baron Heinrich Zemo when the plane exploded, killing his partner Bucky; and throwing him unhurt into icy Arctic waters. The Super-Soldier formula prevented crystallization of Captain America's bodily fluid, allowing him to enter a state of suspended animation. Decades later, he was rescued by the newly-formed Avengers and became a cornerstone of the team. His might undiminished. Captain America remains a symbol of liberty and justice.`,
+    motivation : "I'm just a kid from brooklyn",
+    referenceName : "Bucky Barnes",
+    referenceRank: "E5",
+    referenceEmail: "bigbucky17@gmail.com",
+    referencePhone: "1234567890",
+    status:"Pending",
+    dateSubmitted: ""
+}
+)
+
+
+    }
+
+
+    const onChangeValidate = (e) => {
+
+
+
+
+
+
+        let errorListCopy = JSON.parse(JSON.stringify(errorList))
+
+
+
+ 
+        try{     
+
+            if(inputValidation(applicationInfo[e.target.id],e.target.id).output){
+            
+                errorListCopy.push (inputValidation(applicationInfo[e.target.value],e.target.id).output) //If element is not validated, add the elements name to this list
+                }else if(errorList.includes(e.target.id)){
+                        errorListCopy = errorListCopy.filter(ele => ele !== e.target.id)
+                }
+          
+       }catch{
+           errorListCopy.push(e.target.id)
+       }
+
+
+
+    setErrorList(errorListCopy)
+    }
+
 
     function updateState(e){
 
-
+  
 
 
       setApplicationInfo(
@@ -92,60 +157,71 @@ export default function Submit() {
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} errorList={errorList}/>;
+                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} errorList={errorList} onChangeValidate={onChangeValidate}/>;
             case 1:
-                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState} errorList= {errorList} />;
+                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState} errorList= {errorList}  onChangeValidate={onChangeValidate}/>;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  errorList={errorList} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  errorList={errorList}  onChangeValidate={onChangeValidate}/>;
             case 3:
                 return <ReviewerItem applicationInfo={applicationInfo} />
             default:
                 throw new Error('Unknown step');
         }
     }
+
+const validatePage = () => {
+
+
+
+
+    let stepArray = [];
+
+    switch(activeStep){
+
+        case 0:
+            stepArray = firstStepArray;
+        break;
+
+
+        case 1:
+            stepArray = secondStepArray;
+        break;
+
+
+        case 2:
+            stepArray = thirdStepArray;
+        break;
+
+
+
+        default :
+                //to clear the warning shouldn't get here
+
+        break;
+    }
+
+    stepArray.forEach(element => {
+        try{     
+
+             if(inputValidation(applicationInfo[element],element).output){
+                 outputMessage.push (inputValidation(applicationInfo[element],element).output) //If element is not validated, add the elements name to this list
+                 }
+           
+        }catch{
+            outputMessage.push(element)
+        }
+    });
+
+
+setErrorList(outputMessage);
+
+
+}
+
     const handleNext = () => {
 
-
+        validatePage();
         // This makes sure steps 1-3 are not empty
-
-            let firstStepArray=['fName','lName','dodId','acftScore','height','weight']
-            let secondStepArray=['techBG','motivation']
-            let thirdStepArray=['referenceName','referenceEmail','referencePhone']
-
-            let outputMessage = [] ;  
-            let stepArray = [];
-
-            switch(activeStep){
-
-                case 0:
-                    stepArray = firstStepArray;
-                break;
-
-
-                case 1:
-                    stepArray = secondStepArray;
-                break;
-
-
-                case 2:
-                    stepArray = thirdStepArray;
-                break;
-            }
-
-            stepArray.forEach(element => {
-                try{     
-        
-                     if(inputValidation(applicationInfo[element],element).output){
-                         outputMessage.push (inputValidation(applicationInfo[element],element).output) //If element is not validated, add the elements name to this list
-                         }
-                   
-                }catch{
-                    outputMessage.push(element)
-                }
-            });
-
-        
-        setErrorList(outputMessage);
 
        if(outputMessage.length > 0) return;
 
@@ -206,6 +282,7 @@ export default function Submit() {
                         ))}
                     </Stepper>
                     <React.Fragment>
+                        <Button onClick = {fillFields}>Auto-populate</Button>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>

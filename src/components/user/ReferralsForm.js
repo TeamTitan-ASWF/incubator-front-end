@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Rank from "./Rank";
 
-export default function ReferralsForm({ updateState,applicationInfo,errorList}) {
+export default function ReferralsForm({ updateState,applicationInfo,errorList,onChangeValidate}) {
 
     return (
         <React.Fragment>
@@ -24,7 +24,11 @@ export default function ReferralsForm({ updateState,applicationInfo,errorList}) 
                         fullWidth
                         autoComplete="given-name"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
+                        onBlur={onChangeValidate}
                     />
                 </Grid>
                 <Grid item xs={12} sm={5}>
@@ -41,7 +45,11 @@ export default function ReferralsForm({ updateState,applicationInfo,errorList}) 
                         type="email"
                         fullWidth
                         variant="standard"
-                        onChange={updateState}
+                        onBlur={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} sm={5}>
@@ -55,7 +63,11 @@ export default function ReferralsForm({ updateState,applicationInfo,errorList}) 
                         type="number"
                         fullWidth
                         variant="standard"
-                        onChange={updateState}
+                        onBlur={onChangeValidate}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
                     />
                 </Grid>
 

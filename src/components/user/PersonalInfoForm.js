@@ -7,7 +7,7 @@ import DOB from "./DOB";
 import LastACFT from "./LastACFT";
 
 
-export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,updateState,errorList}) {
+export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,updateState,errorList,onChangeValidate}) {
 
     return (
         <React.Fragment>
@@ -27,7 +27,11 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         fullWidth
                         autoComplete="given-name"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
+                        onBlur={onChangeValidate}
                     />
                     
                 </Grid>
@@ -42,7 +46,11 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         fullWidth
                         autoComplete="family-name"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
+                         onBlur={onChangeValidate}
                     />
                 </Grid>
                 <Grid item xs={12} sm={2}>
@@ -56,6 +64,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         autoComplete="middle-initial"
                         variant="standard"
                         onChange={updateState}
+
                     />
                 </Grid>
                 <Grid item xs={12} sm={5}>
@@ -72,6 +81,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         autoComplete="dodId"
                         variant="standard"
                         onChange={updateState}
+                        onBlur={onChangeValidate}
 
                     />
                 </Grid>
@@ -96,6 +106,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         value={applicationInfo.acftScore || ""}
                         autoComplete="acftScore"
                         variant="standard"
+                        onBlur={onChangeValidate}
                         onChange={updateState}
                     />
 
@@ -114,6 +125,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         autoComplete="height"
                         variant="standard"
                         onChange={updateState}
+                        onBlur={onChangeValidate}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -129,6 +141,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         fullWidth
                         variant="standard"
                         onChange={updateState}
+                        onBlur={onChangeValidate}
                     />
                 </Grid>
 
