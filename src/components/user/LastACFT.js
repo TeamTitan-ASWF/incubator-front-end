@@ -15,6 +15,7 @@ export default function LastACFT({updateState, applicationInfo,setApplicationInf
                 name="lastACFT"
                 label="Last ACFT"
                 inputFormat="yyyy-MM-dd"
+                views={["year", "month", "day"]}
                 value= {applicationInfo.lastACFT}
                 onChange={(newValue) =>{
                     let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))

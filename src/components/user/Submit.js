@@ -14,6 +14,7 @@ import apiCall from '../api/api';
 import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
+import * as moment from "moment";
 
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
@@ -35,8 +36,8 @@ export default function Submit() {
         mI : "",
         dodId : "",
         rank : "E1",
-        dob : '2000-10-11',
-        lastACFT : '2022-05-01',
+        dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
         acftScore : 0,
         height : 0,
         weight: 0,
@@ -46,7 +47,7 @@ export default function Submit() {
         referenceRank: "E1",
         referenceEmail: "",
         referencePhone: "",
-        status:"Pending",
+        status:"pending",
         dateSubmitted: ""
     })
 
@@ -235,9 +236,9 @@ setErrorList(outputMessage);
                 mI :  applicationInfo.mI,
                 dodId :  applicationInfo.dodId,
                 rank : applicationInfo.rank,
-                dob : applicationInfo.dob,
-                lastACFT :  applicationInfo.lastACFT,
-                acftScore :  applicationInfo.acftScore,
+                dob : moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                lastACFT : moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD') ,
+                acftScore : applicationInfo.acftScore ,
                 height :  applicationInfo.height,
                 weight: applicationInfo.weight,
                 techBG :  applicationInfo.techBG,
