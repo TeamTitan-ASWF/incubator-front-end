@@ -36,6 +36,7 @@ export default function ReviewerPage({id, setShowList}) {
                 approveApplication={approveApplication}
                 setShowList={setShowList}
             />
+            <br /><br /><br /><br /><br /><br /><br />
         </>
     );
 }
