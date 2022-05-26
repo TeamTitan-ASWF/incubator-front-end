@@ -1,20 +1,9 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {Divider} from "@mui/material";
-import * as moment from 'moment';
+import {formatDate} from "../inputValidation/dateValidationFunctions";
 
 const ReviewerItem = ({applicationInfo}) => {
-
-        const formatDate = (unformattedDate) => {
-
-            if (unformattedDate.toString().length > 10) {
-                //console.log(unformattedDate + ", got to first");
-                return moment(Date.parse(unformattedDate) - 28800000).format('YYYY-MM-DD');
-            } else {
-                //console.log(unformattedDate + ", got to second");
-                return unformattedDate;
-            }
-        }
 
         return (
             <>

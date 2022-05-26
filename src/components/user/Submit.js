@@ -14,7 +14,7 @@ import apiCall from '../api/api';
 import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
-import * as moment from "moment";
+import {formatDate} from "../inputValidation/dateValidationFunctions";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
@@ -186,8 +186,10 @@ export default function Submit() {
                 mI: applicationInfo.mI,
                 dodId: applicationInfo.dodId,
                 rank: applicationInfo.rank,
-                dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                dob: formatDate(applicationInfo.dob),
+                lastACFT: formatDate(applicationInfo.lastACFT),
                 acftScore: applicationInfo.acftScore,
                 height: applicationInfo.height,
                 weight: applicationInfo.weight,
@@ -198,7 +200,7 @@ export default function Submit() {
                 referenceEmail: applicationInfo.referenceEmail,
                 referencePhone: applicationInfo.referencePhone,
                 //status: applicationInfo.status,
-                dateSubmitted: applicationInfo.dateSubmitted
+                dateSubmitted: formatDate(new Date())
             }).then((r) => {
                 setMessageTitle("Thank you for applying");
                 setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
@@ -219,9 +221,9 @@ export default function Submit() {
 
     return (
         <>
-            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
-                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: 20 }}>
-                    <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+            <Container component="main" maxWidth="md" sx={{mb: 4}}>
+                <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
+                    <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
@@ -229,7 +231,7 @@ export default function Submit() {
                         ))}
                     </Stepper>
                     <React.Fragment>
-                        <Button onClick = {fillFields}>Auto-populate</Button>
+                        <Button onClick={fillFields}>Auto-populate</Button>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>
@@ -242,17 +244,17 @@ export default function Submit() {
                         ) : (
                             <React.Fragment>
                                 {getStepContent(activeStep)}
-                                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
                                     {activeStep !== 0 && (
-                                        <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                                        <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
                                             Back
                                         </Button>
                                     )}
-                   
+
                                     <Button
                                         variant="contained"
                                         onClick={handleNext}
-                                        sx={{ mt: 3, ml: 1 }}
+                                        sx={{mt: 3, ml: 1}}
                                     >
                                         {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
                                     </Button>
@@ -262,8 +264,8 @@ export default function Submit() {
                     </React.Fragment>
                 </Paper>
             </Container>
-            <br /><br /><br /><br />
-            </>
+            <br/><br/><br/><br/>
+        </>
     );
 }
 
