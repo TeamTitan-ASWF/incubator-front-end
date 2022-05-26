@@ -4,7 +4,7 @@ import axios from 'axios';
 // noinspection DuplicatedCode
 const useRemote = true;
 
-const SERVER_API_URL_APPLICATIONS = 'http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
+const SERVER_API_URL_APPLICATIONS = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
 
 const LOCAL_API_URL_APPLICATIONS = 'http://localhost:8080/';
 
@@ -19,7 +19,7 @@ const apiCall = async (entity, action, newData, path = '') => {
 
     switch (entity) {
         case "application":
-            apiURL = currentAppAPI;
+            apiURL = currentAppAPI + (path ? path : '');
             break;
         default:
             apiURL = 'should not get here';
@@ -28,7 +28,7 @@ const apiCall = async (entity, action, newData, path = '') => {
     switch (action) {
         case 'list':
             try {
-                const res = await axios.get(apiURL + path);
+                const res = await axios.get(apiURL);
                 apiData = await res.data;
             } catch (err) {
                 wasError = true;

@@ -9,6 +9,7 @@ import ReviewerSection from "./components/reviewer/ReviewerSection";
 import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
 import ApplicationStatus from "./components/user/ApplicationStatus";
+import UserPage from "./components/user/UserPage";
 
 export default function App() {
     const [showReviewer, setShowReviewer] = useState('newApp');
@@ -23,7 +24,7 @@ export default function App() {
                 return <ReviewerSection/>
                 break;
             case 'checkStatus':
-                return <ApplicationStatus/>
+                return <UserPage/>
                 break;
             default:
             //should not get here

@@ -14,6 +14,7 @@ export default function DOB({updateState, applicationInfo,setApplicationInfo}){
             id="dob"
             name="dob"
             inputFormat="yyyy-MM-dd"
+            views={["year", "month", "day"]}
             value= {applicationInfo.dob}
             onChange={(newValue) =>{
                 let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))

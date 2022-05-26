@@ -10,16 +10,25 @@ import Typography from '@mui/material/Typography';
 import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
-import axios from "axios";
+import apiCall from '../api/api';
 import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
+import inputValidation from '../inputValidation/inputValidation';
+import * as moment from "moment";
+
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function Submit() {
-  const [message,setMessage] = useState("");
-  const [ messageTitle,setMessageTitle] = useState("");
+    let outputMessage = [];
+    let firstStepArray=['fName','lName','dodId','acftScore','height','weight']
+    let secondStepArray=['techBG','motivation']
+    let thirdStepArray=['referenceName','referenceEmail','referencePhone']
+
+    const [message,setMessage] = useState("");
+    const [ messageTitle,setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
+    const [errorList,setErrorList] = useState([]);
     const [applicationInfo,setApplicationInfo] = React.useState({
         refNum : "",
         fName : "",
@@ -27,8 +36,8 @@ export default function Submit() {
         mI : "",
         dodId : "",
         rank : "E1",
-        dob : '2000-10-11',
-        lastACFT : '2022-05-01',
+        dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
         acftScore : 0,
         height : 0,
         weight: 0,
@@ -38,18 +47,84 @@ export default function Submit() {
         referenceRank: "E1",
         referenceEmail: "",
         referencePhone: "",
-        status:"Pending",
+        status:"pending",
         dateSubmitted: ""
     })
 
+    const fillFields = () => {
+setApplicationInfo({
+    refNum : "1234567890",
+    fName : "Steven",
+    lName : "Rodgers",
+    mI : "G",
+    dodId : "1234567890",
+    rank : "O3",
+    dob : '1918-07-04',
+    lastACFT : '2022-05-01',
+    acftScore : 600,
+    height : 74,
+    weight: 240,
+    techBG : `Steve Rogers was born during the Depression and grew up a frail youth in a poor family. His father died when he was a child, his mother when he was in his late teens. Horrified by newsreel footage of the Nazis in Europe, Rogers was inspired to try to enlist in the Army. However, because of his frailty and sickness, he was rejected. Overhearing the boy's earnest plea to be accepted, General Chester Phillips of the U.S. Army offered Rogers the opportunity to take part in a special experiment called Operation: Rebirth. Rogers agreed and was taken to a secret laboratory in Washington, D.C. where he was introduced to Dr. Abrahan Erskine (code named: Prof. Reinstein), the creator to the Super-Soldier formula
+    After weeks of tests, Rogers was at last administered the Super-Soldier serum. Given part of the compound intravenously and another part orally, Rogers was then bombarded by "vita-rays," a special combination of exotic (in 1941) wavelengths of radiation designed to accelerate and stabilize the serum's effect on his body. Steve Rogers emerged from the vita-ray chamber with a body as perfect as a body can be and still be human. A Nazi spy who observed the experiment murdered Dr. Erskine mere minutes after its conclusion. Erskine died without fully committing the Super-Soldier formula to paper, leaving Steve Rogers the Sole beneficiary of his genius.
+    Roger was then put through an intensive physical and tactical training program,teaching him gymnastics, hand-to-hand combat and military strategy. Three months later, he was given his first assignment, to stop the Nazi agent called the Red Skull. To help him become a symbolic counterpart to the Red Skull, Rogers was given the red, white, and blue costume of Captain America.
+    During the war, he served as both a symbol of freedom and America's most effective special operative. Then, during the final days of the war, he was trying to stop a bomb-loaded drone-plane launched by Nazi technician Baron Heinrich Zemo when the plane exploded, killing his partner Bucky; and throwing him unhurt into icy Arctic waters. The Super-Soldier formula prevented crystallization of Captain America's bodily fluid, allowing him to enter a state of suspended animation. Decades later, he was rescued by the newly-formed Avengers and became a cornerstone of the team. His might undiminished. Captain America remains a symbol of liberty and justice.`,
+    motivation : "I'm just a kid from brooklyn",
+    referenceName : "Bucky Barnes",
+    referenceRank: "E5",
+    referenceEmail: "bigbucky17@gmail.com",
+    referencePhone: "1234567890",
+    status:"Pending",
+    dateSubmitted: ""
+}
+)
 
+
+    }
+
+
+    const onChangeValidate = (e) => {
+
+
+
+
+
+
+        let errorListCopy = JSON.parse(JSON.stringify(errorList))
+
+
+
+ 
+        try{     
+
+            if(inputValidation(applicationInfo[e.target.id],e.target.id).output){
+            
+                errorListCopy.push (inputValidation(applicationInfo[e.target.value],e.target.id).output) //If element is not validated, add the elements name to this list
+                }else if(errorList.includes(e.target.id)){
+                        errorListCopy = errorListCopy.filter(ele => ele !== e.target.id)
+                }
+          
+       }catch{
+           errorListCopy.push(e.target.id)
+       }
+
+
+
+    setErrorList(errorListCopy)
+    }
 
 
     function updateState(e){
-//let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
 
-        setApplicationInfo(
+  
+
+
+      setApplicationInfo(
             {
+
+
+
+
+
                 refNum : (e.target.id === "refNum") ? e.target.value : applicationInfo.refNum ,
                 fName : (e.target.id === "fName") ? e.target.value : applicationInfo.fName ,
                 lName : (e.target.id === "lName") ? e.target.value : applicationInfo.lName ,
@@ -70,8 +145,7 @@ export default function Submit() {
                 status:(e.target.id === "status") ? e.target.value : applicationInfo.status ,
                 dateSubmitted: (e.target.id === "dateSubmitted") ? e.target.value : applicationInfo.dateSubmitted
             }
-
-
+        
 
 
         )
@@ -79,58 +153,112 @@ export default function Submit() {
 
     }
 
+
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} />;
+                return <PersonalInfoForm applicationInfo={applicationInfo} updateState={updateState} setApplicationInfo={setApplicationInfo} errorList={errorList} onChangeValidate={onChangeValidate}/>;
             case 1:
-                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState}  />;
+                return <StatementsForm applicationInfo={applicationInfo} updateState={updateState} errorList= {errorList}  onChangeValidate={onChangeValidate}/>;
             case 2:
-                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} />;
+                return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState}  errorList={errorList}  onChangeValidate={onChangeValidate}/>;
             case 3:
-                //return <Review applicationInfo={applicationInfo} updateState={updateState}   />;
                 return <ReviewerItem applicationInfo={applicationInfo} />
             default:
                 throw new Error('Unknown step');
         }
     }
+
+const validatePage = () => {
+
+
+
+
+    let stepArray = [];
+
+    switch(activeStep){
+
+        case 0:
+            stepArray = firstStepArray;
+        break;
+
+
+        case 1:
+            stepArray = secondStepArray;
+        break;
+
+
+        case 2:
+            stepArray = thirdStepArray;
+        break;
+
+
+
+        default :
+                //to clear the warning shouldn't get here
+
+        break;
+    }
+
+    stepArray.forEach(element => {
+        try{     
+
+             if(inputValidation(applicationInfo[element],element).output){
+                 outputMessage.push (inputValidation(applicationInfo[element],element).output) //If element is not validated, add the elements name to this list
+                 }
+           
+        }catch{
+            outputMessage.push(element)
+        }
+    });
+
+
+setErrorList(outputMessage);
+
+
+}
+
     const handleNext = () => {
 
+        validatePage();
+        // This makes sure steps 1-3 are not empty
+
+       if(outputMessage.length > 0) return;
+
+        if(activeStep === 3){ // Submit the form instead of going
 
 
-        if(activeStep === 3){
-       axios.post("http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080", {
-           refNum : applicationInfo.dodId,
-           fName :  applicationInfo.fName,
-           lName :  applicationInfo.lName,
-           mI :  applicationInfo.mI,
-           dodId :  applicationInfo.dodId,
-           rank : applicationInfo.rank,
-           dob : applicationInfo.dob,
-           lastACFT :  applicationInfo.lastACFT,
-           acftScore :  applicationInfo.acftScore,
-           height :  applicationInfo.height,
-           weight: applicationInfo.weight,
-           techBG :  applicationInfo.techBG,
-           motivation :  applicationInfo.motivation,
-           referenceName :  applicationInfo.referenceName,
-           referenceRank:  applicationInfo.referenceRank,
-           referenceEmail:  applicationInfo.referenceEmail,
-           referencePhone:  applicationInfo.referencePhone,
-           //status: applicationInfo.status,
-           dateSubmitted:  applicationInfo.dateSubmitted
-       })
-           .then(()=> {
-               setMessageTitle("Thank you for applying");
-               setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-               setActiveStep(activeStep + 1)
-           } )
-           .catch((r)=>{
-               setMessageTitle("Something went wrong please try again later")
-               setActiveStep(activeStep + 1)
-               console.log(r)
-           })
 
+            apiCall('application', 'add',{
+                refNum : applicationInfo.dodId,
+                fName :  applicationInfo.fName,
+                lName :  applicationInfo.lName,
+                mI :  applicationInfo.mI,
+                dodId :  applicationInfo.dodId,
+                rank : applicationInfo.rank,
+                dob : moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                lastACFT : moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD') ,
+                acftScore : applicationInfo.acftScore ,
+                height :  applicationInfo.height,
+                weight: applicationInfo.weight,
+                techBG :  applicationInfo.techBG,
+                motivation :  applicationInfo.motivation,
+                referenceName :  applicationInfo.referenceName,
+                referenceRank:  applicationInfo.referenceRank,
+                referenceEmail:  applicationInfo.referenceEmail,
+                referencePhone:  applicationInfo.referencePhone,
+                //status: applicationInfo.status,
+                dateSubmitted:  applicationInfo.dateSubmitted
+            } ).then((r)=> {
+                setMessageTitle("Thank you for applying");
+                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                setActiveStep(activeStep + 1)
+            } )
+            .catch((r)=>{
+                setMessageTitle("Something went wrong please try again later")
+                setActiveStep(activeStep + 1)
+            })
+   
 
 
         }else{
@@ -144,8 +272,8 @@ export default function Submit() {
     };
 
     return (
-            <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+            <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: 20 }}>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
                             <Step key={label}>
@@ -154,6 +282,7 @@ export default function Submit() {
                         ))}
                     </Stepper>
                     <React.Fragment>
+                        <Button onClick = {fillFields}>Auto-populate</Button>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>
@@ -172,7 +301,7 @@ export default function Submit() {
                                             Back
                                         </Button>
                                     )}
-
+                   
                                     <Button
                                         variant="contained"
                                         onClick={handleNext}

@@ -1,44 +1,56 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import {useTheme} from "@mui/material";
+import swLogo from "./sf_logo.svg";
+import Grid from "@mui/material/Grid";
+import EggIcon from "@mui/icons-material/Egg";
 
 export default function Footer() {
-    return (
+    const theme = useTheme();
 
+    return (
             <Box
+                bgcolor={theme.palette.primary.main}
                 component="footer"
                 sx={{
-                    py: 3,
-                    px: 2,
+                    p: 1,
                     mt: 'auto',
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                            ? theme.palette.grey[200]
-                            : theme.palette.grey[800],
+                    position: 'absolute',
+                    bottom: '0',
+                    width: '100%'
                 }}
-                //border="1px solid #000"
             >
-                <Container maxWidth="sm">
-                    <Typography variant="body1">
-                        My sticky footer can be found here.
-                    </Typography>
-                    <Copyright />
-                </Container>
-            </Box>
+                <Grid container spacing={0}>
+                    <Grid item xs={4} pl={5}>
+                        <img src={swLogo} width={113} />
+                    </Grid>
 
+                    <Grid item xs={8} sx={{display: "flex", alignItems: "center"}}>
+                        <EggIcon sx={{color: "white"}} />
+                        <Typography
+                            component={"span"}
+                            variant="h6"
+                            noWrap
+                            sx={{
+                                ml: 1,
+                                mr: 4,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'white',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            INCUBATOR
+                        </Typography>
+
+                        <Typography variant={"subtitle2"} component={"span"} sx={{color: "white"}}>
+                            Incubator is a product of <Link sx={{color: "white", textDecoration: "underline"}} href={"https://armyfuturescommand.com/software-factory/"}>The Army Software Factory</Link>
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Box>
     );
 }

@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
-export default function StatementsForm({updateState}) {
+export default function StatementsForm({updateState,errorList,applicationInfo,onChangeValidate}) {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -13,23 +13,35 @@ export default function StatementsForm({updateState}) {
                 <Grid item xs={12} sm={12}>
                     <TextField
                         id="techBG"
+                        error = {errorList.includes("techBG")}
                         label="Please describe your technical background"
                         multiline
+                        value = {applicationInfo.techBG}
                         rows={4}
                         fullWidth
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
                         ariant="filled"
+                        onBlur={onChangeValidate}
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
                     <TextField
                         id="motivation"
+                        value = {applicationInfo.motivation}
+                        error = {errorList.includes("motivation")}
                         label="Why do you want to join the Army Software Factory?"
                         multiline
                         rows={4}
                         fullWidth
-                        onChange={updateState}
+                        onChange={(e) => {
+                            updateState(e)
+                            onChangeValidate(e);
+                        }}
+                        onBlur={onChangeValidate}
                         variant="filled"
                     />
                 </Grid>
