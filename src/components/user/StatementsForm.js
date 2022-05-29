@@ -23,8 +23,11 @@ export default function StatementsForm({updateState,errorList,applicationInfo,on
                             updateState(e)
                             onChangeValidate(e);
                         }}
-                        ariant="filled"
+                        variant="outlined"
                         onBlur={onChangeValidate}
+                        inputProps={{
+                            maxLength: 3000
+                        }}
                     />
                 </Grid>
 
@@ -42,7 +45,10 @@ export default function StatementsForm({updateState,errorList,applicationInfo,on
                             onChangeValidate(e);
                         }}
                         onBlur={onChangeValidate}
-                        variant="filled"
+                        variant="outlined"
+                        inputProps={{
+                            maxLength: 3000
+                        }}
                     />
                 </Grid>
             </Grid>

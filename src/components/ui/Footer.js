@@ -16,9 +16,9 @@ export default function Footer() {
                 sx={{
                     p: 1,
                     mt: 'auto',
-                    position: 'absolute',
+                    position: 'fixed',
                     bottom: '0',
-                    width: '100%'
+                    width: '100%',
                 }}
             >
                 <Grid container spacing={0}>

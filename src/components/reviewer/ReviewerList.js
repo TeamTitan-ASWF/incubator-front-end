@@ -19,6 +19,10 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
 import {useEffect, useState} from "react";
 import apiCall from "../api/api";
+import AppModal from "../ui/AppModal";
+import {Checkbox, FormGroup} from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+import Button from "@mui/material/Button";
 
 function descendingComparator(a, b, orderBy) {
 
@@ -37,6 +41,18 @@ function getComparator(order, orderBy) {
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
+
+const filterStyle = {
+    position: 'absolute',
+    top: '30%',
+    left: '78%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 const headCells = [
     {
@@ -107,38 +123,6 @@ function EnhancedTableHead(props) {
     );
 }
 
-const EnhancedTableToolbar = (props) => {
-    const {numSelected} = props;
-
-    return (
-        <Toolbar
-            sx={{
-                pl: {sm: 2},
-                pr: {xs: 1, sm: 1},
-                ...(numSelected > 0 && {
-                    bgcolor: (theme) =>
-                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                }),
-            }}
-        >
-            <Typography
-                sx={{flex: '1 1 100%'}}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-            >
-                Applications
-            </Typography>
-            <Tooltip title="Filter list">
-                <IconButton>
-                    <FilterListIcon/>
-                    Filter
-                </IconButton>
-            </Tooltip>
-        </Toolbar>
-    );
-};
-
 export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
@@ -147,14 +131,71 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const [applicants, setApplicants] = useState([]);
+    const [filteredApplications, setFilteredApplications] = useState([]);
+
+    //const {numSelected} = props;
+    const [showModal, setShowModal] = useState(false);
+
+    const handleFilter = () => {
+        setShowModal(true);
+    }
+
+    const [showPending, setShowPending] = useState(true);
+    const [showApproved, setShowApproved] = useState(true);
+    const [showDenied, setShowDenied] = useState(true);
+
+    const filterResults =  (event, checked) => {
+        //needed because of state batching
+        let pendingChecked = showPending;
+        let approvedChecked = showApproved;
+        let deniedChecked = showDenied;
+
+        switch (event.target.id) {
+            case "chkPending":
+                 setShowPending(checked);
+                 pendingChecked = checked;
+                break;
+            case "chkApproved":
+                 setShowApproved(checked);
+                approvedChecked = checked;
+                break;
+            case "chkDenied":
+                 setShowDenied(checked);
+                deniedChecked = checked;
+                break;
+            default:
+                // should not get here
+        }
+
+        if(!deniedChecked || !approvedChecked || !pendingChecked) {
+            const filteredResults = applicants.filter(applicant => {
+                switch (applicant.status) {
+                    case "pending":
+                        return pendingChecked;
+                    case "approved":
+                        return approvedChecked;
+                    case "denied":
+                        return deniedChecked;
+                    default:
+                        return false;
+                }
+            });
+
+            setFilteredApplications(filteredResults);
+        } else {
+            // All boxes checked so show all
+            setFilteredApplications(applicants);
+        }
+    }
 
     useEffect(() => {
         getApplications();
-    }, [])
+    }, []);
 
     const getApplications = async () => {
         const response = await apiCall('application', 'list');
-        setApplicants(response.apiData);
+        await setApplicants(response.apiData);
+        await setFilteredApplications(response.apiData);
     }
 
     const handleRequestSort = (event, property) => {
@@ -186,76 +227,117 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - applicants.length) : 0;
 
     return (
-        <Box sx={{width: '100%'}}>
-            <Paper
-                variant="outlined"
-                sx={{width: '100%', my: 2, p: 2, boxShadow: 20}}>
-                <EnhancedTableToolbar/>
-                <TableContainer>
-                    <Table
-                        sx={{minWidth: 750}}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+        <>
+            <Box sx={{width: '100%'}}>
+                <Paper
+                    variant="outlined"
+                    sx={{width: '100%', my: 2, p: 2, boxShadow: 20}}>
+                    <Toolbar
+                        sx={{
+                            pl: {sm: 2},
+                            pr: {xs: 1, sm: 1},
+                            ...(0 > 0 && {
+                                bgcolor: (theme) =>
+                                    alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                            }),
+                        }}
                     >
-                        <EnhancedTableHead
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
-                            rowCount={applicants.length}
-                        />
-                        <TableBody>
-                            {applicants.slice().sort(getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                        <Typography
+                            sx={{flex: '1 1 100%'}}
+                            variant="h6"
+                            id="tableTitle"
+                            component="div"
+                        >
+                            Applications
+                        </Typography>
+                        <Tooltip title="Filter list">
+                            <IconButton onClick={handleFilter}>
+                                <FilterListIcon/>
+                                Filter
+                            </IconButton>
+                        </Tooltip>
+                    </Toolbar>
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row.id)}
-                                            tabIndex={-1}
-                                            key={row.id}>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
-                                            >
-                                                {row.fName + " " + row.mI + " " + row.lName}
-                                            </TableCell>
-                                            <TableCell align="left">{row.rank}</TableCell>
-                                            <TableCell align="left">{row.dob}</TableCell>
-                                            <TableCell align="left">{row.dateSubmitted}</TableCell>
-                                            <TableCell align="left">{row.status}</TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: (dense ? 33 : 53) * emptyRows,
-                                    }}
-                                >
-                                    <TableCell colSpan={6}/>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={applicants.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense}/>}
-                    label="Dense padding"
-                />
-            </Paper>
-        </Box>
+                    <TableContainer>
+                        <Table
+                            sx={{minWidth: 750}}
+                            aria-labelledby="tableTitle"
+                            size={dense ? 'small' : 'medium'}
+                        >
+                            <EnhancedTableHead
+                                order={order}
+                                orderBy={orderBy}
+                                onRequestSort={handleRequestSort}
+                                rowCount={applicants?.length ?? 0}
+                            />
+                            <TableBody>
+                                {filteredApplications ? filteredApplications.slice().sort(getComparator(order, orderBy))
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row, index) => {
+                                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                                        return (
+                                            <TableRow
+                                                hover
+                                                onClick={(event) => handleClick(event, row.id)}
+                                                tabIndex={-1}
+                                                key={row.id}>
+                                                <TableCell
+                                                    component="th"
+                                                    id={labelId}
+                                                    scope="row"
+                                                    padding="none"
+                                                >
+                                                    {row.fName + " " + row.mI + " " + row.lName}
+                                                </TableCell>
+                                                <TableCell align="left">{row.rank}</TableCell>
+                                                <TableCell align="left">{row.dob}</TableCell>
+                                                <TableCell align="left">{row.dateSubmitted}</TableCell>
+                                                <TableCell align="left">{row.status}</TableCell>
+                                            </TableRow>
+                                        );
+                                    }) : []}
+                                {emptyRows > 0 && (
+                                    <TableRow
+                                        style={{
+                                            height: (dense ? 33 : 53) * emptyRows,
+                                        }}
+                                    >
+                                        <TableCell colSpan={6}/>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={applicants?.length ?? 0}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    <FormControlLabel
+                        control={<Switch checked={dense} onChange={handleChangeDense}/>}
+                        label="Dense padding"
+                    />
+                </Paper>
+            </Box>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <AppModal showModal={showModal} setShowModal={setShowModal} styles={filterStyle}>
+                <Typography component={"span"} variant={"h6"} pr={2}>Filter All Applications by:</Typography>
+                <Button variant={"contained"} size={"small"} onClick={() => setShowModal(false)} endIcon={<CloseIcon />}>Close</Button>
+
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
+                    <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
+                    <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
+                </FormGroup>
+            </AppModal>
+        </>
     );
 }

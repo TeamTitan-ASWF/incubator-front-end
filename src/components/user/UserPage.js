@@ -63,6 +63,7 @@ export default function UserPage() {
                             </Button>
                         </Box>
                     </Paper>
+                    <br /><br /><br /><br />
                 </>
             }
             <Snackbar
