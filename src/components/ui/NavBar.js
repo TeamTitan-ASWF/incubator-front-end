@@ -11,6 +11,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import EggIcon from '@mui/icons-material/Egg';
 import {useState} from "react";
+import AddIcon from '@mui/icons-material/Add';
+import ListIcon from '@mui/icons-material/List';
+import PreviewIcon from '@mui/icons-material/Preview';
 
 const settings = ['Profile', 'Application', 'Logout'];
 
@@ -29,13 +32,13 @@ const NavBar = ({setShowReviewer}) => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <EggIcon sx={{ display: { xs: 'flex' }, mr: 1 }} />
+                    <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            display: { xs: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
@@ -45,7 +48,8 @@ const NavBar = ({setShowReviewer}) => {
                     >
                         INCUBATOR
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex' } }}>
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
                         <Button key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Application Status
                         </Button>
@@ -55,6 +59,20 @@ const NavBar = ({setShowReviewer}) => {
                         <Button key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Review Application
                         </Button>
+                    </Box>
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
+                        <IconButton key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <PreviewIcon />
+                        </IconButton>
+
+                        <IconButton key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <AddIcon />
+                        </IconButton>
+
+                        <IconButton key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <ListIcon />
+                        </IconButton>
                     </Box>
 
                     {/*<Box sx={{ flexGrow: 0 }}>*/}
