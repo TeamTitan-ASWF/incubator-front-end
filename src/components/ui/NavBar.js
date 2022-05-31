@@ -70,7 +70,7 @@ const NavBar = ({setShowReviewer}) => {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                            animation: `${glow} 1s infinite ease`,
+                            animation: `${glow} 2s infinite ease`,
                         }}
                     >
                         INCUBATOR
