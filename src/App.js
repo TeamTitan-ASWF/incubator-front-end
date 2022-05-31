@@ -10,14 +10,12 @@ import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
 import ApplicationStatus from "./components/user/ApplicationStatus";
 import UserPage from "./components/user/UserPage";
-import CreateUser from './components/login/CreateUser';
+
 import LoginPage from './components/login/LoginPage';
+import LoginParent from './components/login/LoginParent';
 
 export default function App() {
-    const [userAuthenticated,setUserAuthenticated] = useState({
-        user : 'null',
-        authenicated : true
-    })
+
     const [showReviewer, setShowReviewer] = useState('newApp');
     const theme = createTheme({
         palette: {
@@ -54,7 +52,7 @@ export default function App() {
 
             <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
                 {/* {currentDisplay()} */}
-                <LoginPage setUserAuthenticated = {setUserAuthenticated}/> 
+                <LoginParent/> 
             </Container>
 
 
