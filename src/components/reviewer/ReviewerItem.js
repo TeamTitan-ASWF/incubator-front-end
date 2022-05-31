@@ -39,7 +39,7 @@ const ReviewerItem = ({applicationInfo}) => {
                     </Grid>
 
                     <Grid item xs={4}>
-                        <Typography variant={"h7"} style={{fontWeight: "bold"}}>Rank</Typography>
+                        <Typography variant={"h7"} style={{fontWeight: "bold"}}>Grade</Typography>
                         <Typography variant={"subtitle1"}>{applicationInfo?.rank || ''}</Typography>
                     </Grid>
 
