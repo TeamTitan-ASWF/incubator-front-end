@@ -5,7 +5,6 @@ import {keyframes, useTheme} from "@mui/material";
 import swLogo from "./sf_logo.svg";
 import Grid from "@mui/material/Grid";
 import EggIcon from "@mui/icons-material/Egg";
-import {keyframes} from "@emotion/react";
 
 export default function Footer() {
     const theme = useTheme();
