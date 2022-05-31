@@ -10,6 +10,7 @@ import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
 import ApplicationStatus from "./components/user/ApplicationStatus";
 import UserPage from "./components/user/UserPage";
+import CreateUser from './components/login/CreateUser';
 
 export default function App() {
     const [showReviewer, setShowReviewer] = useState('newApp');
@@ -47,7 +48,8 @@ export default function App() {
             <NavBar setShowReviewer={setShowReviewer}/>
 
             <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
-                {currentDisplay()}
+                {/* {currentDisplay()} */}
+                <CreateUser/> 
             </Container>
 
 
