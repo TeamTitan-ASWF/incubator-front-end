@@ -231,7 +231,7 @@ export default function Submit() {
                         ))}
                     </Stepper>
                     <React.Fragment>
-                        <Button onClick={fillFields}>Auto-populate</Button>
+                       {/* <Button onClick={fillFields}>Auto-populate</Button> */}
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>

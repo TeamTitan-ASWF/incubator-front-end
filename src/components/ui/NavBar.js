@@ -14,7 +14,9 @@ import {useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import PreviewIcon from '@mui/icons-material/Preview';
+
 import {keyframes, styled} from "@mui/material";
+
 
 const settings = ['Profile', 'Application', 'Logout'];
 
@@ -30,15 +32,16 @@ const NavBar = ({setShowReviewer}) => {
     };
 
     const glow = keyframes`
-          from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
-      }
-      
-      to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #99eb34, 0 0 40px #99eb34, 0 0 50px #99eb34, 0 0 60px #99eb34, 0 0 70px #99eb34, 0 0 80px #99eb34;
-      }
-      }
-        `;
+
+      from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #99eb34, 0 0 40px #99eb34, 0 0 50px #99eb34, 0 0 60px #99eb34, 0 0 70px #99eb34, 0 0 80px #99eb34;
+  }
+  }
+    `;
 
     const StyledButton = styled(Button)`
       background-color: black;
@@ -52,11 +55,13 @@ const NavBar = ({setShowReviewer}) => {
       }
     `;
 
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
+
                     <Button key={"LandingPage"} onClick={() => {setShowReviewer('landingPage')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                         <Typography
                             variant="h6"
@@ -82,6 +87,7 @@ const NavBar = ({setShowReviewer}) => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
                         <StyledButton key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+
                             Application Status
                         </StyledButton>
                         <StyledButton key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>

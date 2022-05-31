@@ -5,20 +5,23 @@ import {keyframes, useTheme} from "@mui/material";
 import swLogo from "./sf_logo.svg";
 import Grid from "@mui/material/Grid";
 import EggIcon from "@mui/icons-material/Egg";
+import {keyframes} from "@emotion/react";
 
 export default function Footer() {
     const theme = useTheme();
 
     const glow = keyframes`
-          from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
-      }
-      
-      to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #99eb34, 0 0 40px #99eb34, 0 0 50px #99eb34, 0 0 60px #99eb34, 0 0 70px #99eb34, 0 0 80px #99eb34;
-      }
-      }
-        `;
+
+      from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
+  }
+  
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #99eb34, 0 0 40px #99eb34, 0 0 50px #99eb34, 0 0 60px #99eb34, 0 0 70px #99eb34, 0 0 80px #99eb34;
+  }
+  }
+    `;
+
 
     return (
             <Box
@@ -43,7 +46,9 @@ export default function Footer() {
                             component={"span"}
                             variant="h6"
                             //noWrap
+
                             href="/"
+
                             sx={{
                                 ml: 1,
                                 mr: 4,

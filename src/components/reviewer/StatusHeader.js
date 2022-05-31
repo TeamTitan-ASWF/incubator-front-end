@@ -26,6 +26,7 @@ export default function StatusHeader({applicationInfo}) {
                     <Button
                         variant="outlined"
                         sx={{
+                            cursor : 'default',
                             ml: 1,
                             color: pendingStatus,
                             borderColor: pendingStatus

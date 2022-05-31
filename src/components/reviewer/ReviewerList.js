@@ -65,7 +65,7 @@ const headCells = [
         id: 'rank',
         numeric: false,
         disablePadding: false,
-        label: 'Rank',
+        label: 'Grade',
     },
     {
         id: 'dob',
@@ -128,7 +128,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
-    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [applicants, setApplicants] = useState([]);
     const [filteredApplications, setFilteredApplications] = useState([]);
