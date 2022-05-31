@@ -53,7 +53,7 @@ export default function Footer() {
                                 letterSpacing: '.3rem',
                                 color: 'white',
                                 textDecoration: 'none',
-                                animation: `${glow} 1s infinite ease`,
+                                animation: `${glow} 2s infinite ease`,
                             }}
                         >
                             INCUBATOR

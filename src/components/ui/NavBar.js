@@ -15,6 +15,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import PreviewIcon from '@mui/icons-material/Preview';
 import {keyframes} from "@emotion/react";
+import {styled} from "@mui/material";
 
 const settings = ['Profile', 'Application', 'Logout'];
 
@@ -40,6 +41,20 @@ const NavBar = ({setShowReviewer}) => {
   }
     `;
 
+    const StyledButton = styled(Button)`
+      background-color: black;
+      color: #fff;
+      padding: 6px 12px;
+      &:hover {
+        background-color: #403e3e;
+      }
+      &:focus {
+        background-color: green;
+      }
+    `;
+
+
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -55,22 +70,22 @@ const NavBar = ({setShowReviewer}) => {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                            animation: `${glow} 1s infinite ease`,
+                            animation: `${glow} 2s infinite ease`,
                         }}
                     >
                         INCUBATOR
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
-                        <Button key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <StyledButton key={"Application Status"}  onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Application Status
-                        </Button>
-                        <Button key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        </StyledButton>
+                        <StyledButton key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             New Application
-                        </Button>
-                        <Button key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        </StyledButton>
+                        <StyledButton key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Review Application
-                        </Button>
+                        </StyledButton>
                     </Box>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
