@@ -13,7 +13,17 @@ import UserPage from "./components/user/UserPage";
 
 export default function App() {
     const [showReviewer, setShowReviewer] = useState('newApp');
-    const theme = createTheme();
+    const theme = createTheme({
+        palette: {
+            primary: {
+                light: '#757ce8',
+                main: '#000000',
+                dark: '#4ceb34',
+                contrastText: '#fff',
+            },
+        },
+
+    });
 
     const currentDisplay = () => {
         switch (showReviewer) {
