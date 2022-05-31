@@ -10,9 +10,12 @@ import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
 import ApplicationStatus from "./components/user/ApplicationStatus";
 import UserPage from "./components/user/UserPage";
+import LandingPage from "./components/user/LandingPage";
 
 export default function App() {
-    const [showReviewer, setShowReviewer] = useState('newApp');
+
+    const [showReviewer, setShowReviewer] = useState('landingPage');
+
     const theme = createTheme({
         palette: {
             primary: {
@@ -27,6 +30,9 @@ export default function App() {
 
     const currentDisplay = () => {
         switch (showReviewer) {
+            case 'landingPage':
+                return <LandingPage setShowReviewer={setShowReviewer}/>
+                break;
             case 'newApp':
                 return <Submit/>
                 break;
