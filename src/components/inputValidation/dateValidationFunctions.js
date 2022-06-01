@@ -31,8 +31,8 @@ export const convertMonthNameToDigits = (name) => {
 
 export const formatDate = (unformattedDate) => {
 
-    console.log(unformattedDate);
-    console.log(new Date());
+    //console.log(unformattedDate);
+    //console.log(new Date());
 
     if (unformattedDate.toString().length > 30) {
         //Wed Jan 04 1995 18:00:00 GMT-0600 (Central Standard Time)

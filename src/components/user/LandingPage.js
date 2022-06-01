@@ -1,4 +1,3 @@
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
@@ -10,8 +9,14 @@ import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import swLogo from "../ui/sf_logo.svg";
 import Box from "@mui/material/Box";
+import {useNavigate} from "react-router-dom";
 
 export default function LandingPage({setShowReviewer}) {
+    let navigate = useNavigate();
+
+    const changePage = (path) => {
+        navigate(path);
+    }
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: "white",
@@ -125,7 +130,7 @@ export default function LandingPage({setShowReviewer}) {
                         <Typography sx={{textAlign: 'left', mb: 1, color: "gray"}}>
                             Apply for the next cohort -- cohort 6 applications June 1 - July 1
                         </Typography>
-                        <Button variant="contained" color="success" href="/" key={"New Application"} onClick={(event) => {event.preventDefault(); setShowReviewer('newApp')}} sx={{  m: 2, color: 'white', display: 'block'}}>
+                        <Button variant="contained" color="success" href="/" key={"New Application"} onClick={(event) => {event.preventDefault(); changePage("/newApp")}} sx={{  m: 2, color: 'white', display: 'block'}}>
                             Apply now!
                         </Button>
                     </Item>

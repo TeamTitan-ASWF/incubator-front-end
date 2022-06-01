@@ -17,7 +17,7 @@ export default function StatusHeader({applicationInfo}) {
         <Grid container sx={{my: 2}}>
             <Grid item xs={6}>
                 <Typography variant="h6">
-                    Application - {applicationInfo.fName + " " + applicationInfo.lName}
+                    {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
                 </Typography>
             </Grid>
             <Grid item xs={6} sx={{textAlign: "right"}}>

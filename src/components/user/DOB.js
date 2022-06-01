@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import React from "react";
 
-export default function DOB({updateState, applicationInfo,setApplicationInfo}){
+export default function DOB({applicationInfo, setApplicationInfo}){
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -15,7 +15,7 @@ export default function DOB({updateState, applicationInfo,setApplicationInfo}){
             name="dob"
             inputFormat="yyyy-MM-dd"
             views={["year", "month", "day"]}
-            value= {applicationInfo.dob}
+            value={applicationInfo.dob}
             onChange={(newValue) =>{
                 let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
                 applicationCopy.dob = newValue;

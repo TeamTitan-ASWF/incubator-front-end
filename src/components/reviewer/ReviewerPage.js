@@ -15,7 +15,7 @@ export default function ReviewerPage({id, setShowList}) {
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)
-        await console.log(res);
+        //await console.log(res);
         setApplication(res.apiData);
     }
 

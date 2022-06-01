@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/user/UserProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/contexts/AppContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contexts/AppContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputValidation/inputValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputValidation/inputValidation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/CreateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/CreateForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/LoginParent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginParent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reviewer/StatusHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviewer/StatusHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/DOB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/DOB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Rank.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Rank.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="29ymSheHCn98JYc3HN26GDtrNWo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="" />
+      <created>1654093704205</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654093704205</updated>
+      <workItem from="1654093707675" duration="12290000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

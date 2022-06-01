@@ -1,19 +1,7 @@
-export default function inputValidation(input,type){
+export default function inputValidation(input, type) {
     let output = input || "";
     let validated = true;
     let reason = '';
-
-   
-
-
-
-
-
-
-
-
-
-
 
 
     const outputSetter = (reasonInput) => {
@@ -22,113 +10,108 @@ export default function inputValidation(input,type){
 
     }
 
-    if(input === "" || input === " " || input === 0){
+    if (input === "" || input === " " || input === 0) {
         outputSetter("Enter all required data")
         return
     }
-    switch(type){
+    switch (type) {
         case 'email':
-        if(!input.includes('@')) {
-        outputSetter("Enter a proper email")
-        } else if(input.length == 0){
-            outputSetter("Please enter an email")
-        }
+            if (!input.includes('@')) {
+                outputSetter("Enter a proper email")
+            } else if (input.length == 0) {
+                outputSetter("Please enter an email")
+            }
 
-        break;
+            break;
 
         case 'dodId':
-         
-            if(input < 0 && !Number.isInteger(input)){
-            outputSetter("enter valid dod #")
-    
-            }else if(input.length != 10){
-       
-                outputSetter("enter valid dod #")
-       
 
-        }
-        
-    
+            if (input < 0 && !Number.isInteger(input)) {
+                outputSetter("enter valid dod #")
+
+            } else if (input.length != 10) {
+
+                outputSetter("enter valid dod #")
+
+
+            }
+
+
             break;
 
         case 'acftScore':
-        if(!typeof input == 'number'){
-            outputSetter("ACFT scrore must be a number")
-        }else if(input > 600 || input < 0){
-          outputSetter("Please enter an ACFT score between 0 and 600")
-        } else if(input == 0){
-            outputSetter("Please enter an acftScore")
-        }
-break;
+            if (!typeof input == 'number') {
+                outputSetter("ACFT scrore must be a number")
+            } else if (input > 600 || input < 0) {
+                outputSetter("Please enter an ACFT score between 0 and 600")
+            } else if (input == 0) {
+                outputSetter("Please enter an acftScore")
+            }
+            break;
         case 'weight':
 
-            if(input <= 0){
-        
+            if (input <= 0) {
+
                 outputSetter("Enter a weight")   //need to check for a float
             }
 
-        break;
+            break;
 
         case 'height':
-       
-            if(input <= 0){
+
+            if (input <= 0) {
                 outputSetter("Enter height")
             }
-        break;
+            break;
 
         case 'referenceEmail':
-        
-            if(!input.includes('@')) {
-        
-        outputSetter("Enter a proper email")
-            }   else if(input.length == 0){
+
+            if (!input.includes('@')) {
+
+                outputSetter("Enter a proper email")
+            } else if (input.length == 0) {
                 outputSetter("Please enter an email")
             }
-    
+
             break;
 
 
         case 'referencePhone':
-            if(input.length <= 9 || input.length >= 14) {
+            if (input.length <= 9 || input.length >= 14) {
                 outputSetter('please enter a valid phone number')
-         
-            } 
-    
+
+            }
+
             break;
-            case 'fName':
-                if(input.length == 0) {
-                    outputSetter('Enter a name')
-             
-                } 
-        
-                break;
-                case 'lName':
-                    if(input.length == 0) {
-                        outputSetter('Enter a last Name')
-                 
-                    } 
-            
-                    break;
+        case 'fName':
+            if (input.length == 0) {
+                outputSetter('Enter a name')
+
+            }
+
+            break;
+        case 'lName':
+            if (input.length == 0) {
+                outputSetter('Enter a last Name')
+
+            }
+
+            break;
 
         default:
 
             validated = true;
             reason = "";
             output = "";
-        break;
+            break;
 
     }
 
 
-
-
-    
-
-
     return ({
-        output : validated ? "" : type,
-        validated : validated,
-        reason : reason,
+        output: validated ? "" : type,
+        validated: validated,
+        reason: reason,
 
     })
 }
