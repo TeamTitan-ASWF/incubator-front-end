@@ -19,7 +19,7 @@ export default function LandingPage({setShowReviewer}) {
     }
 
     const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: "black",
+        backgroundColor: "white",
         ...theme.typography.body2,
         padding: theme.spacing(1),
         textAlign: 'center',
@@ -42,7 +42,7 @@ export default function LandingPage({setShowReviewer}) {
     `;
 
     const StyledButton2 = styled(Button)`
-      background-color: green;
+      background-color: gray;
       color: #fff;
       padding: 6px 12px;
       &:hover {
@@ -55,6 +55,7 @@ export default function LandingPage({setShowReviewer}) {
 
     return (
         <Container component="main" maxWidth="lg" sx={{mb: 4}}>
+
             <Paper
                 variant="outlined"
 
@@ -62,9 +63,20 @@ export default function LandingPage({setShowReviewer}) {
                     my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
                     textAlign: "center",
                     boxShadow: 20,
-                    background: "black",
+                    background: "#474a47",
                 }}>
                 <img src={swLogo}/>
+            </Paper>
+
+            <Paper
+                variant="outlined"
+
+                sx={{
+                    my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
+                    textAlign: "center",
+                    boxShadow: 20,
+                    background: "white",
+                }}>
                 <br/><br/>
                 <Typography
                     variant="h4"
@@ -76,7 +88,7 @@ export default function LandingPage({setShowReviewer}) {
                 <br/>
                 <Typography
                     variant="h5"
-                    sx={{textAlign: 'center', mb: 1, color: "white"}}
+                    sx={{textAlign: 'center', mb: 1, color: "black"}}
                 >
                     SOFTWARE SOLUTIONS.
                     <br/>
@@ -92,7 +104,7 @@ export default function LandingPage({setShowReviewer}) {
                 <br/>
                 <Typography
                     variant="h6"
-                    sx={{textAlign: 'center', mb: 1, color: "white"}}
+                    sx={{textAlign: 'center', mb: 1, color: "black"}}
                 >
                     SOFTWARE DEVELOPERS • UI/UX DESIGNERS •
 
@@ -111,8 +123,8 @@ export default function LandingPage({setShowReviewer}) {
             <Grid container spacing={2}>
                 <Grid item xs={4}>
                     <Item>
-                        <PeopleOutlineTwoToneIcon sx={{fontSize: "50px"}}/>
-                        <Typography sx={{textAlign: 'left', mb: 1, color: "white"}}>
+                        <PeopleOutlineTwoToneIcon sx={{fontSize: "50px", color: "black"}}/>
+                        <Typography sx={{textAlign: 'left', mb: 1, color: "black"}}>
                             SOLDIERS AND CIVILIANS
                         </Typography>
                         <Typography sx={{textAlign: 'left', mb: 1, color: "gray"}}>
@@ -125,15 +137,15 @@ export default function LandingPage({setShowReviewer}) {
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                        <HandshakeIcon sx={{fontSize: "50px"}}/>
-                        <Typography sx={{textAlign: 'left', mb: 1, color: "white"}}>
+                        <HandshakeIcon sx={{fontSize: "50px", color: "black"}}/>
+                        <Typography sx={{textAlign: 'left', mb: 1, color: "black"}}>
                             INDUSTRY PARTNERS
                         </Typography>
                         <Typography sx={{textAlign: 'left', mb: 1, color: "gray"}}>
                             Partner with us for internships, showcases, mentorship
                         </Typography>
                         <Box sx={{textAlign: 'center'}}>
-                        <Button variant="contained" color="success" href="https://docs.google.com/forms/d/e/1FAIpQLSeBpnnJ4L0pitFVCo6cicnvNH1smgz6G4CmlmVk8QjXBixUBA/viewform" sx={{ m: 2, color: 'white', display: 'block' }}>
+                        <Button variant="contained" color="success" href="https://docs.google.com/forms/d/e/1FAIpQLSeBpnnJ4L0pitFVCo6cicnvNH1smgz6G4CmlmVk8QjXBixUBA/viewform" target="_blank" sx={{ m: 2, color: 'white', display: 'block' }}>
                             Find out more!
                         </Button>
                         </Box>
@@ -141,34 +153,30 @@ export default function LandingPage({setShowReviewer}) {
                 </Grid>
                 <Grid item xs={4}>
                     <Item>
-                        <MailOutlineIcon sx={{fontSize: "50px"}}/>
-                        <Typography sx={{textAlign: 'left', mb: 1, color: "white"}}>
+                        <MailOutlineIcon sx={{fontSize: "50px", color: "black"}}/>
+                        <Typography sx={{textAlign: 'left', mb: 1, color: "black"}}>
                             SOLDIER PROBLEM SUBMISSION
                         </Typography>
                         <Typography sx={{textAlign: 'left', mb: 1, color: "gray"}}>
                             Nominate an Army problem needing a software solution
                         </Typography>
-                        <Button variant="contained" color="success" href="https://docs.google.com/forms/d/e/1FAIpQLScBDro0ZqR7BCAeXOdhT4g-y3N1OLoaTqg2zPPK-z7FRPh7ZQ/viewform" sx={{ m: 2, color: 'white', display: 'block' }}>
+                        <Button variant="contained" color="success" href="https://docs.google.com/forms/d/e/1FAIpQLScBDro0ZqR7BCAeXOdhT4g-y3N1OLoaTqg2zPPK-z7FRPh7ZQ/viewform" target="_blank" sx={{ m: 2, color: 'white', display: 'block' }}>
                             Tell us!
                         </Button>
                     </Item>
                 </Grid>
             </Grid>
-
-            <Paper
-                variant="outlined"
-
-                sx={{
-                    my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
-                    textAlign: "center",
-                    boxShadow: 20,
-                    background: "black",
-                }}>
-                <StyledButton variant="contained" href="https://afcwebsite.blob.core.usgovcloudapi.net/uploads/assets/ASWF_2021_Annual_Report_20220330_2192927038.pdf" >
-                    Click here for the ASWF 2021 Annual Report
-                </StyledButton>
-            </Paper>
             <br/>
+            <Box
+                sx={{
+                    mb: 12,
+                    textAlign: "center",
+                }}>
+                <StyledButton2 variant="contained" href="https://afcwebsite.blob.core.usgovcloudapi.net/uploads/assets/ASWF_2021_Annual_Report_20220330_2192927038.pdf" target="_blank">
+                    Click here for the ASWF 2021 Annual Report
+                </StyledButton2>
+            </Box>
+            {/*<br/><br/><br/>*/}
 
         </Container>
     );
