@@ -19,8 +19,8 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
 import {useEffect, useState} from "react";
 import apiCall from "../api/api";
-import AppModal from "../ui/AppModal";
-import {Checkbox, FormGroup} from "@mui/material";
+// import AppModal from "../ui/AppModal";
+import {Checkbox, FormGroup, Popover} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from "@mui/material/Button";
 
@@ -52,6 +52,7 @@ const filterStyle = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    borderRadius: 10,
 };
 
 const headCells = [
@@ -222,6 +223,19 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         setDense(event.target.checked);
     };
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClickFilter = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseFilter = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - applicants.length) : 0;
@@ -250,12 +264,36 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                         >
                             Applications
                         </Typography>
-                        <Tooltip title="Filter list">
-                            <IconButton onClick={handleFilter}>
-                                <FilterListIcon/>
-                                Filter
+                        <div>
+                            <IconButton aria-describedby={id} variant="contained" onClick={handleClickFilter}>
+                                        <FilterListIcon/>
+                                        Filter
                             </IconButton>
-                        </Tooltip>
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleCloseFilter}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                sx={{
+                                    // ml: -10
+                                }}
+                            >
+                                <br/>
+                                    <Typography component={"span"} variant={"h6"} sx={{p:3}}>Filter Applications by:</Typography>
+
+                                    <FormGroup sx={{p:2}}>
+                                        <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
+                                        <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
+                                        <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
+                                    </FormGroup>
+                            </Popover>
+                        </div>
+
+
                     </Toolbar>
 
                     <TableContainer>
@@ -328,16 +366,18 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
             <br/>
             <br/>
             <br/>
-            <AppModal showModal={showModal} setShowModal={setShowModal} styles={filterStyle}>
-                <Typography component={"span"} variant={"h6"} pr={2}>Filter All Applications by:</Typography>
-                <Button variant={"contained"} size={"small"} onClick={() => setShowModal(false)} endIcon={<CloseIcon />}>Close</Button>
 
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
-                    <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
-                    <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
-                </FormGroup>
-            </AppModal>
+
+            {/*<AppModal showModal={showModal} setShowModal={setShowModal} styles={filterStyle} >*/}
+            {/*    <Typography component={"span"} variant={"h6"} pr={2}>Filter All Applications by:</Typography>*/}
+            {/*    <Button variant={"contained"} size={"small"} onClick={() => setShowModal(false)} endIcon={<CloseIcon />}>Close</Button>*/}
+
+            {/*    <FormGroup>*/}
+            {/*        <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>*/}
+            {/*        <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>*/}
+            {/*        <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>*/}
+            {/*    </FormGroup>*/}
+            {/*</AppModal>*/}
         </>
     );
 }

@@ -58,7 +58,7 @@ const NavBar = ({setShowReviewer}) => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container sx={{m: 0}}>
                 <Toolbar disableGutters>
                     <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
 

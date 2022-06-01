@@ -16,20 +16,31 @@ export default function ReviewerButtons({status, approveApplication, setShowList
             </Grid>
             <Grid item xs={6} sx={{textAlign: "right"}}>
                 <Button
-                    color={status === "approved" ? "warning" : "success"}
-                    variant="contained"
-                    sx={{}}
-                    onClick={() => approveApplication(status === "approved" ? "pending" : "approved")}
-                >
-                    {status === "approved" ? "Pending" : "Approve"}
-                </Button>
-                <Button
-                    color={status === "denied" ? "warning" : "error"}
+                    color="success"
+                    disabled={status === "approved" ? true : false}
                     variant="contained"
                     sx={{ml: 2}}
-                    onClick={() => approveApplication(status === "denied" ? "pending" : "denied")}
+                    onClick={() => approveApplication("approved")}
                 >
-                    {status === "denied" ? "Pending" : "Deny"}
+                    Approve
+                </Button>
+                <Button
+                    color="warning"
+                    disabled={status === "pending" ? true : false}
+                    variant="contained"
+                    sx={{ml: 2}}
+                    onClick={() => approveApplication("pending")}
+                >
+                    Pending
+                </Button>
+                <Button
+                    color="error"
+                    disabled={status === "denied" ? true : false}
+                    variant="contained"
+                    sx={{ml: 2}}
+                    onClick={() => approveApplication("denied")}
+                >
+                    Deny
                 </Button>
             </Grid>
         </Grid>
