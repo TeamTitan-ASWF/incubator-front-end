@@ -11,6 +11,8 @@ import Container from "@mui/material/Container";
 import ApplicationStatus from "./components/user/ApplicationStatus";
 import UserPage from "./components/user/UserPage";
 import LandingPage from "./components/user/LandingPage";
+import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import LoginParent from './components/login/LoginParent';
 
 export default function App() {
 
@@ -48,16 +50,30 @@ export default function App() {
     };
 
     return (
+        <BrowserRouter> 
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <NavBar setShowReviewer={setShowReviewer}/>
 
             <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
-                {currentDisplay()}
+             <Routes>
+                <Route path="/"
+                element = {<LandingPage/>}/>
+                
+                <Route path="/login"
+                element = {<LoginParent/>}/>
+
+                <Route path="/status"
+                element = {<ApplicationStatus/>}/>
+
+                <Route path="/newApp"
+                element = {<Submit/>}/>
+             </Routes>
             </Container>
 
 
             <Footer/>
         </ThemeProvider>
+        </BrowserRouter>
     );
 }

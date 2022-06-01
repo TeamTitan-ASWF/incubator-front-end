@@ -14,18 +14,29 @@ import {useState} from "react";
 import AddIcon from '@mui/icons-material/Add';
 import ListIcon from '@mui/icons-material/List';
 import PreviewIcon from '@mui/icons-material/Preview';
+import {useNavigate} from "react-router-dom"
+import { useContext } from 'react';
+import AppContext from "../contexts/AppContext";
 
 import {keyframes, styled} from "@mui/material";
 
 
 const settings = ['Profile', 'Application', 'Logout'];
 
+
 const NavBar = ({setShowReviewer}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
-
+    const appContext = useContext(AppContext);
+    let navigate = useNavigate();
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
+    
+
+    const changePage = () => {
+        navigate("/status")
+    }
+
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -86,11 +97,11 @@ const NavBar = ({setShowReviewer}) => {
 
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
-                        <StyledButton key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <StyledButton key={"Application Status"} onClick={changePage} sx={{ my: 2, color: 'white', display: 'block' }}>
 
                             Application Status
                         </StyledButton>
-                        <StyledButton key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <StyledButton key={"New Application"} onClick={() => {appContext.navigate('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
                             New Application
                         </StyledButton>
                         <StyledButton key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
