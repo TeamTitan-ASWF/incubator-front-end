@@ -16,11 +16,11 @@ export default function DOB({applicationInfo, setApplicationInfo}){
             inputFormat="yyyy-MM-dd"
             views={["year", "month", "day"]}
             value={applicationInfo.dob}
-            onChange={(newValue) =>{
+            onChange={(newValue) => {
                 let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
                 applicationCopy.dob = newValue;
                 setApplicationInfo(applicationCopy)
-            console.log(newValue)
+                console.log(newValue)
             }
         }
             renderInput={(params) => <TextField {...params} />}
