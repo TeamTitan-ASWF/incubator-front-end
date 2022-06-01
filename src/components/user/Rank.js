@@ -1,13 +1,12 @@
 import {Select} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function Rank({updateState,applicationInfo,propsID,value}){
+export default function Rank({updateState, propsID, value}) {
     return (
-
         <Select
             labelId="demo-simple-select-label"
             id={propsID}
-            value={value }
+            value={value}
             label="Rank"
             name={propsID}
             onChange={updateState}
@@ -36,11 +35,6 @@ export default function Rank({updateState,applicationInfo,propsID,value}){
             <MenuItem value={"CW3"}>CW3</MenuItem>
             <MenuItem value={"CW4"}>CW4</MenuItem>
             <MenuItem value={"CW5"}>CW5</MenuItem>
-
-
-
-
         </Select>
-
     )
 }

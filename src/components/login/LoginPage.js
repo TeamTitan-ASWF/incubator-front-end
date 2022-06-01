@@ -1,7 +1,6 @@
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { useContext, useState } from "react";
 import apiCall from "../api/api";
@@ -10,13 +9,14 @@ import AppContext from "../contexts/AppContext";
 
 
 
-export default function LoginPage({setCurrentPage,userCreated}){
+export default function LoginPage({setCurrentPage, userCreated, changePage}){
 const appContext = useContext(AppContext);
 const [errorMessage,setErrorMessage] = useState("");
+
 const login = (e) => {
     e.preventDefault();
 
-    apiCall('login','add',{userName : e.target.userName.value, password : e.target.password.value}).then(setUser)
+    apiCall('login','add',{userName : e.target.userName.value, password : e.target.password.value}).then(setUser);
 
 }
 
@@ -26,10 +26,13 @@ const setUser = (r) => {
         setErrorMessage("Wrong Username or Password")
     }
     appContext.setIsValidated(true)
-    appContext.setUserId(r.apiData)
-    
+    appContext.setUser(r.apiData)
+    changePage("/");
 
 }
+
+
+
 
 return (
 
@@ -67,7 +70,7 @@ return (
                 /><br/><br/>
                 <Typography color = 'error'>{errorMessage}</Typography>
                 <Button type="submit">Login</Button>
-                <Button onClick= {() => setCurrentPage("createForm")}> Create User</Button>
+                <Button onClick= {() => setCurrentPage("createForm")}>Create User</Button>
                 </form>
     </Paper>
 

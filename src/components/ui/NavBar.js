@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,24 +18,31 @@ import { useContext } from 'react';
 import AppContext from "../contexts/AppContext";
 
 import {keyframes, styled} from "@mui/material";
-
-
-const settings = ['Profile', 'Application', 'Logout'];
-
+import {AccountCircle, NoAccounts} from "@mui/icons-material";
 
 const NavBar = ({setShowReviewer}) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const appContext = useContext(AppContext);
+
+    const settings = appContext.isValidated ?
+        [{name: "Profile", path: "/profile"}, {name: "Logout", path: "/logout"}] :
+        [{name: "Login", path: "/login"}];
+
     let navigate = useNavigate();
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
-    
 
-    const changePage = () => {
-        navigate("/status")
+    const changePage = (path) => {
+        if (path === "/logout") {
+            appContext.setIsValidated(false);
+            appContext.setUser({});
+            navigate("/");
+        } else {
+            navigate(path);
+        }
     }
-
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -73,7 +79,7 @@ const NavBar = ({setShowReviewer}) => {
                 <Toolbar disableGutters>
                     <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
 
-                    <Button key={"LandingPage"} onClick={() => {setShowReviewer('landingPage')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Button key={"LandingPage"} onClick={() => changePage("/")} sx={{ my: 2, color: 'white', display: 'block' }}>
                         <Typography
                             variant="h6"
                             //noWrap
@@ -95,63 +101,66 @@ const NavBar = ({setShowReviewer}) => {
                         </Typography>
                     </Button>
 
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
-                        <StyledButton key={"Application Status"} onClick={changePage} sx={{ my: 2, color: 'white', display: 'block' }}>
-
+                        <StyledButton key={"Application Status"} onClick={() => changePage("/status")} sx={{ my: 2, color: 'white', display: 'block' }}>
                             Application Status
                         </StyledButton>
-                        <StyledButton key={"New Application"} onClick={() => {appContext.navigate('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <StyledButton key={"New Application"} onClick={() => changePage("/newApp")} sx={{ my: 2, color: 'white', display: 'block' }}>
                             New Application
                         </StyledButton>
-                        <StyledButton key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
-                            Review Application
-                        </StyledButton>
+                        {appContext.user?.isReviewer &&
+                            <StyledButton key={"Review Application"} onClick={() => changePage("/reviewer")}
+                                          sx={{my: 2, color: 'white', display: 'block'}}>
+                                Review Application
+                            </StyledButton>}
                     </Box>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
-                        <IconButton key={"Application Status"} onClick={() => {setShowReviewer('checkStatus')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <IconButton key={"Application Status"} onClick={() => changePage("/status")} sx={{ my: 2, color: 'white', display: 'block' }}>
                             <PreviewIcon />
                         </IconButton>
 
-                        <IconButton key={"New Application"} onClick={() => {setShowReviewer('newApp')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <IconButton key={"New Application"} onClick={() => changePage("/newApp")} sx={{ my: 2, color: 'white', display: 'block' }}>
                             <AddIcon />
                         </IconButton>
 
-                        <IconButton key={"Review Application"} onClick={() => {setShowReviewer('reviewerList')}} sx={{ my: 2, color: 'white', display: 'block' }}>
+                        {appContext.user?.isReviewer &&
+                        <IconButton key={"Review Application"} onClick={() => changePage("/reviewer")} sx={{ my: 2, color: 'white', display: 'block' }}>
                             <ListIcon />
-                        </IconButton>
+                        </IconButton>}
                     </Box>
 
-                    {/*<Box sx={{ flexGrow: 0 }}>*/}
-                    {/*    <Tooltip title="Open settings">*/}
-                    {/*        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>*/}
-                    {/*            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
-                    {/*        </IconButton>*/}
-                    {/*    </Tooltip>*/}
-                    {/*    <Menu*/}
-                    {/*        sx={{ mt: '45px' }}*/}
-                    {/*        id="menu-appbar"*/}
-                    {/*        anchorEl={anchorElUser}*/}
-                    {/*        anchorOrigin={{*/}
-                    {/*            vertical: 'top',*/}
-                    {/*            horizontal: 'right',*/}
-                    {/*        }}*/}
-                    {/*        keepMounted*/}
-                    {/*        transformOrigin={{*/}
-                    {/*            vertical: 'top',*/}
-                    {/*            horizontal: 'right',*/}
-                    {/*        }}*/}
-                    {/*        open={Boolean(anchorElUser)}*/}
-                    {/*        onClose={handleCloseUserMenu}*/}
-                    {/*    >*/}
-                    {/*        {settings.map((setting) => (*/}
-                    {/*            <MenuItem key={setting} onClick={handleCloseUserMenu}>*/}
-                    {/*                <Typography textAlign="center">{setting}</Typography>*/}
-                    {/*            </MenuItem>*/}
-                    {/*        ))}*/}
-                    {/*    </Menu>*/}
-                    {/*</Box>*/}
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                {appContext.isValidated ?
+                                <AccountCircle sx={{color: "white"}}/> :
+                                    <NoAccounts sx={{color: "white"}}/>}
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            {settings.map((setting) => (
+                                <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
+                                    <Typography onClick={() => changePage(setting.path)} textAlign="center">{setting.name}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
