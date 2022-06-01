@@ -70,7 +70,8 @@ export default function UserPage() {
                 open={open}
                 autoHideDuration={5000}
                 onClose={handleClose}
-                sx={{width: "95%"}}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                sx={{width: "25%"}}
             >
                 <Alert
                     onClose={handleClose}
