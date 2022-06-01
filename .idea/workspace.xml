@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/user/UserProfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/contexts/AppContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/contexts/AppContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inputValidation/inputValidation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputValidation/inputValidation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/login/CreateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/CreateForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/login/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/LoginParent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginParent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/reviewer/StatusHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviewer/StatusHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/NavBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/user/DOB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/DOB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/LandingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/Rank.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Rank.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,16 +31,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
