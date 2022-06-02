@@ -11,7 +11,7 @@ import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
 import apiCall from '../api/api';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
 import {formatDate} from "../inputValidation/dateValidationFunctions";
@@ -50,30 +50,35 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
         referenceEmail: "",
         referencePhone: "",
         status: "pending",
-        dateSubmitted: ""
+        dateSubmitted: "",
     })
-    if (isEditing) {
-    setApplicationInfo ({
-        refNum: currentApplicationInfo.refNum : "",
-        fName:  currentApplicationInfo.fName : "",
-        lName:  currentApplicationInfo.lName : "",
-        mI:  currentApplicationInfo.mI : "",
-        dodId:  currentApplicationInfo.dodId : "",
-        rank:  currentApplicationInfo.rank : "E1",
-        dob:  currentApplicationInfo.dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
-        lastACFT:  currentApplicationInfo.lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
-        acftScore:  currentApplicationInfo.acftScore : 0,
-        height:  currentApplicationInfo.height : 0,
-        weight:  currentApplicationInfo.weight : 0,
-        techBG:  currentApplicationInfo.techBG : "",
-        motivation:  currentApplicationInfo.motivation : "",
-        referenceName:  currentApplicationInfo.referenceName : "",
-        referenceRank:  currentApplicationInfo.referenceRank : "E1",
-        referenceEmail:  currentApplicationInfo.referenceEmail : "",
-        referencePhone:  currentApplicationInfo.referencePhone : "",
-        status: "pending",
-        dateSubmitted: "" })
-}
+    useEffect(() => {
+        if (isEditing) {
+            setApplicationInfo({
+                refNum: currentApplicationInfo.refNum,
+                fName: currentApplicationInfo.fName,
+                lName: currentApplicationInfo.lName,
+                mI: currentApplicationInfo.mI,
+                dodId: currentApplicationInfo.dodId,
+                rank: currentApplicationInfo.rank,
+                dob: currentApplicationInfo.dob,
+                lastACFT: currentApplicationInfo.lastACFT,
+                acftScore: currentApplicationInfo.acftScore,
+                height: currentApplicationInfo.height,
+                weight: currentApplicationInfo.weight,
+                techBG: currentApplicationInfo.techBG,
+                motivation: currentApplicationInfo.motivation,
+                referenceName: currentApplicationInfo.referenceName,
+                referenceRank: currentApplicationInfo.referenceRank,
+                referenceEmail: currentApplicationInfo.referenceEmail,
+                referencePhone: currentApplicationInfo.referencePhone,
+                status: "pending",
+                dateSubmitted: "",
+            })
+        }
+    },[])
+
+
 
     const fillFields = () => {
         setApplicationInfo({
@@ -205,7 +210,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
 
         if (activeStep === 3) { // Submit the form instead of going
             if (isEditing == true) {
-                console.log(applicationInfo);
+                //console.log(applicationInfo);
 
                 apiCall('application', 'update', {
                     id: currentApplicationId,
@@ -241,7 +246,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                         setActiveStep(activeStep + 1)
                     })
             } else {
-                console.log("HELLO");
+                //console.log("HELLO");
 
                 apiCall('application', 'add', {
                     refNum: applicationInfo.dodId,
