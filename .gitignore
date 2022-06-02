@@ -24,4 +24,6 @@ yarn-error.log*
 
 /dataSources.local.xml
 /workspace.xml
+/.idea
+/idea
 .idea
