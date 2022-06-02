@@ -7,17 +7,22 @@ import ApplicationStatus from "./ApplicationStatus";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Submit from "./Submit";
+import Grid from "@mui/material/Grid";
 
 export default function UserPage() {
     const [refNumber, setRefNumber] = useState(0);
     const [applicationInfo, setApplicationInfo] = useState(null);
     const [open, setOpen] = useState(false);
     const [showStatus, setShowStatus] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [currentApplicationId, setCurrentApplicationId] = useState(null);
 
-    const handleClick = async () => {
+    const handleClick = async (id) => {
         const res = await apiCall('application', 'read', refNumber, 'dod/');
         //console.log(res.apiData);
         setApplicationInfo(res.apiData);
+        setCurrentApplicationId(res.apiData.id);
 
         if (res.wasError) {
             setOpen(true);
@@ -36,6 +41,7 @@ export default function UserPage() {
         setOpen(false);
     };
 
+    if(isEditing == false) {
     return (
         <>
             {showStatus ?
@@ -43,6 +49,7 @@ export default function UserPage() {
                     setRefNumber={setRefNumber}
                     handleClick={handleClick}
                 /> :
+
                 <>
                     <Paper
                         variant="outlined"
@@ -53,17 +60,33 @@ export default function UserPage() {
                         <ReviewerItem
                             applicationInfo={applicationInfo}
                         />
-                        <Box sx={{p: 2}}>
+                        <Grid container sx={{m: 1}}>
+                            <Grid item xs={6}>
                             <Button
                                 sx={{}}
                                 variant="contained"
-                                onClick={() => {setShowStatus(true)}}
+                                onClick={() => {
+                                    setShowStatus(true)
+                                }}
                             >
                                 Back
                             </Button>
-                        </Box>
+                            </Grid>
+                            <Grid item xs={6} sx={{textAlign:"right"}}>
+                            <Button
+                                sx={{}}
+                                disabled = {applicationInfo.status === "pending" ? false : true}
+                                variant="contained"
+                                onClick={() => {
+                                    setIsEditing(true)
+                                }}
+                            >
+                                Edit
+                            </Button>
+                            </Grid>
+                        </Grid>
                     </Paper>
-                    <br /><br /><br /><br />
+                    <br/><br/><br/><br/>
                 </>
             }
             <Snackbar
@@ -84,4 +107,11 @@ export default function UserPage() {
             </Snackbar>
         </>
     );
+
+}
+    else if (isEditing == true) {
+        return (
+            <Submit currentApplicationInfo={applicationInfo} isEditing={isEditing} setIsEditing={setIsEditing} currentApplicationId = {currentApplicationId} />
+        )
+    }
 }

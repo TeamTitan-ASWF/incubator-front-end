@@ -1,55 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="">
+    <list default="true" id="ee29f01e-7e78-40b7-bc8a-3b041668f3b9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/CreateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/CreateForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/DOB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/DOB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
+    </list>
+    <list id="9689837e-b815-4d8a-b3b8-8bddd4b27c6a" name="Changes by j2229297" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
+    </list>
+    <list id="d2a12632-a3b3-474d-87da-8f080121c793" name="Changes by r2222390" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/components/user/Submit.js">
+      <ranges>
+        <range start1="13" end1="14" start2="13" end2="14" changelist="d2a12632-a3b3-474d-87da-8f080121c793" />
+        <range start1="52" end1="53" start2="52" end2="53" changelist="9689837e-b815-4d8a-b3b8-8bddd4b27c6a" />
+        <range start1="54" end1="76" start2="54" end2="81" changelist="ee29f01e-7e78-40b7-bc8a-3b041668f3b9" />
+        <range start1="207" end1="208" start2="212" end2="213" changelist="9689837e-b815-4d8a-b3b8-8bddd4b27c6a" />
+        <range start1="243" end1="244" start2="248" end2="249" changelist="9689837e-b815-4d8a-b3b8-8bddd4b27c6a" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="29ymSheHCn98JYc3HN26GDtrNWo" />
+  <component name="ProjectId" id="2A1sUnSyiO1r96Te8HrFkXctpPM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="" />
-      <created>1654093704205</created>
+      <changelist id="ee29f01e-7e78-40b7-bc8a-3b041668f3b9" name="Changes" comment="" />
+      <created>1654188449674</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1654093704205</updated>
-      <workItem from="1654093707675" duration="12290000" />
+      <updated>1654188449674</updated>
+      <workItem from="1654188451729" duration="1918000" />
     </task>
     <servers />
   </component>
