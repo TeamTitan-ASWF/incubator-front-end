@@ -18,7 +18,7 @@ import {formatDate} from "../inputValidation/dateValidationFunctions";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
-export default function Submit() {
+export default function Submit({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
     let secondStepArray = ['techBG', 'motivation']
@@ -29,23 +29,23 @@ export default function Submit() {
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
     const [applicationInfo, setApplicationInfo] = React.useState({
-        refNum: "",
-        fName: "",
-        lName: "",
-        mI: "",
-        dodId: "",
-        rank: "E1",
-        dob: 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
-        lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
-        acftScore: 0,
-        height: 0,
-        weight: 0,
-        techBG: "",
-        motivation: "",
-        referenceName: "",
-        referenceRank: "E1",
-        referenceEmail: "",
-        referencePhone: "",
+        refNum: (isEditing == true) ? currentApplicationInfo.refNum : "",
+        fName: (isEditing == true) ? currentApplicationInfo.fName : "",
+        lName: (isEditing == true) ? currentApplicationInfo.lName : "",
+        mI: (isEditing == true) ? currentApplicationInfo.mI : "",
+        dodId: (isEditing == true) ? currentApplicationInfo.dodId : "",
+        rank: (isEditing == true) ? currentApplicationInfo.rank : "E1",
+        dob: (isEditing == true) ? currentApplicationInfo.dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        lastACFT: (isEditing == true) ? currentApplicationInfo.lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
+        acftScore: (isEditing == true) ? currentApplicationInfo.acftScore : 0,
+        height: (isEditing == true) ? currentApplicationInfo.height : 0,
+        weight: (isEditing == true) ? currentApplicationInfo.weight : 0,
+        techBG: (isEditing == true) ? currentApplicationInfo.techBG : "",
+        motivation: (isEditing == true) ? currentApplicationInfo.motivation : "",
+        referenceName: (isEditing == true) ? currentApplicationInfo.referenceName : "",
+        referenceRank: (isEditing == true) ? currentApplicationInfo.referenceRank : "E1",
+        referenceEmail: (isEditing == true) ? currentApplicationInfo.referenceEmail : "",
+        referencePhone: (isEditing == true) ? currentApplicationInfo.referencePhone : "",
         status: "pending",
         dateSubmitted: ""
     })
@@ -177,43 +177,87 @@ export default function Submit() {
         // This makes sure steps 1-3 are not empty
 
         if (outputMessage.length > 0) return;
+        console.log(isEditing);
 
         if (activeStep === 3) { // Submit the form instead of going
-            apiCall('application', 'add', {
-                refNum: applicationInfo.dodId,
-                fName: applicationInfo.fName,
-                lName: applicationInfo.lName,
-                mI: applicationInfo.mI,
-                dodId: applicationInfo.dodId,
-                rank: applicationInfo.rank,
-                // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
-                dob: formatDate(applicationInfo.dob),
-                lastACFT: formatDate(applicationInfo.lastACFT),
-                acftScore: applicationInfo.acftScore,
-                height: applicationInfo.height,
-                weight: applicationInfo.weight,
-                techBG: applicationInfo.techBG,
-                motivation: applicationInfo.motivation,
-                referenceName: applicationInfo.referenceName,
-                referenceRank: applicationInfo.referenceRank,
-                referenceEmail: applicationInfo.referenceEmail,
-                referencePhone: applicationInfo.referencePhone,
-                //status: applicationInfo.status,
-                dateSubmitted: formatDate(new Date())
-            }).then((r) => {
-                setMessageTitle("Thank you for applying");
-                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-                setActiveStep(activeStep + 1)
-            })
-                .catch((r) => {
-                    setMessageTitle("Something went wrong please try again later")
+            if (isEditing == true) {
+                console.log(applicationInfo);
+
+                apiCall('application', 'update', {
+                    id: currentApplicationId,
+                    fName: applicationInfo.fName,
+                    lName: applicationInfo.lName,
+                    mI: applicationInfo.mI,
+                    dodId: applicationInfo.dodId.toString(),
+                    rank: applicationInfo.rank,
+                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                    dob: formatDate(applicationInfo.dob),
+                    lastACFT: formatDate(applicationInfo.lastACFT),
+                    acftScore: applicationInfo.acftScore,
+                    height: applicationInfo.height,
+                    weight: applicationInfo.weight,
+                    techBG: applicationInfo.techBG,
+                    motivation: applicationInfo.motivation,
+                    referenceName: applicationInfo.referenceName,
+                    referenceRank: applicationInfo.referenceRank,
+                    referenceEmail: applicationInfo.referenceEmail,
+                    referencePhone: applicationInfo.referencePhone,
+                    //status: applicationInfo.status,
+                    dateSubmitted: formatDate(new Date())
+                })
+                    .then((r) => {
+                        setMessageTitle("Your application has been updated successfully");
+                        setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                        setActiveStep(activeStep + 1)
+                        //setIsEditing (false);
+                    })
+                    .catch((r) => {
+                        setMessageTitle("Something went wrong please try again later")
+                        setActiveStep(activeStep + 1)
+                    })
+            } else {
+                console.log("HELLO");
+
+                apiCall('application', 'add', {
+                    refNum: applicationInfo.dodId,
+                    fName: applicationInfo.fName,
+                    lName: applicationInfo.lName,
+                    mI: applicationInfo.mI,
+                    dodId: applicationInfo.dodId,
+                    rank: applicationInfo.rank,
+                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                    dob: formatDate(applicationInfo.dob),
+                    lastACFT: formatDate(applicationInfo.lastACFT),
+                    acftScore: applicationInfo.acftScore,
+                    height: applicationInfo.height,
+                    weight: applicationInfo.weight,
+                    techBG: applicationInfo.techBG,
+                    motivation: applicationInfo.motivation,
+                    referenceName: applicationInfo.referenceName,
+                    referenceRank: applicationInfo.referenceRank,
+                    referenceEmail: applicationInfo.referenceEmail,
+                    referencePhone: applicationInfo.referencePhone,
+                    //status: applicationInfo.status,
+                    dateSubmitted: formatDate(new Date())
+                }).then((r) => {
+                    setMessageTitle("Thank you for applying");
+                    setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
                     setActiveStep(activeStep + 1)
                 })
+                    .catch((r) => {
+                        setMessageTitle("Something went wrong please try again later")
+                        setActiveStep(activeStep + 1)
+                    })
+            }
+
         } else {
             setActiveStep(activeStep + 1);
+            console.log(activeStep);
         }
     };
+
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
