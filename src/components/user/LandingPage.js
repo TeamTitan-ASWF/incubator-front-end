@@ -29,17 +29,17 @@ export default function LandingPage({setShowReviewer}) {
 
     }));
 
-    const StyledButton = styled(Button)`
-      background-color: black;
-      color: #fff;
-      padding: 6px 12px;
-      &:hover {
-        background-color: #3c3c3d;
-      }
-      &:focus {
-        background-color: green;
-      }
-    `;
+    // const StyledButton = styled(Button)`
+    //   background-color: black;
+    //   color: #fff;
+    //   padding: 6px 12px;
+    //   &:hover {
+    //     background-color: #3c3c3d;
+    //   }
+    //   &:focus {
+    //     background-color: green;
+    //   }
+    // `;
 
     const StyledButton2 = styled(Button)`
       background-color: gray;
@@ -65,7 +65,7 @@ export default function LandingPage({setShowReviewer}) {
                     boxShadow: 20,
                     background: "#474a47",
                 }}>
-                <img src={swLogo}/>
+                <img src={swLogo} alt={"AWSF Logo"}/>
             </Paper>
 
             <Paper

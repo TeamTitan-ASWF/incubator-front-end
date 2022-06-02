@@ -15,6 +15,8 @@ import LoginParent from './components/login/LoginParent';
 import UserProfile from "./components/user/UserProfile";
 import {useContext} from "react";
 import AppContext from "./components/contexts/AppContext";
+import CreateForm from "./components/login/CreateForm";
+import LoginPage from "./components/login/LoginPage";
 
 export default function App() {
     const appContext = useContext(AppContext);
@@ -44,19 +46,22 @@ export default function App() {
                                element={<LandingPage/>}/>
 
                         <Route path="/login"
-                               element={appContext.isValidated ? <LandingPage/> : <LoginParent/>}/>
+                               element={appContext.isValidated ? <LandingPage/> : <LoginPage/>}/>
+
+                        <Route path="/create_account"
+                               element={appContext.isValidated ? <LandingPage/> : <CreateForm/>}/>
 
                         <Route path="/status"
-                               element={appContext.isValidated ? <UserPage/> : <LoginParent/>}/>
+                               element={appContext.isValidated ? <UserPage/> : <LoginPage/>}/>
 
                         <Route path="/newApp"
-                               element={appContext.isValidated ? <Submit/> : <LoginParent/>}/>
+                               element={appContext.isValidated ? <Submit/> : <LoginPage/>}/>
 
                         <Route path="/reviewer"
                                element={appContext.user?.isReviewer ? <ReviewerSection/> : <LandingPage/>}/>
 
                         <Route path="/profile"
-                               element={appContext.isValidated ? <UserProfile/> : <LoginParent/>}/>
+                               element={appContext.isValidated ? <UserProfile/> : <LoginPage/>}/>
 
                         <Route path="*"
                                element={<LandingPage/>}/>

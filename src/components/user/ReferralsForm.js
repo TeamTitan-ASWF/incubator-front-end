@@ -1,82 +1,73 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Rank from "./Rank";
+import Referral from "./Referral";
+import {useState} from "react";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-export default function ReferralsForm({ updateState,applicationInfo,errorList,onChangeValidate}) {
+export default function ReferralsForm({updateState, applicationInfo, errorList, onChangeValidate}) {
+    const [numReferrals, setNumReferrals] = useState(1);
+    const oddRowColor = '#fff';
+    const evenRowColor = '#ccc';
 
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-             Referrals
+                Referrals <Typography component={"span"} variant={"subtitle1"}>(5
+                maximum)</Typography> {numReferrals < 5 &&
+                <AddCircleIcon onClick={() => setNumReferrals(numReferrals + 1)}/>} {numReferrals > 1 &&
+                <RemoveCircleIcon onClick={() => setNumReferrals(numReferrals - 1)}/>}
             </Typography>
+            <br/>
             <Grid container spacing={3}>
+                <Grid ml={'3%'} item xs={12} sm={9}>
+                    <Referral updateState={updateState} errorList={errorList} onChangeValidate={onChangeValidate}
+                              bg={oddRowColor}
+                              referenceEmail={applicationInfo?.referenceEmail ?? ''}
+                              referenceName={applicationInfo?.referenceName ?? ''}
+                              referencePhone={applicationInfo?.referencePhone ?? ''}
+                              referenceRank={applicationInfo?.referenceRank ?? 'E1'}/>
 
-                <Grid item xs={12} sm={5}>
-                    <TextField
-                        required
-                        error = {errorList.includes("referenceName")}
-                        value={applicationInfo.referenceName}
-                        id="referenceName"
-                        name="referenceName"
-                        label="Reference Name"
-                        fullWidth
-                        autoComplete="given-name"
-                        variant="standard"
-                        onChange={(e) => {
-                            updateState(e)
-                            onChangeValidate(e);
-                        }}
-                        onBlur={onChangeValidate}
-                    />
+                    {(numReferrals >= 2) && <><Referral
+                        updateState={updateState}
+                        errorList={errorList}
+                        onChangeValidate={onChangeValidate}
+                        bg={evenRowColor}
+                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
+                        referenceName={applicationInfo?.referenceName ?? ''}
+                        referencePhone={applicationInfo?.referencePhone ?? ''}
+                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
+
+                    {(numReferrals >= 3) && <><Referral updateState={updateState}
+                                                        errorList={errorList}
+                                                        onChangeValidate={onChangeValidate}
+                                                        bg={oddRowColor}
+                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
+                                                        referenceName={applicationInfo?.referenceName ?? ''}
+                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
+                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
+
+                    {(numReferrals >= 4) && <><Referral updateState={updateState}
+                                                        errorList={errorList}
+                                                        onChangeValidate={onChangeValidate}
+                                                        bg={evenRowColor}
+                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
+                                                        referenceName={applicationInfo?.referenceName ?? ''}
+                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
+                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
+
+                    {(numReferrals >= 5) && <><Referral updateState={updateState}
+                                                        errorList={errorList}
+                                                        bg={oddRowColor}
+                                                        onChangeValidate={onChangeValidate}
+                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
+                                                        referenceName={applicationInfo?.referenceName ?? ''}
+                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
+                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
                 </Grid>
-                <Grid item xs={12} sm={5}>
-               <Rank propsID ="referenceRank" updateState={updateState} value={applicationInfo.referenceRank}/>
-                </Grid>
-                <Grid item xs={12} sm={5}>
-                    <TextField
-                        required
-                        error = {errorList.includes("referenceEmail")}
-                        id="referenceEmail"
-                        name="referenceEmail"
-                        label="Reference Email"
-                        value={applicationInfo.referenceEmail}
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                        onBlur={updateState}
-                        onChange={(e) => {
-                            updateState(e)
-                            onChangeValidate(e);
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={5}>
-                    <TextField
-                        required
-                        error = {errorList.includes("referencePhone")}
-                        id="referencePhone"
-                        name="referencePhone"
-                        value={applicationInfo.referencePhone}
-                        label="Reference Phone"
-                        type="number"
-                        fullWidth
-                        variant="standard"
-                        onBlur={onChangeValidate}
-                        onChange={(e) => {
-                            updateState(e)
-                            onChangeValidate(e);
-                        }}
-                    />
-                </Grid>
-
-
-
-
-
-
             </Grid>
+
         </React.Fragment>
     );
 }
