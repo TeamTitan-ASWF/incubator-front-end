@@ -11,7 +11,7 @@ export default function ReviewerPage({id, setShowList}) {
     useEffect(() => {
         getApplication(id)
             .then(r => r)
-    }, [application.status])
+    }, [application.status], id)
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)

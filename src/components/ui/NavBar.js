@@ -50,12 +50,16 @@ const NavBar = ({setShowReviewer}) => {
 
     const glow = keyframes`
 
-      from {
+      0% {
     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
   }
   
-  to {
+  50% {
     text-shadow: 0 0 20px #fff, 0 0 30px #99eb34, 0 0 40px #99eb34, 0 0 50px #99eb34, 0 0 60px #99eb34, 0 0 70px #99eb34, 0 0 80px #99eb34;
+  }
+  
+  100% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4ceb34, 0 0 40px #4ceb34, 0 0 50px #4ceb34, 0 0 60px #4ceb34, 0 0 70px #4ceb34;
   }
   }
     `;
@@ -75,7 +79,7 @@ const NavBar = ({setShowReviewer}) => {
 
     return (
         <AppBar position="static">
-            <Container sx={{m: 0}}>
+            <Container maxWidth={"100%"} sx={{m: 0}}>
                 <Toolbar disableGutters>
                     <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
 
@@ -94,7 +98,7 @@ const NavBar = ({setShowReviewer}) => {
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
-                                animation: `${glow} 2s infinite ease`,
+                                animation: `${glow} 5s infinite ease`,
                             }}
                         >
                             INCUBATOR

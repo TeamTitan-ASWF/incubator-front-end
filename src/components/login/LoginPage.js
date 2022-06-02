@@ -5,11 +5,18 @@ import Paper from "@mui/material/Paper";
 import {useContext, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
+import {useNavigate} from "react-router-dom";
 
 
-export default function LoginPage({setCurrentPage, userCreated, changePage}) {
+export default function LoginPage({setCurrentPage, userCreated}) {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
+
+    let navigate = useNavigate();
+
+    const changePage = (path) => {
+        navigate(path);
+    }
 
     const login = (e) => {
         e.preventDefault();
@@ -18,17 +25,15 @@ export default function LoginPage({setCurrentPage, userCreated, changePage}) {
 
     }
 
-
     const setUser = (r) => {
         if (r.wasError) {
             setErrorMessage("Wrong Username or Password")
+        } else {
+            appContext.setIsValidated(true)
+            appContext.setUser(r.apiData)
+            changePage("/");
         }
-        appContext.setIsValidated(true)
-        appContext.setUser(r.apiData)
-        changePage("/");
-
     }
-
 
     return (
         <Paper
@@ -62,13 +67,9 @@ export default function LoginPage({setCurrentPage, userCreated, changePage}) {
 
                 /><br/><br/>
                 <Typography color='error'>{errorMessage}</Typography>
-                <Button type="submit">Login</Button>
-                <Button onClick={() => setCurrentPage("createForm")}>Create User</Button>
+                <Button variant={"contained"} sx={{mr: '3%'}} type="submit">Login</Button>
+                <Button variant={"contained"} onClick={() => changePage("/create_account")}>Create User</Button>
             </form>
         </Paper>
-
-
     )
-
-
 }

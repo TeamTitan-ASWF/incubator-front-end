@@ -51,3 +51,14 @@ export const formatDate = (unformattedDate) => {
         return unformattedDate.toString();
     }
 }
+
+export const fixTimeZone = (unformattedDate) => {
+    if (unformattedDate.toString().length === 10 ) {
+        let fixedDate = new Date(unformattedDate);
+        fixedDate.setDate(fixedDate.getDate() + 1);
+
+        return fixedDate;
+    } else {
+        return unformattedDate;
+    }
+}

@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="">
+    <list default="true" id="3334111a-27a8-40a7-8b72-fc66d05315ff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/user/Referral.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/user/UserProfileFormFields.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inputValidation/dateValidationFunctions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/login/CreateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/CreateForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/login/LoginPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/DOB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/DOB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login/LoginParent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginParent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reviewer/ReviewerPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/LandingPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/ReferralsForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/ReferralsForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/Submit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/Submit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/UserProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+    </list>
+    <list id="33b6b843-652d-41b9-ac1f-4b5d61fee01e" name="Changes by j2222307" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/reviewer/ReviewerDataGrid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/NavBar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,33 +41,44 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/components/ui/NavBar.js">
+      <ranges>
+        <range start1="52" end1="53" start2="52" end2="53" changelist="33b6b843-652d-41b9-ac1f-4b5d61fee01e" />
+        <range start1="56" end1="57" start2="56" end2="57" changelist="33b6b843-652d-41b9-ac1f-4b5d61fee01e" />
+        <range start1="58" end1="58" start2="58" end2="62" changelist="33b6b843-652d-41b9-ac1f-4b5d61fee01e" />
+        <range start1="77" end1="78" start2="81" end2="82" changelist="3334111a-27a8-40a7-8b72-fc66d05315ff" />
+        <range start1="96" end1="97" start2="100" end2="101" changelist="33b6b843-652d-41b9-ac1f-4b5d61fee01e" />
+      </ranges>
+    </file>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="29ymSheHCn98JYc3HN26GDtrNWo" />
+  <component name="ProjectId" id="29zz49Q3FDk8RD9okixy53UDXof" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="30771878-2fce-43b4-9a66-8beb4a93ce2b" name="Changes" comment="" />
-      <created>1654093704205</created>
+      <changelist id="3334111a-27a8-40a7-8b72-fc66d05315ff" name="Changes" comment="" />
+      <created>1654130508129</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1654093704205</updated>
-      <workItem from="1654093707675" duration="12290000" />
+      <updated>1654130508129</updated>
+      <workItem from="1654130510762" duration="4105000" />
+      <workItem from="1654177383916" duration="15072000" />
     </task>
     <servers />
   </component>

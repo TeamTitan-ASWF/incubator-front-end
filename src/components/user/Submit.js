@@ -14,7 +14,7 @@ import apiCall from '../api/api';
 import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
-import {formatDate} from "../inputValidation/dateValidationFunctions";
+import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
 
@@ -38,7 +38,7 @@ export default function Submit() {
         mI: appContext.user?.mI ?? "",
         dodId: appContext.user?.dodId ?? "",
         rank: appContext.user?.rank ?? "E1",
-        dob: appContext.user?.dob ?? 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
         lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
         acftScore: 0,
         height: 0,
