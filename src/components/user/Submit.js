@@ -263,6 +263,13 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
         setActiveStep(activeStep - 1);
     };
 
+    let saveOrSubmit = "";
+    if (isEditing == true) {
+        saveOrSubmit = "Save";
+    } else {
+        saveOrSubmit = "Submit";
+    }
+
     return (
         <>
             <Container component="main" maxWidth="md" sx={{mb: 4}}>
@@ -300,7 +307,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                                         onClick={handleNext}
                                         sx={{mt: 3, ml: 1}}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                        {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
                                     </Button>
                                 </Box>
                             </React.Fragment>
