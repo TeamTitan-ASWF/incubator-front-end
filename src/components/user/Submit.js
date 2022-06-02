@@ -11,7 +11,7 @@ import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
 import apiCall from '../api/api';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
 import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
@@ -20,7 +20,7 @@ import AppContext from "../contexts/AppContext";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
-export default function Submit() {
+export default function Submit({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
     const appContext = useContext(AppContext);
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
@@ -50,8 +50,35 @@ export default function Submit() {
         referenceEmail: "",
         referencePhone: "",
         status: "pending",
-        dateSubmitted: ""
+        dateSubmitted: "",
     })
+    useEffect(() => {
+        if (isEditing) {
+            setApplicationInfo({
+                refNum: currentApplicationInfo.refNum,
+                fName: currentApplicationInfo.fName,
+                lName: currentApplicationInfo.lName,
+                mI: currentApplicationInfo.mI,
+                dodId: currentApplicationInfo.dodId,
+                rank: currentApplicationInfo.rank,
+                dob: currentApplicationInfo.dob,
+                lastACFT: currentApplicationInfo.lastACFT,
+                acftScore: currentApplicationInfo.acftScore,
+                height: currentApplicationInfo.height,
+                weight: currentApplicationInfo.weight,
+                techBG: currentApplicationInfo.techBG,
+                motivation: currentApplicationInfo.motivation,
+                referenceName: currentApplicationInfo.referenceName,
+                referenceRank: currentApplicationInfo.referenceRank,
+                referenceEmail: currentApplicationInfo.referenceEmail,
+                referencePhone: currentApplicationInfo.referencePhone,
+                status: "pending",
+                dateSubmitted: "",
+            })
+        }
+    },[])
+
+
 
     const fillFields = () => {
         setApplicationInfo({
@@ -182,37 +209,78 @@ export default function Submit() {
         if (outputMessage.length > 0) return;
 
         if (activeStep === 3) { // Submit the form instead of going
-            apiCall('application', 'add', {
-                refNum: applicationInfo.dodId,
-                fName: applicationInfo.fName,
-                lName: applicationInfo.lName,
-                mI: applicationInfo.mI,
-                dodId: applicationInfo.dodId,
-                rank: applicationInfo.rank,
-                // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
-                dob: formatDate(applicationInfo.dob),
-                lastACFT: formatDate(applicationInfo.lastACFT),
-                acftScore: applicationInfo.acftScore,
-                height: applicationInfo.height,
-                weight: applicationInfo.weight,
-                techBG: applicationInfo.techBG,
-                motivation: applicationInfo.motivation,
-                referenceName: applicationInfo.referenceName,
-                referenceRank: applicationInfo.referenceRank,
-                referenceEmail: applicationInfo.referenceEmail,
-                referencePhone: applicationInfo.referencePhone,
-                //status: applicationInfo.status,
-                dateSubmitted: formatDate(new Date())
-            }).then((r) => {
-                setMessageTitle("Thank you for applying");
-                setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-                setActiveStep(activeStep + 1)
-            })
-                .catch((r) => {
-                    setMessageTitle("Something went wrong please try again later")
+            if (isEditing == true) {
+                //console.log(applicationInfo);
+
+                apiCall('application', 'update', {
+                    id: currentApplicationId,
+                    fName: applicationInfo.fName,
+                    lName: applicationInfo.lName,
+                    mI: applicationInfo.mI,
+                    dodId: applicationInfo.dodId.toString(),
+                    rank: applicationInfo.rank,
+                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                    dob: formatDate(applicationInfo.dob),
+                    lastACFT: formatDate(applicationInfo.lastACFT),
+                    acftScore: applicationInfo.acftScore,
+                    height: applicationInfo.height,
+                    weight: applicationInfo.weight,
+                    techBG: applicationInfo.techBG,
+                    motivation: applicationInfo.motivation,
+                    referenceName: applicationInfo.referenceName,
+                    referenceRank: applicationInfo.referenceRank,
+                    referenceEmail: applicationInfo.referenceEmail,
+                    referencePhone: applicationInfo.referencePhone,
+                    //status: applicationInfo.status,
+                    dateSubmitted: formatDate(new Date())
+                })
+                    .then((r) => {
+                        setMessageTitle("Your application has been updated successfully");
+                        setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                        setActiveStep(activeStep + 1)
+                        //setIsEditing (false);
+                    })
+                    .catch((r) => {
+                        setMessageTitle("Something went wrong please try again later")
+                        setActiveStep(activeStep + 1)
+                    })
+            } else {
+                //console.log("HELLO");
+
+                apiCall('application', 'add', {
+                    refNum: applicationInfo.dodId,
+                    fName: applicationInfo.fName,
+                    lName: applicationInfo.lName,
+                    mI: applicationInfo.mI,
+                    dodId: applicationInfo.dodId,
+                    rank: applicationInfo.rank,
+                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
+                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
+                    dob: formatDate(applicationInfo.dob),
+                    lastACFT: formatDate(applicationInfo.lastACFT),
+                    acftScore: applicationInfo.acftScore,
+                    height: applicationInfo.height,
+                    weight: applicationInfo.weight,
+                    techBG: applicationInfo.techBG,
+                    motivation: applicationInfo.motivation,
+                    referenceName: applicationInfo.referenceName,
+                    referenceRank: applicationInfo.referenceRank,
+                    referenceEmail: applicationInfo.referenceEmail,
+                    referencePhone: applicationInfo.referencePhone,
+                    //status: applicationInfo.status,
+                    dateSubmitted: formatDate(new Date())
+                }).then((r) => {
+                    setMessageTitle("Thank you for applying");
+                    setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
                     setActiveStep(activeStep + 1)
                 })
+                    .catch((r) => {
+                        setMessageTitle("Something went wrong please try again later")
+                        setActiveStep(activeStep + 1)
+                    })
+            }
+
         } else {
             setActiveStep(activeStep + 1);
         }
@@ -221,6 +289,13 @@ export default function Submit() {
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
+
+    let saveOrSubmit = "";
+    if (isEditing == true) {
+        saveOrSubmit = "Save";
+    } else {
+        saveOrSubmit = "Submit";
+    }
 
     return (
         <>
@@ -234,7 +309,7 @@ export default function Submit() {
                         ))}
                     </Stepper>
                     <React.Fragment>
-                        {/*<Button onClick={fillFields}>Auto-populate</Button>*/}
+                       {/* <Button onClick={fillFields}>Auto-populate</Button> */}
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>
@@ -259,7 +334,7 @@ export default function Submit() {
                                         onClick={handleNext}
                                         sx={{mt: 3, ml: 1}}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                                        {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
                                     </Button>
                                 </Box>
                             </React.Fragment>
