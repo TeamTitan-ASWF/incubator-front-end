@@ -8,8 +8,8 @@ const AppContext = React.createContext({
 });
 
 export const AppContextProvider = ({children}) => {
-    const [isValidated, setIsValidated] = useState(false);
-    const [user, setUser] = useState({});
+    const [isValidated, setIsValidated] = useState(localStorage.getItem("isValidated") ?? false);
+    const [user, setUser] = useState((localStorage.getItem("userData")) ? JSON.parse(localStorage.getItem("userData")) : {});
     
     return (
         <AppContext.Provider value={{
