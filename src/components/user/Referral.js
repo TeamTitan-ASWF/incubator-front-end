@@ -3,16 +3,16 @@ import TextField from "@mui/material/TextField";
 import Rank from "./Rank";
 import * as React from "react";
 
-const Referral = ({errorList, referenceName, updateState, onChangeValidate, referenceRank, referenceEmail, referencePhone, bg}) => {
+const Referral = ({referenceNumber, errorList, referenceName, updateState, onChangeValidate, referenceRank, referenceEmail, referencePhone, bg}) => {
     return (
         <Grid container marginBottom={'5%'} p={'3%'} spacing={3} borderRadius={5} border={1} bgcolor={bg}>
             <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    error={errorList.includes("referenceName")}
+                    error={errorList.includes("referenceName" + (referenceNumber ?? ''))}
                     value={referenceName}
-                    id="referenceName"
-                    name="referenceName"
+                    id={"referenceName" + (referenceNumber ?? '')}
+                    name={"referenceName" + (referenceNumber ?? '')}
                     label="Reference Name"
                     fullWidth
                     autoComplete="given-name"
@@ -25,14 +25,14 @@ const Referral = ({errorList, referenceName, updateState, onChangeValidate, refe
                 />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Rank propsID="referenceRank" updateState={updateState} value={referenceRank}/>
+                <Rank propsID={"referenceRank" + (referenceNumber ?? '')} updateState={updateState} value={referenceRank}/>
             </Grid>
             <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    error={errorList.includes("referenceEmail")}
-                    id="referenceEmail"
-                    name="referenceEmail"
+                    error={errorList.includes("referenceEmail" + (referenceNumber ?? ''))}
+                    id={"referenceEmail" + (referenceNumber ?? '')}
+                    name={"referenceEmail" + (referenceNumber ?? '')}
                     label="Reference Email"
                     value={referenceEmail}
                     type="email"
@@ -48,9 +48,9 @@ const Referral = ({errorList, referenceName, updateState, onChangeValidate, refe
             <Grid item xs={12} sm={6}>
                 <TextField
                     required
-                    error={errorList.includes("referencePhone")}
-                    id="referencePhone"
-                    name="referencePhone"
+                    error={errorList.includes("referencePhone" + (referenceNumber ?? ''))}
+                    id={"referencePhone" + (referenceNumber ?? '')}
+                    name={"referencePhone" + (referenceNumber ?? '')}
                     value={referencePhone}
                     label="Reference Phone"
                     type="number"

@@ -14,8 +14,8 @@ export default function ReferralsForm({updateState, applicationInfo, errorList, 
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-                Referrals <Typography component={"span"} variant={"subtitle1"}>(5
-                maximum)</Typography> {numReferrals < 5 &&
+                Referrals <Typography component={"span"} variant={"subtitle1"}>(3
+                maximum)</Typography> {numReferrals < 3 &&
                 <AddCircleIcon onClick={() => setNumReferrals(numReferrals + 1)}/>} {numReferrals > 1 &&
                 <RemoveCircleIcon onClick={() => setNumReferrals(numReferrals - 1)}/>}
             </Typography>
@@ -30,41 +30,26 @@ export default function ReferralsForm({updateState, applicationInfo, errorList, 
                               referenceRank={applicationInfo?.referenceRank ?? 'E1'}/>
 
                     {(numReferrals >= 2) && <><Referral
+                        referenceNumber={2}
                         updateState={updateState}
                         errorList={errorList}
                         onChangeValidate={onChangeValidate}
                         bg={evenRowColor}
-                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
-                        referenceName={applicationInfo?.referenceName ?? ''}
-                        referencePhone={applicationInfo?.referencePhone ?? ''}
-                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
+                        referenceEmail={applicationInfo?.referenceEmail2 ?? ''}
+                        referenceName={applicationInfo?.referenceName2 ?? ''}
+                        referencePhone={applicationInfo?.referencePhone2 ?? ''}
+                        referenceRank={applicationInfo?.referenceRank2 ?? 'E1'}/></>}
 
-                    {(numReferrals >= 3) && <><Referral updateState={updateState}
-                                                        errorList={errorList}
-                                                        onChangeValidate={onChangeValidate}
-                                                        bg={oddRowColor}
-                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
-                                                        referenceName={applicationInfo?.referenceName ?? ''}
-                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
-                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
-
-                    {(numReferrals >= 4) && <><Referral updateState={updateState}
-                                                        errorList={errorList}
-                                                        onChangeValidate={onChangeValidate}
-                                                        bg={evenRowColor}
-                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
-                                                        referenceName={applicationInfo?.referenceName ?? ''}
-                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
-                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
-
-                    {(numReferrals >= 5) && <><Referral updateState={updateState}
-                                                        errorList={errorList}
-                                                        bg={oddRowColor}
-                                                        onChangeValidate={onChangeValidate}
-                                                        referenceEmail={applicationInfo?.referenceEmail ?? ''}
-                                                        referenceName={applicationInfo?.referenceName ?? ''}
-                                                        referencePhone={applicationInfo?.referencePhone ?? ''}
-                                                        referenceRank={applicationInfo?.referenceRank ?? 'E1'}/></>}
+                    {(numReferrals >= 3) && <><Referral
+                        referenceNumber={3}
+                        updateState={updateState}
+                        errorList={errorList}
+                        onChangeValidate={onChangeValidate}
+                        bg={oddRowColor}
+                        referenceEmail={applicationInfo?.referenceEmail3 ?? ''}
+                        referenceName={applicationInfo?.referenceName3 ?? ''}
+                        referencePhone={applicationInfo?.referencePhone3 ?? ''}
+                        referenceRank={applicationInfo?.referenceRank3 ?? 'E1'}/></>}
                 </Grid>
             </Grid>
 
