@@ -8,11 +8,16 @@ import {useState} from "react";
 import ReviewerSection from "./components/reviewer/ReviewerSection";
 import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
-import ApplicationStatus from "./components/user/ApplicationStatus";
 import UserPage from "./components/user/UserPage";
 import LandingPage from "./components/user/LandingPage";
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import LoginParent from './components/login/LoginParent';
+import UserProfile from "./components/user/UserProfile";
+import {useContext} from "react";
+import AppContext from "./components/contexts/AppContext";
 
 export default function App() {
+    const appContext = useContext(AppContext);
 
     const [showReviewer, setShowReviewer] = useState('landingPage');
 
@@ -25,39 +30,43 @@ export default function App() {
                 contrastText: '#fff',
             },
         },
-
     });
 
-    const currentDisplay = () => {
-        switch (showReviewer) {
-            case 'landingPage':
-                return <LandingPage setShowReviewer={setShowReviewer}/>
-                break;
-            case 'newApp':
-                return <Submit/>
-                break;
-            case 'reviewerList':
-                return <ReviewerSection/>
-                break;
-            case 'checkStatus':
-                return <UserPage/>
-                break;
-            default:
-            //should not get here
-        }
-    };
-
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <NavBar setShowReviewer={setShowReviewer}/>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <NavBar setShowReviewer={setShowReviewer}/>
 
-            <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
-                {currentDisplay()}
-            </Container>
+                <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
+                    <Routes>
+                        <Route path="/"
+                               element={<LandingPage/>}/>
+
+                        <Route path="/login"
+                               element={appContext.isValidated ? <LandingPage/> : <LoginParent/>}/>
+
+                        <Route path="/status"
+                               element={appContext.isValidated ? <UserPage/> : <LoginParent/>}/>
+
+                        <Route path="/newApp"
+                               element={appContext.isValidated ? <Submit/> : <LoginParent/>}/>
+
+                        <Route path="/reviewer"
+                               element={appContext.user?.isReviewer ? <ReviewerSection/> : <LandingPage/>}/>
+
+                        <Route path="/profile"
+                               element={appContext.isValidated ? <UserProfile/> : <LoginParent/>}/>
+
+                        <Route path="*"
+                               element={<LandingPage/>}/>
+
+                    </Routes>
+                </Container>
 
 
-            <Footer/>
-        </ThemeProvider>
+                <Footer/>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 }

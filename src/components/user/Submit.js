@@ -15,10 +15,13 @@ import {useState} from "react";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import inputValidation from '../inputValidation/inputValidation';
 import {formatDate} from "../inputValidation/dateValidationFunctions";
+import {useContext} from "react";
+import AppContext from "../contexts/AppContext";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function Submit({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
+    const appContext = useContext(AppContext);
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
     let secondStepArray = ['techBG', 'motivation']
@@ -29,26 +32,48 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
     const [applicationInfo, setApplicationInfo] = React.useState({
-        refNum: (isEditing == true) ? currentApplicationInfo.refNum : "",
-        fName: (isEditing == true) ? currentApplicationInfo.fName : "",
-        lName: (isEditing == true) ? currentApplicationInfo.lName : "",
-        mI: (isEditing == true) ? currentApplicationInfo.mI : "",
-        dodId: (isEditing == true) ? currentApplicationInfo.dodId : "",
-        rank: (isEditing == true) ? currentApplicationInfo.rank : "E1",
-        dob: (isEditing == true) ? currentApplicationInfo.dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
-        lastACFT: (isEditing == true) ? currentApplicationInfo.lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
-        acftScore: (isEditing == true) ? currentApplicationInfo.acftScore : 0,
-        height: (isEditing == true) ? currentApplicationInfo.height : 0,
-        weight: (isEditing == true) ? currentApplicationInfo.weight : 0,
-        techBG: (isEditing == true) ? currentApplicationInfo.techBG : "",
-        motivation: (isEditing == true) ? currentApplicationInfo.motivation : "",
-        referenceName: (isEditing == true) ? currentApplicationInfo.referenceName : "",
-        referenceRank: (isEditing == true) ? currentApplicationInfo.referenceRank : "E1",
-        referenceEmail: (isEditing == true) ? currentApplicationInfo.referenceEmail : "",
-        referencePhone: (isEditing == true) ? currentApplicationInfo.referencePhone : "",
+        refNum: "",
+        fName: appContext.user?.fName ?? "",
+        lName: appContext.user?.lName ?? "",
+        mI: appContext.user?.mI ?? "",
+        dodId: appContext.user?.dodId ?? "",
+        rank: appContext.user?.rank ?? "E1",
+        dob: appContext.user?.dob ?? 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
+        acftScore: 0,
+        height: 0,
+        weight: 0,
+        techBG: "",
+        motivation: "",
+        referenceName: "",
+        referenceRank: "E1",
+        referenceEmail: "",
+        referencePhone: "",
         status: "pending",
         dateSubmitted: ""
     })
+    if (isEditing) {
+    setApplicationInfo ({
+        refNum: currentApplicationInfo.refNum : "",
+        fName:  currentApplicationInfo.fName : "",
+        lName:  currentApplicationInfo.lName : "",
+        mI:  currentApplicationInfo.mI : "",
+        dodId:  currentApplicationInfo.dodId : "",
+        rank:  currentApplicationInfo.rank : "E1",
+        dob:  currentApplicationInfo.dob : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        lastACFT:  currentApplicationInfo.lastACFT : 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
+        acftScore:  currentApplicationInfo.acftScore : 0,
+        height:  currentApplicationInfo.height : 0,
+        weight:  currentApplicationInfo.weight : 0,
+        techBG:  currentApplicationInfo.techBG : "",
+        motivation:  currentApplicationInfo.motivation : "",
+        referenceName:  currentApplicationInfo.referenceName : "",
+        referenceRank:  currentApplicationInfo.referenceRank : "E1",
+        referenceEmail:  currentApplicationInfo.referenceEmail : "",
+        referencePhone:  currentApplicationInfo.referencePhone : "",
+        status: "pending",
+        dateSubmitted: "" })
+}
 
     const fillFields = () => {
         setApplicationInfo({
@@ -177,7 +202,6 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
         // This makes sure steps 1-3 are not empty
 
         if (outputMessage.length > 0) return;
-        console.log(isEditing);
 
         if (activeStep === 3) { // Submit the form instead of going
             if (isEditing == true) {
@@ -254,10 +278,8 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
 
         } else {
             setActiveStep(activeStep + 1);
-            console.log(activeStep);
         }
     };
-
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
