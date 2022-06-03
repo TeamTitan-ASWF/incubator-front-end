@@ -50,7 +50,7 @@ export default function CreateForm({setCurrentPage, setUserCreated}) {
             return;
         }
 
-        setUserCreated(true);
+        // setUserCreated(true);
         setCurrentPage('login');
     }
 

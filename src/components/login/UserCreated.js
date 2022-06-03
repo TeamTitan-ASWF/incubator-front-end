@@ -4,13 +4,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 
-export default function UserCreate(){
-
-    
-
-
-
-
+export default function UserCreate() {
 
     return (
 
@@ -22,7 +16,7 @@ export default function UserCreate(){
                     textAlign: "center",
                     boxShadow: 20
                 }}>
-         <Typography>New Account Succesfully Created</Typography>
+         <Typography>New Account Successfully Created</Typography>
          <Button>Button</Button>
             </Paper>
       
