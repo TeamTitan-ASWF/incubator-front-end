@@ -1,15 +1,15 @@
- import StatusHeader from "../reviewer/StatusHeader";
-import ReviewerItem from "../reviewer/ReviewerItem";
+ import StatusHeader from "../application/StatusHeader";
+import ApplicationView from "../application/ApplicationView";
 import {useState} from "react";
 import apiCall from "../api/api";
 import {Alert, Snackbar} from "@mui/material";
-import ApplicationStatus from "./ApplicationStatus";
+import ApplicationStatus from "../application/ApplicationStatus";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Submit from "./Submit";
+import ApplicationForm from "../application/ApplicationForm";
 import Grid from "@mui/material/Grid";
 
-export default function UserPage() {
+export default function StatusOrEditPage() {
     const [refNumber, setRefNumber] = useState(0);
     const [applicationInfo, setApplicationInfo] = useState(null);
     const [open, setOpen] = useState(false);
@@ -56,7 +56,7 @@ export default function UserPage() {
                         <StatusHeader
                             applicationInfo={applicationInfo}
                         />
-                        <ReviewerItem
+                        <ApplicationView
                             applicationInfo={applicationInfo}
                         />
                         <Grid container sx={{m: 1}}>
@@ -110,7 +110,7 @@ export default function UserPage() {
 }
     else if (isEditing === true) {
         return (
-            <Submit currentApplicationInfo={applicationInfo} isEditing={isEditing} setIsEditing={setIsEditing} currentApplicationId = {currentApplicationId} />
+            <ApplicationForm currentApplicationInfo={applicationInfo} isEditing={isEditing} setIsEditing={setIsEditing} currentApplicationId = {currentApplicationId} />
         )
     }
 }

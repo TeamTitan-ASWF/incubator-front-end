@@ -8,10 +8,10 @@ import apiCall from "../api/api";
 import Grid from "@mui/material/Grid";
 import * as React from "react";
 import {formatDate} from "../inputValidation/dateValidationFunctions";
-import UserProfileFormFields from "../user/UserProfileFormFields";
+import UserProfileFormFields from "./UserProfileFormFields";
 import {useNavigate} from "react-router-dom";
 
-export default function CreateForm({setCurrentPage, setUserCreated}) {
+export default function CreateUser({setCurrentPage, setUserCreated}) {
     const [errorMessage, setErrorMessage] = useState("");
     const [dob, setDob] = useState(null);
     const [rank, setRank] = useState('E1');

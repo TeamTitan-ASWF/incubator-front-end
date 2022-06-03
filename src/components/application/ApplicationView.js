@@ -5,7 +5,7 @@ import {formatDate} from "../inputValidation/dateValidationFunctions";
 import AppContext from "../contexts/AppContext";
 import {useContext} from "react";
 
-const ReviewerItem = ({applicationInfo}) => {
+const ApplicationView = ({applicationInfo}) => {
     const appContext = useContext (AppContext);
 
         return (
@@ -129,4 +129,4 @@ const ReviewerItem = ({applicationInfo}) => {
     }
 ;
 
-export default ReviewerItem;
+export default ApplicationView;

@@ -3,11 +3,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import ReviewerList from "../reviewer/ReviewerList";
+import ApplicationList from "./ApplicationList";
 import {useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
-import ReviewerPage from "../reviewer/ReviewerPage";
+import ReviewerApplicationView from "../reviewer/ReviewerApplicationView";
 
 export default function ApplicationStatus({setRefNumber, handleClick}) {
     const appContext = useContext(AppContext);
@@ -37,7 +37,7 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
                 }}>
 
                 {   showList ?
-                    <ReviewerList
+                    <ApplicationList
                         setShowList={setShowList}
                         setCurrentApplicationId={setCurrentApplicationId}
                         applicants={applicants}
@@ -46,7 +46,7 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
                         setFilteredApplications={setFilteredApplications}
                     />
                     :
-                    <ReviewerPage
+                    <ReviewerApplicationView
                     id={currentApplicationId}
                     setShowList={setShowList}
                     />

@@ -12,7 +12,7 @@ import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
 import apiCall from '../api/api';
 import {useEffect, useState} from "react";
-import ReviewerItem from "../reviewer/ReviewerItem";
+import ApplicationView from "./ApplicationView";
 import inputValidation from '../inputValidation/inputValidation';
 import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext} from "react";
@@ -20,7 +20,7 @@ import AppContext from "../contexts/AppContext";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
-export default function Submit({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
+export default function ApplicationForm({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
     const appContext = useContext(AppContext);
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
@@ -186,7 +186,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                 return <ReferralsForm applicationInfo={applicationInfo} updateState={updateState} errorList={errorList}
                                       onChangeValidate={onChangeValidate}/>;
             case 3:
-                return <ReviewerItem applicationInfo={applicationInfo}/>
+                return <ApplicationView applicationInfo={applicationInfo}/>
             default:
                 throw new Error('Unknown step');
         }
@@ -232,7 +232,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
 
         if (outputMessage.length > 0) return;
 
-        if (activeStep === 3) { // Submit the form instead of going
+        if (activeStep === 3) { // ApplicationForm the form instead of going
             if (isEditing === true) {
                 //console.log(applicationInfo);
 
@@ -334,7 +334,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
     if (isEditing === true) {
         saveOrSubmit = "Save";
     } else {
-        saveOrSubmit = "Submit";
+        saveOrSubmit = "ApplicationForm";
     }
 
     return (

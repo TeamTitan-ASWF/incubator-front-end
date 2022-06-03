@@ -120,7 +120,7 @@ function EnhancedTableHead(props) {
     );
 }
 
-export default function ReviewerList({setShowList, setCurrentApplicationId, applicants, setApplicants, setFilteredApplications, filteredApplications}) {
+export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setApplicants, setFilteredApplications, filteredApplications}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
