@@ -269,7 +269,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 })
                     .then((r) => {
                         setMessageTitle("Your application has been updated successfully");
-                        setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                        setMessage(`Please periodically check your Application Status tab for status updates.`);
                         setActiveStep(activeStep + 1)
                         //setIsEditing (false);
                     })
@@ -312,7 +312,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     dateSubmitted: formatDate(new Date())
                 }).then((r) => {
                     setMessageTitle("Thank you for applying");
-                    setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                    setMessage(`Please periodically check your Application Status tab for status updates.`);
                     setActiveStep(activeStep + 1)
                 })
                     .catch((r) => {
