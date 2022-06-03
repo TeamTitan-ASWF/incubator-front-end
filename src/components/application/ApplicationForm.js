@@ -334,7 +334,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     if (isEditing === true) {
         saveOrSubmit = "Save";
     } else {
-        saveOrSubmit = "ApplicationForm";
+        saveOrSubmit = "Submit";
     }
 
     return (

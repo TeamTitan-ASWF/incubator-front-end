@@ -20,7 +20,7 @@ export default function DOB({applicationInfo, setApplicationInfo}){
                 let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
                 applicationCopy.dob = newValue;
                 setApplicationInfo(applicationCopy)
-                console.log(newValue)
+                // console.log(newValue)
             }
         }
             renderInput={(params) => <TextField {...params} />}

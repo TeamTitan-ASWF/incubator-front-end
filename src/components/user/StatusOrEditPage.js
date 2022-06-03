@@ -53,6 +53,7 @@ export default function StatusOrEditPage() {
                     <Paper
                         variant="outlined"
                         sx={{my: 3, p: 3, boxShadow: 20}}>
+                        <p>hello, you've reached the view plus buttons</p>
                         <StatusHeader
                             applicationInfo={applicationInfo}
                         />
@@ -68,7 +69,7 @@ export default function StatusOrEditPage() {
                                     setShowStatus(true)
                                 }}
                             >
-                                Back
+                                Back button yeah
                             </Button>
                             </Grid>
                             <Grid item xs={6} sx={{textAlign:"right"}}>

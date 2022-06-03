@@ -21,7 +21,7 @@ export default function LastACFT({updateState, applicationInfo,setApplicationInf
                     let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
                     applicationCopy.lastACFT = newValue;
                     setApplicationInfo(applicationCopy)
-                    console.log(newValue)
+                   // console.log(newValue)
                 }
                 }
                 renderInput={(params) => <TextField {...params} />}

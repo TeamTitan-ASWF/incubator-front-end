@@ -9,6 +9,7 @@ import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import ReviewerApplicationView from "../reviewer/ReviewerApplicationView";
 
+
 export default function ApplicationStatus({setRefNumber, handleClick}) {
     const appContext = useContext(AppContext);
     const [showList, setShowList] = useState(true);
@@ -27,14 +28,7 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
     }
 
     return (
-        <Container component="main" maxWidth="sm" sx={{mb: 4}}>
-            <Paper
-                variant="outlined"
-                sx={{
-                    my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
-                    textAlign: "center",
-                    boxShadow: 20
-                }}>
+        <Container component="main"  sx={{mb: 4}}>
 
                 {   showList ?
                     <ApplicationList
@@ -46,12 +40,14 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
                         setFilteredApplications={setFilteredApplications}
                     />
                     :
+
                     <ReviewerApplicationView
                     id={currentApplicationId}
                     setShowList={setShowList}
                     />
                 }
-            </Paper>
+                }
+
         </Container>
     );
 }

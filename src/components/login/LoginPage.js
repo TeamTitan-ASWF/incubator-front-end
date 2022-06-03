@@ -29,7 +29,7 @@ export default function LoginPage({userCreated}) {
         if (r.wasError) {
             setErrorMessage("Wrong Username or Password")
         } else {
-            console.log(r.apiData);
+            // console.log(r.apiData);
             appContext.setIsValidated(true)
             appContext.setUser(r.apiData)
             localStorage.setItem("isValidated", 'true');

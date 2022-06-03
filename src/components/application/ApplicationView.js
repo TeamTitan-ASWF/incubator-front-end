@@ -4,9 +4,12 @@ import {Divider} from "@mui/material";
 import {formatDate} from "../inputValidation/dateValidationFunctions";
 import AppContext from "../contexts/AppContext";
 import {useContext} from "react";
+import Button from "@mui/material/Button";
 
-const ApplicationView = ({applicationInfo}) => {
+const ApplicationView = ({id, applicationInfo}) => {
     const appContext = useContext (AppContext);
+
+
 
         return (
             <>
@@ -124,6 +127,7 @@ const ApplicationView = ({applicationInfo}) => {
                     </Grid>
 
                 </Grid>
+
             </>
         );
     }
