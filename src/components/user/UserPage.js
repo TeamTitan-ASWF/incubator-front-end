@@ -14,7 +14,7 @@ export default function UserPage({id, setShowList}) {
     useEffect(() => {
         getApplication(id)
             .then(r => r)
-    }, [application.status], id)
+    }, [application.status, id])
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)
