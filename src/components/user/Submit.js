@@ -80,6 +80,14 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                 referenceRank: currentApplicationInfo.referenceRank,
                 referenceEmail: currentApplicationInfo.referenceEmail,
                 referencePhone: currentApplicationInfo.referencePhone,
+                referenceName2: currentApplicationInfo.referenceName2,
+                referenceRank2: currentApplicationInfo.referenceRank2,
+                referenceEmail2: currentApplicationInfo.referenceEmail2,
+                referencePhone2: currentApplicationInfo.referencePhone2,
+                referenceName3: currentApplicationInfo.referenceName3,
+                referenceRank3: currentApplicationInfo.referenceRank3,
+                referenceEmail3: currentApplicationInfo.referenceEmail3,
+                referencePhone3: currentApplicationInfo.referencePhone3,
                 status: "pending",
                 dateSubmitted: "",
             })
@@ -225,7 +233,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
         if (outputMessage.length > 0) return;
 
         if (activeStep === 3) { // Submit the form instead of going
-            if (isEditing == true) {
+            if (isEditing === true) {
                 //console.log(applicationInfo);
 
                 apiCall('application', 'update', {
@@ -248,6 +256,14 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                     referenceRank: applicationInfo.referenceRank,
                     referenceEmail: applicationInfo.referenceEmail,
                     referencePhone: applicationInfo.referencePhone,
+                    referenceName2: applicationInfo.referenceName2,
+                    referenceRank2: applicationInfo.referenceRank2,
+                    referenceEmail2: applicationInfo.referenceEmail2,
+                    referencePhone2: applicationInfo.referencePhone2,
+                    referenceName3: applicationInfo.referenceName3,
+                    referenceRank3: applicationInfo.referenceRank3,
+                    referenceEmail3: applicationInfo.referenceEmail3,
+                    referencePhone3: applicationInfo.referencePhone3,
                     //status: applicationInfo.status,
                     dateSubmitted: formatDate(new Date())
                 })
@@ -285,14 +301,14 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                     referenceRank: applicationInfo.referenceRank,
                     referenceEmail: applicationInfo.referenceEmail,
                     referencePhone: applicationInfo.referencePhone,
-                    // referenceName2: applicationInfo.referenceName2,
-                    // referenceRank2: applicationInfo.referenceRank2,
-                    // referenceEmail2: applicationInfo.referenceEmail2,
-                    // referencePhone2: applicationInfo.referencePhone2,
-                    // referenceName3: applicationInfo.referenceName3,
-                    // referenceRank3: applicationInfo.referenceRank3,
-                    // referenceEmail3: applicationInfo.referenceEmail3,
-                    // referencePhone3: applicationInfo.referencePhone3,
+                    referenceName2: applicationInfo.referenceName2,
+                    referenceRank2: applicationInfo.referenceRank2,
+                    referenceEmail2: applicationInfo.referenceEmail2,
+                    referencePhone2: applicationInfo.referencePhone2,
+                    referenceName3: applicationInfo.referenceName3,
+                    referenceRank3: applicationInfo.referenceRank3,
+                    referenceEmail3: applicationInfo.referenceEmail3,
+                    referencePhone3: applicationInfo.referencePhone3,
                     dateSubmitted: formatDate(new Date())
                 }).then((r) => {
                     setMessageTitle("Thank you for applying");
@@ -315,7 +331,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
     };
 
     let saveOrSubmit = "";
-    if (isEditing == true) {
+    if (isEditing === true) {
         saveOrSubmit = "Save";
     } else {
         saveOrSubmit = "Submit";

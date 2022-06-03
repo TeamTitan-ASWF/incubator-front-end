@@ -1,4 +1,3 @@
-
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -7,7 +6,6 @@ import Paper from "@mui/material/Paper";
 export default function UserCreate() {
 
     return (
-
         <Container component="main" maxWidth="md" sx={{mb: 4}}>
             <Paper
                 variant="outlined"
@@ -19,8 +17,6 @@ export default function UserCreate() {
          <Typography>New Account Successfully Created</Typography>
          <Button>Button</Button>
             </Paper>
-      
         </Container>
-
     )
 }

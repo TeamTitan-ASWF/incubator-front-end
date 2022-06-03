@@ -2,7 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Referral from "./Referral";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
@@ -10,6 +10,16 @@ export default function ReferralsForm({updateState, applicationInfo, errorList, 
     const [numReferrals, setNumReferrals] = useState(1);
     const oddRowColor = '#fff';
     const evenRowColor = '#ccc';
+
+    useEffect(() => {
+        if (applicationInfo.referenceName3) {
+            setNumReferrals(3);
+        } else if (applicationInfo.referenceName2) {
+            setNumReferrals(2);
+        } else {
+            setNumReferrals(1);
+        }
+    }, [])
 
     return (
         <React.Fragment>
