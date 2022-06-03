@@ -120,15 +120,15 @@ function EnhancedTableHead(props) {
     );
 }
 
-export default function ReviewerList({setShowList, setCurrentApplicationId}) {
+export default function ReviewerList({setShowList, setCurrentApplicationId, applicants, setApplicants, setFilteredApplications, filteredApplications}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const [applicants, setApplicants] = useState([]);
-    const [filteredApplications, setFilteredApplications] = useState([]);
+    // const [applicants, setApplicants] = useState([]);
+    // const [filteredApplications, setFilteredApplications] = useState([]);
 
     //const {numSelected} = props;
     const [showModal, setShowModal] = useState(false);
@@ -185,15 +185,15 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         }
     }
 
-    useEffect(() => {
-        getApplications();
-    }, []);
-
-    const getApplications = async () => {
-        const response = await apiCall('application', 'list');
-        await setApplicants(response.apiData);
-        await setFilteredApplications(response.apiData);
-    }
+    // useEffect(() => {
+    //     getApplications();
+    // }, []);
+    //
+    // const getApplications = async () => {
+    //     const response = await apiCall('application', 'list');
+    //     await setApplicants(response.apiData);
+    //     await setFilteredApplications(response.apiData);
+    // }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';

@@ -14,8 +14,8 @@ export default function UserCreate() {
                     textAlign: "center",
                     boxShadow: 20
                 }}>
-                <Typography>New Account Succesfully Created</Typography>
-                <Button>Button</Button>
+         <Typography>New Account Successfully Created</Typography>
+         <Button>Button</Button>
             </Paper>
         </Container>
     )

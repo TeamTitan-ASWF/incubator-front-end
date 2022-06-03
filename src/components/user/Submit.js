@@ -281,7 +281,8 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                 //console.log("HELLO");
 
                 apiCall('application', 'add', {
-                    refNum: applicationInfo.dodId,
+                    user: appContext.user.id,
+                    // refNum: applicationInfo.dodId,
                     fName: applicationInfo.fName,
                     lName: applicationInfo.lName,
                     mI: applicationInfo.mI,
@@ -348,7 +349,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
                         ))}
                     </Stepper>
                     <React.Fragment>
-                       {/* <Button onClick={fillFields}>Auto-populate</Button> */}
+                        <Button onClick={fillFields}>Auto-populate</Button>
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>

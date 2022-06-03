@@ -7,14 +7,17 @@ const useRemote = false;
 const SERVER_API_URL_APPLICATIONS = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/';
 const SERVER_API_URL_CREATE_USER = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/user/';
 const SERVER_API_URL_LOGIN = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/login/';
+const SERVER_API_URL_APPLICATION_BY_USER = 'https://cors-everywhere-me.herokuapp.com/http://ec2-18-216-140-13.us-east-2.compute.amazonaws.com:8080/app/userid/';
 
 const LOCAL_API_URL_APPLICATIONS = 'http://localhost:8080/';
 const LOCAL_API_URL_CREATE_USER = 'http://localhost:8080/user/';
 const LOCAL_API_URL_LOGIN = 'http://localhost:8080/login/';
+const LOCAL_API_URL_APPLICATION_BY_USER = 'http://localhost:8080/app/userid/';
 
 const currentAppAPI = (useRemote) ? SERVER_API_URL_APPLICATIONS : LOCAL_API_URL_APPLICATIONS;
 const currentCreateUserAppAPI = (useRemote) ? SERVER_API_URL_CREATE_USER : LOCAL_API_URL_CREATE_USER;
 const currentLoginAPI = (useRemote) ? SERVER_API_URL_LOGIN : LOCAL_API_URL_LOGIN;
+const currentApplicationByUser = (useRemote) ? SERVER_API_URL_APPLICATION_BY_USER : LOCAL_API_URL_APPLICATION_BY_USER;
 
 
 const apiCall = async (entity, action, newData, path = '') => {
@@ -32,6 +35,9 @@ const apiCall = async (entity, action, newData, path = '') => {
             break;
         case "login":
             apiURL = currentLoginAPI + (path ? path : '');
+            break;
+        case "getApplicationByUser":
+            apiURL = currentApplicationByUser + (path ? path : '');
             break;
         default:
             apiURL = 'should not get here';

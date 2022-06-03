@@ -29,6 +29,7 @@ export default function LoginPage({setCurrentPage, userCreated}) {
         if (r.wasError) {
             setErrorMessage("Wrong Username or Password")
         } else {
+            console.log(r.apiData);
             appContext.setIsValidated(true)
             appContext.setUser(r.apiData)
             localStorage.setItem("isValidated", 'true');
@@ -46,7 +47,7 @@ export default function LoginPage({setCurrentPage, userCreated}) {
                 textAlign: "center",
                 boxShadow: 20
             }}>
-            {userCreated ? <> <Typography>Account Created Succesfully!</Typography> <br/> </> : ""}
+            {userCreated ? <> <Typography>Account Created Successfully!</Typography> <br/> </> : ""}
 
             <Typography>Login Page</Typography>
 
