@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import PeopleOutlineTwoToneIcon from '@mui/icons-material/PeopleOutlineTwoTone';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import swLogo from "../ui/sf_logo.svg";
+import swLogo from "../images/sf_logo.svg";
 import Box from "@mui/material/Box";
 import {useNavigate} from "react-router-dom";
 

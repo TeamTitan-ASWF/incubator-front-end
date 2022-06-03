@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import {keyframes, useTheme} from "@mui/material";
-import swLogo from "./sf_logo.svg";
+import swLogo from "../images/sf_logo.svg";
 import Grid from "@mui/material/Grid";
 import EggIcon from "@mui/icons-material/Egg";
 

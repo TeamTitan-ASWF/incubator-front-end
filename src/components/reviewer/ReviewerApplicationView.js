@@ -1,11 +1,11 @@
-import ReviewerItem from "./ReviewerItem";
+import ApplicationView from "../application/ApplicationView";
 import ReviewerButtons from "./ReviewerButtons";
-import StatusHeader from "./StatusHeader";
+import StatusHeader from "../application/StatusHeader";
 import {useEffect, useState} from "react";
 import apiCall from "../api/api";
 import Paper from "@mui/material/Paper";
 
-export default function ReviewerPage({id, setShowList}) {
+export default function ReviewerApplicationView({id, setShowList}) {
     const [application, setApplication] = useState({})
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function ReviewerPage({id, setShowList}) {
                 <StatusHeader
                     applicationInfo={application}
                 />
-                <ReviewerItem
+                <ApplicationView
                     applicationInfo={application}
                 />
 

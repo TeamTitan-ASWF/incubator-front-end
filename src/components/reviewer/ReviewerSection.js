@@ -1,6 +1,6 @@
 import {useState} from "react";
-import ReviewerList from "./ReviewerList";
-import ReviewerPage from "./ReviewerPage";
+import ApplicationList from "../application/ApplicationList";
+import ReviewerApplicationView from "./ReviewerApplicationView";
 import {useEffect} from "react";
 import apiCall from "../api/api";
 
@@ -23,7 +23,7 @@ const ReviewerSection = () => {
     return (
         <>
             {showList &&
-                <ReviewerList
+                <ApplicationList
                     setShowList={setShowList}
                     setCurrentApplicationId={setCurrentApplicationId}
                     applicants = {applicants}
@@ -32,7 +32,7 @@ const ReviewerSection = () => {
                     setFilteredApplications = {setFilteredApplications}
                 />}
             {!showList &&
-                <ReviewerPage
+                <ReviewerApplicationView
                     id={currentApplicationId}
                     setShowList={setShowList}
                 />}
