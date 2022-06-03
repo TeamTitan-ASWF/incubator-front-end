@@ -16,8 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
-import {useEffect, useState} from "react";
-import apiCall from "../api/api";
+import {useState} from "react";
 import {Checkbox, FormGroup, Popover} from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {

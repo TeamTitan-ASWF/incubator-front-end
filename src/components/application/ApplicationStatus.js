@@ -1,16 +1,12 @@
-import {TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import ApplicationList from "./ApplicationList";
 import {useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
-import ReviewerApplicationView from "../reviewer/ReviewerApplicationView";
+import UserPage from "../user/UserPage";
 
 
-export default function ApplicationStatus({setRefNumber, handleClick}) {
+export default function ApplicationStatus() {
     const appContext = useContext(AppContext);
     const [showList, setShowList] = useState(true);
     const [currentApplicationId, setCurrentApplicationId] = useState(null);
@@ -40,14 +36,11 @@ export default function ApplicationStatus({setRefNumber, handleClick}) {
                         setFilteredApplications={setFilteredApplications}
                     />
                     :
-
-                    <ReviewerApplicationView
-                    id={currentApplicationId}
-                    setShowList={setShowList}
+                    <UserPage
+                        id={currentApplicationId}
+                        setShowList={setShowList}
                     />
                 }
-                }
-
         </Container>
     );
 }
