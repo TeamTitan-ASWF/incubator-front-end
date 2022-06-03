@@ -1,11 +1,10 @@
-import StatusHeader from "../reviewer/StatusHeader";
+ import StatusHeader from "../reviewer/StatusHeader";
 import ReviewerItem from "../reviewer/ReviewerItem";
 import {useState} from "react";
 import apiCall from "../api/api";
 import {Alert, Snackbar} from "@mui/material";
 import ApplicationStatus from "./ApplicationStatus";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Submit from "./Submit";
 import Grid from "@mui/material/Grid";
@@ -41,7 +40,7 @@ export default function UserPage() {
         setOpen(false);
     };
 
-    if(isEditing == false) {
+    if(isEditing === false) {
     return (
         <>
             {showStatus ?
@@ -109,7 +108,7 @@ export default function UserPage() {
     );
 
 }
-    else if (isEditing == true) {
+    else if (isEditing === true) {
         return (
             <Submit currentApplicationInfo={applicationInfo} isEditing={isEditing} setIsEditing={setIsEditing} currentApplicationId = {currentApplicationId} />
         )

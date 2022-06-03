@@ -11,7 +11,6 @@ import Container from "@mui/material/Container";
 import UserPage from "./components/user/UserPage";
 import LandingPage from "./components/user/LandingPage";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import LoginParent from './components/login/LoginParent';
 import UserProfile from "./components/user/UserProfile";
 import {useContext} from "react";
 import AppContext from "./components/contexts/AppContext";

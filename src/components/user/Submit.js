@@ -233,7 +233,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
         if (outputMessage.length > 0) return;
 
         if (activeStep === 3) { // Submit the form instead of going
-            if (isEditing == true) {
+            if (isEditing === true) {
                 //console.log(applicationInfo);
 
                 apiCall('application', 'update', {
@@ -330,7 +330,7 @@ export default function Submit({currentApplicationInfo, isEditing, setIsEditing,
     };
 
     let saveOrSubmit = "";
-    if (isEditing == true) {
+    if (isEditing === true) {
         saveOrSubmit = "Save";
     } else {
         saveOrSubmit = "Submit";

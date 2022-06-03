@@ -1,19 +1,11 @@
-
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 
-export default function UserCreate(){
-
-    
-
-
-
-
+export default function UserCreate() {
 
     return (
-
         <Container component="main" maxWidth="md" sx={{mb: 4}}>
             <Paper
                 variant="outlined"
@@ -22,11 +14,9 @@ export default function UserCreate(){
                     textAlign: "center",
                     boxShadow: 20
                 }}>
-         <Typography>New Account Succesfully Created</Typography>
-         <Button>Button</Button>
+                <Typography>New Account Succesfully Created</Typography>
+                <Button>Button</Button>
             </Paper>
-      
         </Container>
-
     )
 }
