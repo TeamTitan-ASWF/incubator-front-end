@@ -32,6 +32,9 @@ export default function LoginPage({setCurrentPage, userCreated}) {
             console.log(r.apiData);
             appContext.setIsValidated(true)
             appContext.setUser(r.apiData)
+            localStorage.setItem("isValidated", 'true');
+            localStorage.setItem("userData", JSON.stringify(r.apiData));
+
             changePage("/");
         }
     }

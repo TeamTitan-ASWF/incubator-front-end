@@ -39,6 +39,8 @@ export default function UserProfile() {
             console.log(r.apiErrorMsg.response.data)
         } else {
             appContext.setUser({...appContext.user, ...dataToUpdate})
+            localStorage.setItem('userData', JSON.stringify({...appContext.user, ...dataToUpdate}));
+
             setErrorMessage("User Profile Updated.");
         }
     }

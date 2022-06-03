@@ -38,6 +38,8 @@ const NavBar = ({setShowReviewer}) => {
         if (path === "/logout") {
             appContext.setIsValidated(false);
             appContext.setUser({});
+            localStorage.clear();
+
             navigate("/");
         } else {
             navigate(path);
@@ -75,7 +77,6 @@ const NavBar = ({setShowReviewer}) => {
         background-color: green;
       }
     `;
-
 
     return (
         <AppBar position="static">

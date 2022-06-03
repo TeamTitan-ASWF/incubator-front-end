@@ -24,4 +24,5 @@ yarn-error.log*
 
 # new addition
 package-lock.json
+/.idea
 
