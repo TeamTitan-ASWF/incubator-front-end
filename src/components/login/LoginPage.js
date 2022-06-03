@@ -8,7 +8,7 @@ import AppContext from "../contexts/AppContext";
 import {useNavigate} from "react-router-dom";
 
 
-export default function LoginPage({setCurrentPage, userCreated}) {
+export default function LoginPage({userCreated}) {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
 
