@@ -20,6 +20,16 @@ export default function UserProfile() {
         setErrorMessage("");
         e.preventDefault();
 
+        if (!e.target.dodId.value.match(/^\d{10}$/)) {
+            setErrorMessage("DODID has incorrect format.");
+            return;
+        }
+
+        if (!dob) {
+            setErrorMessage("Date of Birth is required.");
+            return;
+        }
+
         const dataToUpdate = {
             id: appContext.user.id,
             fName: e.target.fName.value,
@@ -65,8 +75,9 @@ export default function UserProfile() {
                     <UserProfileFormFields dob={dob} setDob={setDob} userData={appContext.user} rank={rank}
                                            setRank={setRank}/>
                 </Grid>
-
-                <Typography color='error'>{errorMessage}</Typography>
+                <br/>
+                <Typography
+                    color={(errorMessage === 'User Profile Updated.') ? 'green' : 'error'}>{errorMessage}</Typography>
 
                 <Button
                     variant="contained"

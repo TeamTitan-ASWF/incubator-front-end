@@ -68,7 +68,7 @@ export default function Footer() {
 
                     <Typography variant={"subtitle2"} component={"span"} sx={{color: "white"}}>
                         Incubator is a product of <Link sx={{color: "white", textDecoration: "underline"}}
-                                                        href={"https://armyfuturescommand.com/software-factory/"}>The
+                                                        href={"https://armyfuturescommand.com/software-factory/"} target="_blank">The
                         Army Software Factory</Link>
                     </Typography>
                 </Grid>
