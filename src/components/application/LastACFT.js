@@ -1,10 +1,10 @@
 import {TextField} from "@mui/material";
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import React from "react";
 
-export default function LastACFT({updateState, applicationInfo,setApplicationInfo}){
+export default function LastACFT({updateState, applicationInfo, setApplicationInfo}) {
 
 
     return (
@@ -16,15 +16,19 @@ export default function LastACFT({updateState, applicationInfo,setApplicationInf
                 label="Last ACFT"
                 inputFormat="yyyy-MM-dd"
                 views={["year", "month", "day"]}
-                value= {applicationInfo.lastACFT}
-                onChange={(newValue) =>{
+                minDate={new Date(2016, 1, 1)}
+                value={applicationInfo.lastACFT}
+                disableFuture={true}
+                onChange={(newValue) => {
                     let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
                     applicationCopy.lastACFT = newValue;
                     setApplicationInfo(applicationCopy)
-                   // console.log(newValue)
                 }
                 }
-                renderInput={(params) => <TextField {...params} />}
+                renderInput={(params) => <TextField {...params} onKeyDown={(e) => {
+                    e.preventDefault();
+                    return false;
+                }}/>}
             />
         </LocalizationProvider>
     )
