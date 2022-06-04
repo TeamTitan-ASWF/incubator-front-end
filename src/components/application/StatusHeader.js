@@ -8,10 +8,13 @@ export default function StatusHeader({applicationInfo}) {
     let pendingStatus;
 
     if (applicationInfo.status === "approved") {
+        // eslint-disable-next-line
         pendingStatus = "green";
     } else if (applicationInfo.status === "denied") {
+        // eslint-disable-next-line
         pendingStatus = "red";
     } else {
+        // eslint-disable-next-line
         pendingStatus = "orange";
     }
 

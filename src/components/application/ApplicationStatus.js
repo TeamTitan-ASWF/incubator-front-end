@@ -1,10 +1,9 @@
 import Container from "@mui/material/Container";
 import ApplicationList from "./ApplicationList";
-import {useContext, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import UserViewAddEditParent from "../user/UserViewAddEditParent";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 
@@ -16,11 +15,7 @@ export default function ApplicationStatus() {
     const [filteredApplications, setFilteredApplications] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        getApplications();
-    }, []);
-
-    const getApplications = async () => {
+    const getApplications = useCallback(async () => {
         const response = await apiCall('getApplicationByUser', 'read', appContext.user.id);
 
         if (response.apiErrorMsg) {
@@ -33,7 +28,11 @@ export default function ApplicationStatus() {
             await setFilteredApplications(response.apiData);
         }
         await setIsLoading(false);
-    }
+    }, [appContext.user.id]);
+
+    useEffect(() => {
+        getApplications().then(r=>r);
+    }, [getApplications]);
 
     if (isLoading) {
         return <></>

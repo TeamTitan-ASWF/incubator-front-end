@@ -1,4 +1,3 @@
-import {alpha} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -37,18 +36,18 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-const filterStyle = {
-    position: 'absolute',
-    top: '30%',
-    left: '78%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 10,
-};
+// const filterStyle = {
+//     position: 'absolute',
+//     top: '30%',
+//     left: '78%',
+//     transform: 'translate(-50%, -50%)',
+//     width: 400,
+//     bgcolor: 'background.paper',
+//     border: '2px solid #000',
+//     boxShadow: 24,
+//     p: 4,
+//     borderRadius: 10,
+// };
 
 const headCells = [
     {
@@ -126,15 +125,11 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    // const [applicants, setApplicants] = useState([]);
-    // const [filteredApplications, setFilteredApplications] = useState([]);
+    // const [showModal, setShowModal] = useState(false);
 
-    //const {numSelected} = props;
-    const [showModal, setShowModal] = useState(false);
-
-    const handleFilter = () => {
-        setShowModal(true);
-    }
+    // const handleFilter = () => {
+    //     setShowModal(true);
+    // }
 
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
@@ -244,11 +239,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                     <Toolbar
                         sx={{
                             pl: {sm: 2},
-                            pr: {xs: 1, sm: 1},
-                            ...(0 > 0 && {
-                                bgcolor: (theme) =>
-                                    alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                            }),
+                            pr: {xs: 1, sm: 1}
                         }}
                     >
                         <Typography
@@ -361,18 +352,6 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
             <br/>
             <br/>
             <br/>
-
-
-            {/*<AppModal showModal={showModal} setShowModal={setShowModal} styles={filterStyle} >*/}
-            {/*    <Typography component={"span"} variant={"h6"} pr={2}>Filter All Applications by:</Typography>*/}
-            {/*    <Button variant={"contained"} size={"small"} onClick={() => setShowModal(false)} endIcon={<CloseIcon />}>Close</Button>*/}
-
-            {/*    <FormGroup>*/}
-            {/*        <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>*/}
-            {/*        <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>*/}
-            {/*        <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>*/}
-            {/*    </FormGroup>*/}
-            {/*</AppModal>*/}
         </>
     );
 }
