@@ -32,13 +32,13 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
     const [applicationInfo, setApplicationInfo] = React.useState({
-        refNum: "",
         fName: appContext.user?.fName ?? "",
         lName: appContext.user?.lName ?? "",
         mI: appContext.user?.mI ?? "",
         dodId: appContext.user?.dodId ?? "",
         rank: appContext.user?.rank ?? "E1",
-        dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        //dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        dob: (appContext.user?.dob) ? formatDate(appContext.user?.dob) : '1990/01/01',
         lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
         acftScore: 0,
         height: 0,
@@ -88,6 +88,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 // referenceRank3: currentApplicationInfo.referenceRank3,
                 // referenceEmail3: currentApplicationInfo.referenceEmail3,
                 // referencePhone3: currentApplicationInfo.referencePhone3,
+                lastACFT: fixTimeZone(currentApplicationInfo.lastACFT),
                 status: "pending",
                 dateSubmitted: "",
             })
@@ -97,13 +98,12 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
 
     const fillFields = () => {
         setApplicationInfo({
-                refNum: "1234567890",
-                fName: "Steven",
-                lName: "Rodgers",
-                mI: "G",
-                dodId: "1234567890",
-                rank: "O3",
-                dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
+                // fName: "Steven",
+                // lName: "Rodgers",
+                // mI: "G",
+                // dodId: "1234567890",
+                // rank: "O3",
+                // dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
                 lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
                 acftScore: 600,
                 height: 74,
@@ -134,6 +134,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     const onChangeValidate = (e) => {
         let errorListCopy = JSON.parse(JSON.stringify(errorList))
 
+        //console.log(e.target.id);
+
         try {
             if (inputValidation(applicationInfo[e.target.id], e.target.id).output) {
                 errorListCopy.push(inputValidation(applicationInfo[e.target.value], e.target.id).output) //If element is not validated, add the elements name to this list
@@ -149,7 +151,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     function updateState(e) {
         setApplicationInfo(
             {
-                refNum: (e.target.id === "refNum") ? e.target.value : applicationInfo.refNum,
                 fName: (e.target.id === "fName") ? e.target.value : applicationInfo.fName,
                 lName: (e.target.id === "lName") ? e.target.value : applicationInfo.lName,
                 mI: (e.target.id === "mI") ? e.target.value : applicationInfo.mI,
@@ -251,6 +252,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     dodId: applicationInfo.dodId.toString(),
                     rank: applicationInfo.rank,
                     dob: formatDate(applicationInfo.dob),
+                    user: appContext.user.id,
                     lastACFT: formatDate(applicationInfo.lastACFT),
                     acftScore: applicationInfo.acftScore,
                     height: applicationInfo.height,
@@ -283,18 +285,13 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                         setActiveStep(activeStep + 1)
                     })
             } else {
-                //console.log("HELLO");
-
                 apiCall('application', 'add', {
                     user: appContext.user.id,
-                    // refNum: applicationInfo.dodId,
                     fName: applicationInfo.fName,
                     lName: applicationInfo.lName,
                     mI: applicationInfo.mI,
                     dodId: applicationInfo.dodId,
                     rank: applicationInfo.rank,
-                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
                     dob: formatDate(applicationInfo.dob),
                     lastACFT: formatDate(applicationInfo.lastACFT),
                     acftScore: applicationInfo.acftScore,
@@ -316,12 +313,19 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     referencePhone3: applicationInfo.referencePhone3,
                     dateSubmitted: formatDate(new Date())
                 }).then((r) => {
-                    setMessageTitle("Thank you for applying");
-                    setMessage(`Please periodically check your Application Status tab for status updates.`);
-                    setActiveStep(activeStep + 1)
+                    if(r.wasError) {
+                        setMessageTitle("Something went wrong.");
+                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
+                        setActiveStep(activeStep + 1);
+                    } else {
+                        setMessageTitle("Thank you for applying.");
+                        setMessage(`Please periodically check your Application Status tab for status updates.`);
+                        setActiveStep(activeStep + 1);
+                    }
                 })
                     .catch((r) => {
-                        setMessageTitle("Something went wrong please try again later")
+                        setMessageTitle("Something went wrong.");
+                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
                         setActiveStep(activeStep + 1)
                     })
             }

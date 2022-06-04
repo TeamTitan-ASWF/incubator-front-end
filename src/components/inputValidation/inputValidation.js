@@ -21,13 +21,13 @@ export default function inputValidation(input, type) {
                 outputSetter("Please enter an email")
             }
             break;
-        case 'dodId':
-            if (input < 0 && !Number.isInteger(input)) {
-                outputSetter("enter valid dod #")
-            } else if (input.length !== 10) {
-                outputSetter("enter valid dod #")
-            }
-            break;
+        // case 'dodId':
+        //     if (input < 0 && !Number.isInteger(input)) {
+        //         outputSetter("enter valid dod #")
+        //     } else if (input.length !== 10) {
+        //         outputSetter("enter valid dod #")
+        //     }
+        //     break;
         case 'acftScore':
             if (!typeof input === 'number') {
                 outputSetter("ACFT score must be a number")
@@ -59,16 +59,16 @@ export default function inputValidation(input, type) {
                 outputSetter('please enter a valid phone number')
             }
             break;
-        case 'fName':
-            if (input.length === 0) {
-                outputSetter('Enter a name')
-            }
-            break;
-        case 'lName':
-            if (input.length === 0) {
-                outputSetter('Enter a last Name')
-            }
-            break;
+        // case 'fName':
+        //     if (input.length === 0) {
+        //         outputSetter('Enter a name')
+        //     }
+        //     break;
+        // case 'lName':
+        //     if (input.length === 0) {
+        //         outputSetter('Enter a last Name')
+        //     }
+        //     break;
         default:
             validated = true;
             reason = "";

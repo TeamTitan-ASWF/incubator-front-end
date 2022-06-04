@@ -116,10 +116,10 @@ export default function CreateUser() {
 
                     <Button
                         variant="contained"
-                        sx={{mr: 2, mt: 2}}
+                        sx={{mr: '15%', mt: 2}}
                         onClick={() => changePage("/login")}
                     >
-                        Login
+                        Back to Login
                     </Button>
 
                     <Button
@@ -127,7 +127,7 @@ export default function CreateUser() {
                         sx={{mt: 2}}
                         type={"submit"}
                     >
-                        Create
+                        Create Account
                     </Button><br/>
                 </form>
             </Paper>

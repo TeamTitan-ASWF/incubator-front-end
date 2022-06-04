@@ -8,7 +8,7 @@ const Referral = ({referenceNumber, errorList, referenceName, updateState, onCha
         <Grid container marginBottom={'5%'} p={'3%'} spacing={3} borderRadius={5} border={1} bgcolor={bg}>
             <Grid item xs={12} sm={6}>
                 <TextField
-                    required
+                    required={(!referenceNumber)}
                     error={errorList.includes("referenceName" + (referenceNumber ?? ''))}
                     value={referenceName}
                     id={"referenceName" + (referenceNumber ?? '')}
@@ -29,7 +29,7 @@ const Referral = ({referenceNumber, errorList, referenceName, updateState, onCha
             </Grid>
             <Grid item xs={12} sm={6}>
                 <TextField
-                    required
+                    required={(!referenceNumber)}
                     error={errorList.includes("referenceEmail" + (referenceNumber ?? ''))}
                     id={"referenceEmail" + (referenceNumber ?? '')}
                     name={"referenceEmail" + (referenceNumber ?? '')}
@@ -47,7 +47,7 @@ const Referral = ({referenceNumber, errorList, referenceName, updateState, onCha
             </Grid>
             <Grid item xs={12} sm={6}>
                 <TextField
-                    required
+                    required={(!referenceNumber)}
                     error={errorList.includes("referencePhone" + (referenceNumber ?? ''))}
                     id={"referencePhone" + (referenceNumber ?? '')}
                     name={"referencePhone" + (referenceNumber ?? '')}
