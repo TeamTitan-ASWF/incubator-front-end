@@ -11,7 +11,7 @@ const ReviewerSection = () => {
     const [filteredApplications, setFilteredApplications] = useState([]);
 
     useEffect(() => {
-        getApplications();
+        getApplications().then(r=>r);
     }, []);
 
     const getApplications = async () => {
@@ -35,6 +35,7 @@ const ReviewerSection = () => {
                 <ReviewerApplicationView
                     id={currentApplicationId}
                     setShowList={setShowList}
+                    getApplications={getApplications}
                 />}
 
         </>

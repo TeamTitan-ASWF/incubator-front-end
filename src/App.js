@@ -4,7 +4,6 @@ import Footer from "./components/ui/Footer";
 import CssBaseline from "@mui/material/CssBaseline";
 import {ThemeProvider} from "@mui/material";
 import {createTheme} from "@mui/material/styles";
-import {useState} from "react";
 import ReviewerSection from "./components/reviewer/ReviewerSection";
 import NavBar from "./components/ui/NavBar";
 import Container from "@mui/material/Container";
@@ -19,8 +18,6 @@ import ApplicationStatus from "./components/application/ApplicationStatus";
 
 export default function App() {
     const appContext = useContext(AppContext);
-
-    const [showReviewer, setShowReviewer] = useState('landingPage');
 
     const theme = createTheme({
         palette: {
@@ -37,7 +34,7 @@ export default function App() {
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
-                <NavBar setShowReviewer={setShowReviewer}/>
+                <NavBar />
 
                 <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
                     <Routes>

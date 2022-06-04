@@ -39,7 +39,7 @@ export default function Footer() {
         >
             <Grid container spacing={0}>
                 <Grid item xs={4} pl={5}>
-                    <img src={swLogo} width={113}/>
+                    <img src={swLogo} width={113} alt={"Army Software Factory Logo"} />
                 </Grid>
 
                 <Grid item xs={8} sx={{display: "flex", alignItems: "center"}}>

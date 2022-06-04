@@ -20,7 +20,7 @@ import AppContext from "../contexts/AppContext";
 import {keyframes, styled} from "@mui/material";
 import {AccountCircle, NoAccounts} from "@mui/icons-material";
 
-const NavBar = ({setShowReviewer}) => {
+const NavBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const appContext = useContext(AppContext);
 

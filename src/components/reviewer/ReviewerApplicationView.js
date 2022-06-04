@@ -5,23 +5,23 @@ import {useEffect, useState} from "react";
 import apiCall from "../api/api";
 import Paper from "@mui/material/Paper";
 
-export default function ReviewerApplicationView({id, setShowList}) {
+export default function ReviewerApplicationView({id, setShowList, getApplications}) {
     const [application, setApplication] = useState({})
 
     useEffect(() => {
         getApplication(id)
             .then(r => r)
-    }, [application.status], id)
+    }, [application.status, id])
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)
-        //await console.log(res);
         setApplication(res.apiData);
     }
 
     const approveApplication = async (newStatus) => {
         const res = await apiCall("application", "update", {id: id, status: newStatus})
-        setApplication(res.apiData);
+        await setApplication(res.apiData);
+        await getApplications();
     }
 
     return (
