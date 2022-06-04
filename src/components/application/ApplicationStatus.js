@@ -3,7 +3,9 @@ import ApplicationList from "./ApplicationList";
 import {useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
-import UserPage from "../user/UserPage";
+import UserViewAddEditParent from "../user/UserViewAddEditParent";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 
 export default function ApplicationStatus() {
@@ -12,6 +14,7 @@ export default function ApplicationStatus() {
     const [currentApplicationId, setCurrentApplicationId] = useState(null);
     const [applicants, setApplicants] = useState([]);
     const [filteredApplications, setFilteredApplications] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getApplications();
@@ -19,28 +22,45 @@ export default function ApplicationStatus() {
 
     const getApplications = async () => {
         const response = await apiCall('getApplicationByUser', 'read', appContext.user.id);
-        await setApplicants(response.apiData);
-        await setFilteredApplications(response.apiData);
+
+        if (response.apiErrorMsg) {
+            //console.log(response.apiErrorMsg.response.data);
+            await setApplicants([]);
+            await setFilteredApplications([]);
+
+        } else {
+            await setApplicants(response.apiData);
+            await setFilteredApplications(response.apiData);
+        }
+        await setIsLoading(false);
     }
 
-    return (
-        <Container component="main"  sx={{mb: 4}}>
+    if (isLoading) {
+        return <></>
+    } else {
+        return (
+            <Container component="main" sx={{mb: 4}}>
 
-                {   showList ?
-                    <ApplicationList
-                        setShowList={setShowList}
-                        setCurrentApplicationId={setCurrentApplicationId}
-                        applicants={applicants}
-                        setApplicants={setApplicants}
-                        filteredApplications={filteredApplications}
-                        setFilteredApplications={setFilteredApplications}
-                    />
+                {showList ? (applicants.length === 0) ?
+                        <><br/><br/><Typography variant={"h5"}> You have not yet started an application. Please start the
+                            application
+                            process by clicking on "New Application" on the main menu. </Typography></>
+                        :
+                        <ApplicationList
+                            setShowList={setShowList}
+                            setCurrentApplicationId={setCurrentApplicationId}
+                            applicants={applicants}
+                            setApplicants={setApplicants}
+                            filteredApplications={filteredApplications}
+                            setFilteredApplications={setFilteredApplications}
+                        />
                     :
-                    <UserPage
+                    <UserViewAddEditParent
                         id={currentApplicationId}
                         setShowList={setShowList}
                     />
                 }
-        </Container>
-    );
+            </Container>
+        );
+    }
 }

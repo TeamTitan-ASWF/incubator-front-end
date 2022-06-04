@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import ApplicationForm from "../application/ApplicationForm";
 
-export default function UserPage({id, setShowList}) {
+export default function UserViewAddEditParent({id, setShowList}) {
     const [application, setApplication] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
