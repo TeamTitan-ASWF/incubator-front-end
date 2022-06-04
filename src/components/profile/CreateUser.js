@@ -1,4 +1,4 @@
-import {Select, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -11,9 +11,9 @@ import {formatDate} from "../inputValidation/dateValidationFunctions";
 import UserProfileFormFields from "./UserProfileFormFields";
 import {useNavigate} from "react-router-dom";
 
-export default function CreateUser({setCurrentPage, setUserCreated}) {
+export default function CreateUser() {
     const [errorMessage, setErrorMessage] = useState("");
-    const [dob, setDob] = useState(null);
+    const [dob, setDob] = useState("1990-01-02");
     const [rank, setRank] = useState('E1');
 
     let navigate = useNavigate();
@@ -28,30 +28,36 @@ export default function CreateUser({setCurrentPage, setUserCreated}) {
 
         if (e.target.password.value !== e.target.confirmPassword.value) {
             setErrorMessage("Passwords do not match")
-            return;
+        } else if (!e.target.dodId.value.match(/^\d{10}$/)) {
+            setErrorMessage("DODID has incorrect format.");
+        } else if (!dob) {
+            setErrorMessage("Date of Birth is required.");
+        } else {
+            apiCall("user", 'add', {
+                userName: e.target.userName.value,
+                password: e.target.password.value,
+                fName: e.target.fName.value,
+                lName: e.target.lName.value,
+                mI: e.target.mI.value,
+                dodId: e.target.dodId.value,
+                rank: rank,
+                dob: formatDate(dob),
+            }).then(handleResults);
         }
-
-        apiCall("user", 'add', {
-            userName: e.target.userName.value,
-            password: e.target.password.value,
-            fName: e.target.fName.value,
-            lName: e.target.lName.value,
-            mI: e.target.mI.value,
-            dodId: e.target.dodId.value,
-            rank: rank,
-            dob: formatDate(dob),
-        }).then(handleResults);
     }
 
     const handleResults = (r) => {
         if (r.wasError) {
-            setErrorMessage("Something went wrong.");
-            console.log(r.apiErrorMsg.response.data)
-            return;
-        }
+            if(r.apiErrorMsg.response.data.includes("already taken")) {
+                setErrorMessage("Username is already taken. Please choose another username.");
+            } else {
+                setErrorMessage("Something went wrong. Please try again later.");
+            }
 
-        //setUserCreated(true);
-        changePage('/login');
+            console.log(r.apiErrorMsg.response.data)
+        } else {
+            changePage('/login?newAccount=true');
+        }
     }
 
     return (
@@ -103,9 +109,9 @@ export default function CreateUser({setCurrentPage, setUserCreated}) {
                             />
                         </Grid>
 
-                        <UserProfileFormFields dob={dob} setDob={setDob} rank={rank} setRank={setRank} />
+                        <UserProfileFormFields dob={dob} setDob={setDob} rank={rank} setRank={setRank}/>
                     </Grid>
-
+                    <br/>
                     <Typography color='error'>{errorMessage}</Typography>
 
                     <Button

@@ -108,7 +108,9 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
                         views={["year", "month", "day"]}
                         value={dob}
                         onChange={(value) => setDob(value)}
-                        renderInput={(params) => <TextField {...params} />}
+                        disableFuture={true}
+                        minDate={new Date(1940, 1, 1)}
+                        renderInput={(params) => <TextField {...params} onKeyDown={(e) => {e.preventDefault(); return false;}} />}
                     />
                 </LocalizationProvider>
             </Grid>

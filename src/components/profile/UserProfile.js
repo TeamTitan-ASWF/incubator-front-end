@@ -22,33 +22,31 @@ export default function UserProfile() {
 
         if (!e.target.dodId.value.match(/^\d{10}$/)) {
             setErrorMessage("DODID has incorrect format.");
-            return;
-        }
-
-        if (!dob) {
+        } else if (!dob) {
             setErrorMessage("Date of Birth is required.");
-            return;
+        } else {
+            const dataToUpdate = {
+                id: appContext.user.id,
+                fName: e.target.fName.value,
+                lName: e.target.lName.value,
+                mI: e.target.mI.value,
+                dodId: e.target.dodId.value,
+                rank: rank,
+                dob: formatDate(dob)
+            };
+
+            console.log(dataToUpdate);
+
+            apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
         }
-
-        const dataToUpdate = {
-            id: appContext.user.id,
-            fName: e.target.fName.value,
-            lName: e.target.lName.value,
-            mI: e.target.mI.value,
-            dodId: e.target.dodId.value,
-            rank: rank,
-            dob: formatDate(dob)
-        };
-
-        apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
     }
 
     const handleResults = (r, dataToUpdate) => {
         if (r.wasError) {
             setErrorMessage("Something went wrong. User Profile was not updated.");
-            console.log(r.apiErrorMsg.response.data)
+            console.log(r.apiErrorMsg.response.data);
         } else {
-            appContext.setUser({...appContext.user, ...dataToUpdate})
+            appContext.setUser({...appContext.user, ...dataToUpdate});
             localStorage.setItem('userData', JSON.stringify({...appContext.user, ...dataToUpdate}));
 
             setErrorMessage("User Profile Updated.");
