@@ -114,7 +114,7 @@ export default function PersonalInfoForm({
                 <Grid item xs={12} sm={3} alignContent={"center"} alignItems={"center"}>
                     {/*<Rank updateState={updateState} applicationInfo={applicationInfo} propsID={"rank"} value={applicationInfo.rank}/>*/}
                     <TextField id={"rank"} variant="standard" value={appContext.user?.rank ?? "E1"} disabled={true}
-                               label={"Rank"}/>
+                               label={"Grade"}/>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     {/*<DOB updateState={updateState} applicationInfo={applicationInfo} setApplicationInfo={setApplicationInfo} />*/}
