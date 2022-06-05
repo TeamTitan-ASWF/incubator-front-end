@@ -8,17 +8,17 @@ export default function inputValidation(input, type) {
         reason = reasonInput;
     }
 
-    if (input === "" || input === " " || input === 0) {
-        outputSetter("Enter all required data")
-        return
+    if (input.toString().trim() === "" || input === 0) {
+        outputSetter("Enter all required data");
+        return;
     }
 
     switch (type) {
         case 'email':
             if (!input.includes('@')) {
-                outputSetter("Enter a proper email")
+                outputSetter("Please enter a proper email");
             } else if (input.length === 0) {
-                outputSetter("Please enter an email")
+                outputSetter("Please enter an email");
             }
             break;
         // case 'dodId':
@@ -29,34 +29,36 @@ export default function inputValidation(input, type) {
         //     }
         //     break;
         case 'acftScore':
-            if (!typeof input === 'number') {
-                outputSetter("ACFT score must be a number")
-            } else if (input > 600 || input < 0) {
-                outputSetter("Please enter an ACFT score between 0 and 600")
+            // if (!typeof input === 'number') {
+            //     outputSetter("ACFT score must be a number");
+            // } else
+
+            if (input > 600 || input < 0) {
+                outputSetter("Please enter an ACFT score between 0 and 600");
             } else if (input === 0) {
-                outputSetter("Please enter an acftScore")
+                outputSetter("Please enter an acftScore");
             }
             break;
         case 'weight':
             if (input <= 0) {
-                outputSetter("Enter a weight")   //need to check for a float
+                outputSetter("Enter a weight");  //need to check for a float
             }
             break;
         case 'height':
             if (input <= 0) {
-                outputSetter("Enter height")
+                outputSetter("Enter height");
             }
             break;
         case 'referenceEmail':
             if (!input.includes('@')) {
-                outputSetter("Enter a proper email")
+                outputSetter("Please enter a proper email");
             } else if (input.length === 0) {
-                outputSetter("Please enter an email")
+                outputSetter("Please enter an email");
             }
             break;
         case 'referencePhone':
             if (input.length <= 9 || input.length >= 14) {
-                outputSetter('please enter a valid phone number')
+                outputSetter('Please enter a valid phone number (10-14 digits)');
             }
             break;
         // case 'fName':

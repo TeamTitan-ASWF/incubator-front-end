@@ -17,20 +17,22 @@ import inputValidation from '../inputValidation/inputValidation';
 import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
+import Grid from "@mui/material/Grid";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function ApplicationForm({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
     const appContext = useContext(AppContext);
     let outputMessage = [];
-    let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
-    let secondStepArray = ['techBG', 'motivation']
-    let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone']
+    let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
+    let secondStepArray = ['techBG', 'motivation'];
+    let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone'];
 
     const [message, setMessage] = useState("");
     const [messageTitle, setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
+    const [errorMessageOnNext, setErrorMessageOnNext] = useState([]);
     const [applicationInfo, setApplicationInfo] = React.useState({
         fName: appContext.user?.fName ?? "",
         lName: appContext.user?.lName ?? "",
@@ -132,23 +134,39 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     }
 
     const onChangeValidate = (e) => {
-        let errorListCopy = JSON.parse(JSON.stringify(errorList))
+        let errorListCopy = JSON.parse(JSON.stringify(errorList));
 
         //console.log(e.target.id);
 
         try {
             if (inputValidation(applicationInfo[e.target.id], e.target.id).output) {
-                errorListCopy.push(inputValidation(applicationInfo[e.target.value], e.target.id).output) //If element is not validated, add the elements name to this list
+                errorListCopy.push(inputValidation(applicationInfo[e.target.value], e.target.id).output); //If element is not validated, add the elements name to this list
             } else if (errorList.includes(e.target.id)) {
-                errorListCopy = errorListCopy.filter(ele => ele !== e.target.id)
+                errorListCopy = errorListCopy.filter(ele => ele !== e.target.id);
             }
         } catch {
-            errorListCopy.push(e.target.id)
+            errorListCopy.push(e.target.id);
         }
-        setErrorList(errorListCopy)
+
+        setErrorList(errorListCopy);
     }
 
+    const cleanErrorMessage = (errorMessageArray) => {
+        let tempErrorMessage = errorMessageArray.join("|||");
+        tempErrorMessage = tempErrorMessage.replace(/acftScore/, "ACFT Score");
+        tempErrorMessage = tempErrorMessage.replace(/height/, "Height");
+        tempErrorMessage = tempErrorMessage.replace(/weight/, "Weight");
+        tempErrorMessage = tempErrorMessage.replace(/techBG/, "Technical Background");
+        tempErrorMessage = tempErrorMessage.replace(/motivation/, "'Why you want to join'");
+        tempErrorMessage = tempErrorMessage.replace(/referenceName/, "Reference Name");
+        tempErrorMessage = tempErrorMessage.replace(/referenceEmail/, "Reference Email");
+        tempErrorMessage = tempErrorMessage.replace(/referencePhone/, "Reference Phone");
+
+        return tempErrorMessage.split("|||");
+    };
+
     function updateState(e) {
+
         setApplicationInfo(
             {
                 fName: (e.target.id === "fName") ? e.target.value : applicationInfo.fName,
@@ -222,14 +240,17 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
             try {
 
                 if (inputValidation(applicationInfo[element], element).output) {
-                    outputMessage.push(inputValidation(applicationInfo[element], element).output) //If element is not validated, add the elements name to this list
+                    const handlerOutput = inputValidation(applicationInfo[element], element);
+                    outputMessage.push(handlerOutput.reason); //If element is not validated, add the elements name to this list
                 }
 
-            } catch {
-                outputMessage.push(element)
+            } catch (error) {
+                //console.log(error);
+                outputMessage.push(element + " required");
             }
         });
 
+        setErrorMessageOnNext(cleanErrorMessage(outputMessage));
         setErrorList(outputMessage);
     }
 
@@ -238,7 +259,9 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         validatePage();
         // This makes sure steps 1-3 are not empty
 
-        if (outputMessage.length > 0) return;
+        if (outputMessage.length > 0) {
+            return;
+        }
 
         if (activeStep === 3) { // ApplicationForm the form instead of going
             if (isEditing === true) {
@@ -371,21 +394,28 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                         ) : (
                             <React.Fragment>
                                 {getStepContent(activeStep)}
-                                <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
-                                            Back
-                                        </Button>
-                                    )}
+                                <Grid container>
+                                    <Grid item xs={8} sx={{pl: '2%', color: "red", display: "flex", justifyContent: "flex-end", flexDirection: "column"}}>
+                                        {errorMessageOnNext.join(", ")}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+                                            {activeStep !== 0 && (
+                                                <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
+                                                    Back
+                                                </Button>
+                                            )}
 
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{mt: 3, ml: 1}}
-                                    >
-                                        {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
-                                    </Button>
-                                </Box>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleNext}
+                                                sx={{mt: 3, ml: 1}}
+                                            >
+                                                {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </React.Fragment>
                         )}
                     </React.Fragment>

@@ -10,9 +10,19 @@ import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
 
 
-export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,updateState,errorList,onChangeValidate}) {
+export default function PersonalInfoForm({
+                                             applicationInfo,
+                                             setApplicationInfo,
+                                             updateState,
+                                             errorList,
+                                             onChangeValidate
+                                         }) {
 
     const appContext = useContext(AppContext);
+    //const IS_NUMERIC_REGEX = /^[0-9]+$/;
+    const IS_FLOAT_REGEX = /^[0-9]+[.]?[0-9]*$/;
+    const IS_THREE_DIGITS_OR_LESS = /^[0-9]{0,3}$/;
+    const IS_TWO_DIGITS_OR_LESS = /^[0-9]{0,2}$/;
 
     // fName: appContext.user?.fName ?? "",
     // lName: appContext.user?.lName ?? "",
@@ -25,11 +35,11 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-              Personal Information
+                Personal Information
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={5}>
-  
+
                     <TextField
                         // required
                         // error = {errorList.includes("fName")}
@@ -37,7 +47,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         id="fName"
                         name="firstName"
                         label="First name"
-                        value= {appContext.user?.fName ?? ""}
+                        value={appContext.user?.fName ?? ""}
                         fullWidth
                         // autoComplete="given-name"
                         variant="standard"
@@ -47,7 +57,7 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         // }}
                         // onBlur={onChangeValidate}
                     />
-                    
+
                 </Grid>
                 <Grid item xs={12} sm={5}>
                     <TextField
@@ -102,21 +112,24 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                     />
                 </Grid>
                 <Grid item xs={12} sm={3} alignContent={"center"} alignItems={"center"}>
-                 {/*<Rank updateState={updateState} applicationInfo={applicationInfo} propsID={"rank"} value={applicationInfo.rank}/>*/}
-                    <TextField id={"rank"} variant="standard" value={appContext.user?.rank ?? "E1"} disabled={true} label={"Rank"} />
+                    {/*<Rank updateState={updateState} applicationInfo={applicationInfo} propsID={"rank"} value={applicationInfo.rank}/>*/}
+                    <TextField id={"rank"} variant="standard" value={appContext.user?.rank ?? "E1"} disabled={true}
+                               label={"Rank"}/>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     {/*<DOB updateState={updateState} applicationInfo={applicationInfo} setApplicationInfo={setApplicationInfo} />*/}
-                    <TextField fullWidth={true} variant="standard" id={"dob"} value={(appContext.user?.dob) ? formatDate(appContext.user?.dob) : ''} disabled={true} label={"DOB"} />
+                    <TextField fullWidth={true} variant="standard" id={"dob"}
+                               value={(appContext.user?.dob) ? formatDate(appContext.user?.dob) : ''} disabled={true}
+                               label={"DOB"}/>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <LastACFT updateState={updateState} applicationInfo={applicationInfo} setApplicationInfo={setApplicationInfo} />
+                    <LastACFT updateState={updateState} applicationInfo={applicationInfo}
+                              setApplicationInfo={setApplicationInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
                         required
-                        type="number"
-                        error = {errorList.includes("acftScore")}
+                        error={errorList.includes("acftScore")}
                         id="acftScore"
                         name="acftScore"
                         label="ACFT Score"
@@ -125,7 +138,14 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                         autoComplete="acftScore"
                         variant="standard"
                         onBlur={onChangeValidate}
-                        onChange={updateState}
+                        onChange={(e) => {
+                            const currentValue = e.target.value;
+                            if (currentValue !== "" && !IS_THREE_DIGITS_OR_LESS.test(currentValue)) {
+                                return;
+                            }
+                            updateState(e);
+                        }
+                        }
                     />
 
                 </Grid>
@@ -133,16 +153,22 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                 <Grid item xs={12} sm={6}>
                     <TextField
                         required
-                        type="number"
                         id="height"
-                        error = {errorList.includes("height")}
+                        error={errorList.includes("height")}
                         name="height"
                         label="Height in inches"
                         fullWidth
                         value={applicationInfo.height || ""}
                         autoComplete="height"
                         variant="standard"
-                        onChange={updateState}
+                        onChange={(e) => {
+                            const currentValue = e.target.value;
+                            if (currentValue !== "" && !IS_TWO_DIGITS_OR_LESS.test(currentValue)) {
+                                return;
+                            }
+                            updateState(e);
+                        }
+                        }
                         onBlur={onChangeValidate}
                     />
                 </Grid>
@@ -150,15 +176,21 @@ export default function PersonalInfoForm({ applicationInfo, setApplicationInfo,u
                     <TextField
                         required
                         id="weight"
-                        error = {errorList.includes("weight")}
-                        type="number"
+                        error={errorList.includes("weight")}
                         name="weight"
                         label="Weight lbs"
                         autoComplete="weight"
                         value={applicationInfo.weight || ""}
                         fullWidth
                         variant="standard"
-                        onChange={updateState}
+                        onChange={(e) => {
+                            const currentValue = e.target.value;
+                            if (currentValue !== "" && !IS_FLOAT_REGEX.test(currentValue)) {
+                                return;
+                            }
+                            updateState(e);
+                        }
+                        }
                         onBlur={onChangeValidate}
                     />
                 </Grid>

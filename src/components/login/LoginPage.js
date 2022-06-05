@@ -59,7 +59,7 @@ export default function LoginPage({userCreated}) {
             }}>
             {userCreated ? <> <Typography>Account Created Successfully!</Typography> <br/> </> : ""}
 
-            <Typography>Login Page</Typography>
+            <Typography variant={"h4"}>Login</Typography>
 
             <br/>
             <form onSubmit={login}>
@@ -69,8 +69,8 @@ export default function LoginPage({userCreated}) {
                     variant="outlined"
                     label="User Name"
                     id="userName"
-
-                /><br/><br/>
+                />
+                <br/><br/>
                 <TextField
                     required
                     error={!!errorMessage}
@@ -78,9 +78,10 @@ export default function LoginPage({userCreated}) {
                     variant="outlined"
                     label="Password"
                     type={"password"}
-
-                /><br/><br/>
+                />
+                <br/><br />
                 <Typography color='error'>{errorMessage}</Typography>
+                <br/>
                 <Button variant={"contained"} sx={{mr: '3%'}} type="submit">Login</Button>
                 <Button variant={"contained"} onClick={() => changePage("/create_account")}>Create User</Button>
             </form>
