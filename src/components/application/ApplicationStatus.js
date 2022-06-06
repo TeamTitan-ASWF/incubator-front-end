@@ -7,9 +7,9 @@ import UserViewAddEditParent from "../user/UserViewAddEditParent";
 import Typography from "@mui/material/Typography";
 
 
-export default function ApplicationStatus() {
+export default function ApplicationStatus({setShowList, showList}) {
     const appContext = useContext(AppContext);
-    const [showList, setShowList] = useState(true);
+    //const [showList, setShowList] = useState(true);
     const [currentApplicationId, setCurrentApplicationId] = useState(null);
     const [applicants, setApplicants] = useState([]);
     const [filteredApplications, setFilteredApplications] = useState([]);

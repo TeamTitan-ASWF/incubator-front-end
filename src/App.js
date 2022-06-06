@@ -15,9 +15,11 @@ import AppContext from "./components/contexts/AppContext";
 import CreateUser from "./components/profile/CreateUser";
 import LoginPage from "./components/login/LoginPage";
 import ApplicationStatus from "./components/application/ApplicationStatus";
+import {useState} from "react";
 
 export default function App() {
     const appContext = useContext(AppContext);
+    const [showList, setShowList] = useState(true);
 
     const theme = createTheme({
         palette: {
@@ -34,7 +36,7 @@ export default function App() {
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
-                <NavBar />
+                <NavBar showList={showList} setShowList={setShowList} />
 
                 <Container maxWidth={"lg"} sx={{justifyContent: 'center', alignContent: 'center',}}>
                     <Routes>
@@ -48,13 +50,13 @@ export default function App() {
                                element={appContext.isValidated ? <LandingPage/> : <CreateUser/>}/>
 
                         <Route path="/status"
-                               element={appContext.isValidated ? <ApplicationStatus/> : <LoginPage/>}/>
+                               element={appContext.isValidated ? <ApplicationStatus showList={showList} setShowList={setShowList} /> : <LoginPage/>}/>
 
                         <Route path="/newApp"
-                               element={appContext.isValidated ? <ApplicationForm/> : <LoginPage/>}/>
+                               element={appContext.isValidated ? <ApplicationForm showList={showList} setShowList={setShowList} /> : <LoginPage/>}/>
 
                         <Route path="/reviewer"
-                               element={appContext.user?.isReviewer ? <ReviewerSection/> : <LandingPage/>}/>
+                               element={appContext.user?.isReviewer ? <ReviewerSection showList={showList} setShowList={setShowList} /> : <LandingPage/>}/>
 
                         <Route path="/profile"
                                element={appContext.isValidated ? <UserProfile/> : <LoginPage/>}/>
