@@ -6,11 +6,11 @@ import {AppContextProvider} from "./components/contexts/AppContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <AppContextProvider>
             <App/>
         </AppContextProvider>
-    </React.StrictMode>
+    // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -64,7 +64,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     })
     useEffect(() => {
         if (isEditing) {
-            setApplicationInfo({ ...currentApplicationInfo,
+            setApplicationInfo({
+                ...currentApplicationInfo,
                 // refNum: currentApplicationInfo.refNum,
                 // fName: currentApplicationInfo.fName,
                 // lName: currentApplicationInfo.lName,
@@ -336,7 +337,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     referencePhone3: applicationInfo.referencePhone3,
                     dateSubmitted: formatDate(new Date())
                 }).then((r) => {
-                    if(r.wasError) {
+                    if (r.wasError) {
                         setMessageTitle("Something went wrong.");
                         setMessage('Unfortunately there was an error submitting your application. Please try again later.');
                         setActiveStep(activeStep + 1);
@@ -395,7 +396,13 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                             <React.Fragment>
                                 {getStepContent(activeStep)}
                                 <Grid container>
-                                    <Grid item xs={8} sx={{pl: '2%', color: "red", display: "flex", justifyContent: "flex-end", flexDirection: "column"}}>
+                                    <Grid item xs={8} sx={{
+                                        pl: '2%',
+                                        color: "red",
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                        flexDirection: "column"
+                                    }}>
                                         {errorMessageOnNext.join(", ")}
                                     </Grid>
                                     <Grid item xs={4}>
@@ -405,7 +412,16 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                                                     Back
                                                 </Button>
                                             )}
-
+                                            {activeStep !== steps.length - 1 && (
+                                                <Button
+                                                    variant="contained"
+                                                    sx={{mt: 3, ml: 1}}
+                                                    onClick={() => {
+                                                        //nothing yet
+                                                    }}
+                                                >
+                                                    Save
+                                                </Button>)}
                                             <Button
                                                 variant="contained"
                                                 onClick={handleNext}

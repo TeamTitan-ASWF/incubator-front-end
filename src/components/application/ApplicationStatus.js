@@ -57,6 +57,7 @@ export default function ApplicationStatus({setShowList, showList}) {
                     <UserViewAddEditParent
                         id={currentApplicationId}
                         setShowList={setShowList}
+                        getApplications={getApplications}
                     />
                 }
             </Container>
