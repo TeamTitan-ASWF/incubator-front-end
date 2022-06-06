@@ -54,7 +54,6 @@ export default function CreateUser() {
                 setErrorMessage("Something went wrong. Please try again later.");
             }
 
-            console.log(r.apiErrorMsg.response.data)
         } else {
             changePage('/login?newAccount=true');
         }

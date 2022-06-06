@@ -24,6 +24,7 @@ const apiCall = async (entity, action, newData, path = '') => {
     let apiErrorMsg = '';
     let wasError = false;
     let apiData;
+    let apiStatus;
     let apiURL;
 
     switch (entity) {
@@ -48,6 +49,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             try {
                 const res = await axios.get(apiURL);
                 apiData = await res.data;
+                apiStatus = res.status;
             } catch (err) {
                 wasError = true;
                 apiErrorMsg = err;
@@ -58,6 +60,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             try {
                 const res = await axios.get(apiURL + newData);
                 apiData = await res.data;
+                apiStatus = res.status;
             } catch (err) {
                 wasError = true;
                 apiErrorMsg = err;
@@ -68,6 +71,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             try {
                 const res = await axios.post(apiURL, newData);
                 apiData = await res.data;
+                apiStatus = res.status;
             } catch (err) {
                 wasError = true;
                 apiErrorMsg = err;
@@ -78,6 +82,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             try {
                 const res = await axios.patch(apiURL + newData.id, newData);
                 apiData = await res.data;
+                apiStatus = res.status;
             } catch (err) {
                 wasError = true;
                 apiErrorMsg = err;
@@ -88,6 +93,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             try {
                 const res = await axios.delete(apiURL + newData);
                 apiData = await res.data;
+                apiStatus = res.status;
             } catch (err) {
                 wasError = true;
                 apiErrorMsg = err;
@@ -100,7 +106,7 @@ const apiCall = async (entity, action, newData, path = '') => {
             apiErrorMsg = 'should not get here.';
     }
 
-    return {apiData, wasError, apiErrorMsg};
+    return {apiData, apiStatus, wasError, apiErrorMsg};
 };
 
 export default apiCall;
