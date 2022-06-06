@@ -7,18 +7,28 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import ApplicationForm from "../application/ApplicationForm";
 
-export default function UserViewAddEditParent({id, setShowList}) {
+export default function UserViewAddEditParent({id, setShowList, getApplications}) {
     const [application, setApplication] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         getApplication(id)
             .then(r => r)
-    }, [application.status, id])
+    }, [id])
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)
         setApplication(res.apiData);
+    }
+
+    const handleRescind = (id) => {
+        apiCall('application', 'update', {
+            id: id,
+            status: (application.status === "rescinded") ? "pending" : "rescinded"
+        }).then(r => {
+            getApplication(id);
+            getApplications();
+        });
     }
 
     if (isEditing === false) {
@@ -47,10 +57,18 @@ export default function UserViewAddEditParent({id, setShowList}) {
                                 Back
                             </Button>
                         </Grid>
-                        <Grid item xs={6} sx={{textAlign:"right"}}>
+                        <Grid item xs={6} sx={{textAlign: "right"}}>
+                            <Button
+                                sx={{mr: 2}}
+                                disabled={(application.status === "approved" || application.status === "denied")}
+                                variant="contained"
+                                onClick={() => handleRescind(id)}
+                            >
+                                {application.status === "rescinded" ? "Un-rescind": "Rescind"}
+                            </Button>
                             <Button
                                 sx={{}}
-                                disabled = {(application.status !== "pending")}
+                                disabled={(application.status !== "pending")}
                                 variant="contained"
                                 onClick={() => {
                                     setIsEditing(true)
@@ -66,8 +84,11 @@ export default function UserViewAddEditParent({id, setShowList}) {
         );
     } else if (isEditing === true) {
         return (
-            <ApplicationForm currentApplicationInfo={application} isEditing={isEditing} setIsEditing={setIsEditing}
-                             currentApplicationId={id}/>
+            <ApplicationForm
+                currentApplicationInfo={application}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                currentApplicationId={id}/>
         )
     }
 }

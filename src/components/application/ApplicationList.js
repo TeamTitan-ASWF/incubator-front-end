@@ -134,12 +134,14 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
+    const [showRescinded, setShowRescinded] = useState(true);
 
     const filterResults =  (event, checked) => {
         //needed because of state batching
         let pendingChecked = showPending;
         let approvedChecked = showApproved;
         let deniedChecked = showDenied;
+        let rescindedChecked = showRescinded;
 
         switch (event.target.id) {
             case "chkPending":
@@ -154,11 +156,15 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                  setShowDenied(checked);
                 deniedChecked = checked;
                 break;
+            case "chkRescinded":
+                setShowRescinded(checked);
+                rescindedChecked = checked;
+                break;
             default:
                 // should not get here
         }
 
-        if(!deniedChecked || !approvedChecked || !pendingChecked) {
+        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked) {
             const filteredResults = applicants.filter(applicant => {
                 switch (applicant.status) {
                     case "pending":
@@ -167,6 +173,8 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                         return approvedChecked;
                     case "denied":
                         return deniedChecked;
+                    case "rescinded":
+                        return rescindedChecked;
                     default:
                         return false;
                 }
@@ -275,6 +283,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                         <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
                                         <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
                                         <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
+                                        <FormControlLabel control={<Checkbox id={"chkRescinded"} onChange={(event, checked) => filterResults(event, checked)} checked={showRescinded} />} label="Rescinded"/>
                                     </FormGroup>
                             </Popover>
                         </div>
