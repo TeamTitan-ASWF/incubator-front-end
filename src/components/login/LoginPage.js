@@ -2,15 +2,37 @@ import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import {useContext, useState} from "react";
+import {useContext, useState,useEffect} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import {useNavigate} from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 
 export default function LoginPage({userCreated}) {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
+    const handleCallBack = (r) => {
+        console.log("hey")
+        console.log(jwtDecode(r.credential))
+    }
+
+    useEffect(()=> {
+        /*global google*/
+        google.accounts.id.initialize({
+            client_id: "23314949546-c69jdm466a2h99bqb009abt550gns9cl.apps.googleusercontent.com",
+            callback: handleCallBack,
+            
+        })     
+        google.accounts.id.renderButton(
+            
+            document.getElementById("signInDiv"),
+            {theme : 'outline',size: "large"}
+        )
+
+        console.log(document.cookie)
+      
+    }, [])
 
     let navigate = useNavigate();
 
@@ -50,6 +72,12 @@ export default function LoginPage({userCreated}) {
             {userCreated ? <> <Typography>Account Created Successfully!</Typography> <br/> </> : ""}
 
             <Typography>Login Page</Typography>
+                <div id="signInDiv">
+
+                </div>
+
+
+
 
             <br/>
             <form onSubmit={login}>
