@@ -16,8 +16,8 @@ export default function LoginPage({userCreated}) {
         console.log("hey")
         console.log(jwtDecode(r.credential))
         let tempAccount =  jwtDecode(r.credential);
-        login(tempAccount)
-
+        //login(tempAccount)
+        apiCall('login', 'add', {user : r.credential}).then(setUser);
     }
 
     useEffect(()=> {
@@ -52,9 +52,11 @@ export default function LoginPage({userCreated}) {
         navigate(path);
     }
 
-    const login = (user) => {
-        apiCall('login', 'add', {userName: user.email, fName : user.given_name, lName : user.family_name}).then(setUser);
 
+    const login = (e) => {
+        e.preventDefault();
+
+        apiCall('login', 'add', {userName: e.target.userName.value, password: e.target.password.value}).then(setUser);
     }
 
     const setUser = (r) => {
@@ -93,15 +95,7 @@ export default function LoginPage({userCreated}) {
             }}>
 
             <Typography>Login Page</Typography>
-
-
-
-
-
-
             <Typography variant={"h4"}>Login</Typography>
-
-
             <br/>
             <form onSubmit={login}>
                 <TextField
