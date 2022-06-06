@@ -11,6 +11,7 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
             <Grid item xs={12} sm={5}>
                 <TextField
                     id="fName"
+                    required
                     name="firstName"
                     label="First name"
                     defaultValue={userData?.fName ?? ''}
@@ -23,6 +24,7 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
             <Grid item xs={12} sm={5}>
                 <TextField
                     id="lName"
+                    required
                     name="lastName"
                     label="Last name"
                     defaultValue={userData?.lName ?? ''}
@@ -47,6 +49,7 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
             <Grid item xs={12} sm={5}>
                 <TextField
                     id="dodId"
+                    required
                     name="dodId"
                     label="Dod ID"
                     type="number"
@@ -105,7 +108,9 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
                         views={["year", "month", "day"]}
                         value={dob}
                         onChange={(value) => setDob(value)}
-                        renderInput={(params) => <TextField {...params} />}
+                        disableFuture={true}
+                        minDate={new Date(1940, 1, 1)}
+                        renderInput={(params) => <TextField {...params} onKeyDown={(e) => {e.preventDefault(); return false;}} />}
                     />
                 </LocalizationProvider>
             </Grid>

@@ -17,28 +17,30 @@ import inputValidation from '../inputValidation/inputValidation';
 import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
+import Grid from "@mui/material/Grid";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function ApplicationForm({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
     const appContext = useContext(AppContext);
     let outputMessage = [];
-    let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight']
-    let secondStepArray = ['techBG', 'motivation']
-    let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone']
+    let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
+    let secondStepArray = ['techBG', 'motivation'];
+    let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone'];
 
     const [message, setMessage] = useState("");
     const [messageTitle, setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
+    const [errorMessageOnNext, setErrorMessageOnNext] = useState([]);
     const [applicationInfo, setApplicationInfo] = React.useState({
-        refNum: "",
         fName: appContext.user?.fName ?? "",
         lName: appContext.user?.lName ?? "",
         mI: appContext.user?.mI ?? "",
         dodId: appContext.user?.dodId ?? "",
         rank: appContext.user?.rank ?? "E1",
-        dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        //dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
+        dob: (appContext.user?.dob) ? formatDate(appContext.user?.dob) : '1990/01/01',
         lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
         acftScore: 0,
         height: 0,
@@ -62,49 +64,48 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     })
     useEffect(() => {
         if (isEditing) {
-            setApplicationInfo({
-                refNum: currentApplicationInfo.refNum,
-                fName: currentApplicationInfo.fName,
-                lName: currentApplicationInfo.lName,
-                mI: currentApplicationInfo.mI,
-                dodId: currentApplicationInfo.dodId,
-                rank: currentApplicationInfo.rank,
-                dob: currentApplicationInfo.dob,
-                lastACFT: currentApplicationInfo.lastACFT,
-                acftScore: currentApplicationInfo.acftScore,
-                height: currentApplicationInfo.height,
-                weight: currentApplicationInfo.weight,
-                techBG: currentApplicationInfo.techBG,
-                motivation: currentApplicationInfo.motivation,
-                referenceName: currentApplicationInfo.referenceName,
-                referenceRank: currentApplicationInfo.referenceRank,
-                referenceEmail: currentApplicationInfo.referenceEmail,
-                referencePhone: currentApplicationInfo.referencePhone,
-                referenceName2: currentApplicationInfo.referenceName2,
-                referenceRank2: currentApplicationInfo.referenceRank2,
-                referenceEmail2: currentApplicationInfo.referenceEmail2,
-                referencePhone2: currentApplicationInfo.referencePhone2,
-                referenceName3: currentApplicationInfo.referenceName3,
-                referenceRank3: currentApplicationInfo.referenceRank3,
-                referenceEmail3: currentApplicationInfo.referenceEmail3,
-                referencePhone3: currentApplicationInfo.referencePhone3,
+            setApplicationInfo({ ...currentApplicationInfo,
+                // refNum: currentApplicationInfo.refNum,
+                // fName: currentApplicationInfo.fName,
+                // lName: currentApplicationInfo.lName,
+                // mI: currentApplicationInfo.mI,
+                // dodId: currentApplicationInfo.dodId,
+                // rank: currentApplicationInfo.rank,
+                // dob: currentApplicationInfo.dob,
+                // lastACFT: currentApplicationInfo.lastACFT,
+                // acftScore: currentApplicationInfo.acftScore,
+                // height: currentApplicationInfo.height,
+                // weight: currentApplicationInfo.weight,
+                // techBG: currentApplicationInfo.techBG,
+                // motivation: currentApplicationInfo.motivation,
+                // referenceName: currentApplicationInfo.referenceName,
+                // referenceRank: currentApplicationInfo.referenceRank,
+                // referenceEmail: currentApplicationInfo.referenceEmail,
+                // referencePhone: currentApplicationInfo.referencePhone,
+                // referenceName2: currentApplicationInfo.referenceName2,
+                // referenceRank2: currentApplicationInfo.referenceRank2,
+                // referenceEmail2: currentApplicationInfo.referenceEmail2,
+                // referencePhone2: currentApplicationInfo.referencePhone2,
+                // referenceName3: currentApplicationInfo.referenceName3,
+                // referenceRank3: currentApplicationInfo.referenceRank3,
+                // referenceEmail3: currentApplicationInfo.referenceEmail3,
+                // referencePhone3: currentApplicationInfo.referencePhone3,
+                lastACFT: fixTimeZone(currentApplicationInfo.lastACFT),
                 status: "pending",
                 dateSubmitted: "",
             })
         }
-    },[])
-
+    }, [currentApplicationInfo, isEditing])
 
 
     const fillFields = () => {
         setApplicationInfo({
-                refNum: "1234567890",
-                fName: "Steven",
-                lName: "Rodgers",
-                mI: "G",
-                dodId: "1234567890",
-                rank: "O3",
-                dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
+                // fName: "Steven",
+                // lName: "Rodgers",
+                // mI: "G",
+                // dodId: "1234567890",
+                // rank: "O3",
+                // dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
                 lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
                 acftScore: 600,
                 height: 74,
@@ -118,6 +119,14 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 referenceRank: "E5",
                 referenceEmail: "bigbucky17@gmail.com",
                 referencePhone: "1234567890",
+                referenceName2: "Bucky Barnes",
+                referenceRank2: "E5",
+                referenceEmail2: "bigbucky17@gmail.com",
+                referencePhone2: "1234567890",
+                referenceName3: "Bucky Barnes",
+                referenceRank3: "E5",
+                referenceEmail3: "bigbucky17@gmail.com",
+                referencePhone3: "1234567890",
                 status: "Pending",
                 dateSubmitted: ""
             }
@@ -125,24 +134,41 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     }
 
     const onChangeValidate = (e) => {
-        let errorListCopy = JSON.parse(JSON.stringify(errorList))
+        let errorListCopy = JSON.parse(JSON.stringify(errorList));
+
+        //console.log(e.target.id);
 
         try {
             if (inputValidation(applicationInfo[e.target.id], e.target.id).output) {
-                errorListCopy.push(inputValidation(applicationInfo[e.target.value], e.target.id).output) //If element is not validated, add the elements name to this list
+                errorListCopy.push(inputValidation(applicationInfo[e.target.value], e.target.id).output); //If element is not validated, add the elements name to this list
             } else if (errorList.includes(e.target.id)) {
-                errorListCopy = errorListCopy.filter(ele => ele !== e.target.id)
+                errorListCopy = errorListCopy.filter(ele => ele !== e.target.id);
             }
         } catch {
-            errorListCopy.push(e.target.id)
+            errorListCopy.push(e.target.id);
         }
-        setErrorList(errorListCopy)
+
+        setErrorList(errorListCopy);
     }
 
+    const cleanErrorMessage = (errorMessageArray) => {
+        let tempErrorMessage = errorMessageArray.join("|||");
+        tempErrorMessage = tempErrorMessage.replace(/acftScore/, "ACFT Score");
+        tempErrorMessage = tempErrorMessage.replace(/height/, "Height");
+        tempErrorMessage = tempErrorMessage.replace(/weight/, "Weight");
+        tempErrorMessage = tempErrorMessage.replace(/techBG/, "Technical Background");
+        tempErrorMessage = tempErrorMessage.replace(/motivation/, "'Why you want to join'");
+        tempErrorMessage = tempErrorMessage.replace(/referenceName/, "Reference Name");
+        tempErrorMessage = tempErrorMessage.replace(/referenceEmail/, "Reference Email");
+        tempErrorMessage = tempErrorMessage.replace(/referencePhone/, "Reference Phone");
+
+        return tempErrorMessage.split("|||");
+    };
+
     function updateState(e) {
+
         setApplicationInfo(
             {
-                refNum: (e.target.id === "refNum") ? e.target.value : applicationInfo.refNum,
                 fName: (e.target.id === "fName") ? e.target.value : applicationInfo.fName,
                 lName: (e.target.id === "lName") ? e.target.value : applicationInfo.lName,
                 mI: (e.target.id === "mI") ? e.target.value : applicationInfo.mI,
@@ -214,14 +240,17 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
             try {
 
                 if (inputValidation(applicationInfo[element], element).output) {
-                    outputMessage.push(inputValidation(applicationInfo[element], element).output) //If element is not validated, add the elements name to this list
+                    const handlerOutput = inputValidation(applicationInfo[element], element);
+                    outputMessage.push(handlerOutput.reason); //If element is not validated, add the elements name to this list
                 }
 
-            } catch {
-                outputMessage.push(element)
+            } catch (error) {
+                //console.log(error);
+                outputMessage.push(element + " required");
             }
         });
 
+        setErrorMessageOnNext(cleanErrorMessage(outputMessage));
         setErrorList(outputMessage);
     }
 
@@ -230,7 +259,9 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         validatePage();
         // This makes sure steps 1-3 are not empty
 
-        if (outputMessage.length > 0) return;
+        if (outputMessage.length > 0) {
+            return;
+        }
 
         if (activeStep === 3) { // ApplicationForm the form instead of going
             if (isEditing === true) {
@@ -243,9 +274,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     mI: applicationInfo.mI,
                     dodId: applicationInfo.dodId.toString(),
                     rank: applicationInfo.rank,
-                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
                     dob: formatDate(applicationInfo.dob),
+                    user: appContext.user.id,
                     lastACFT: formatDate(applicationInfo.lastACFT),
                     acftScore: applicationInfo.acftScore,
                     height: applicationInfo.height,
@@ -269,7 +299,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 })
                     .then((r) => {
                         setMessageTitle("Your application has been updated successfully");
-                        setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
+                        setMessage(`Please periodically check your Application Status tab for status updates.`);
                         setActiveStep(activeStep + 1)
                         //setIsEditing (false);
                     })
@@ -278,18 +308,13 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                         setActiveStep(activeStep + 1)
                     })
             } else {
-                //console.log("HELLO");
-
                 apiCall('application', 'add', {
                     user: appContext.user.id,
-                    // refNum: applicationInfo.dodId,
                     fName: applicationInfo.fName,
                     lName: applicationInfo.lName,
                     mI: applicationInfo.mI,
                     dodId: applicationInfo.dodId,
                     rank: applicationInfo.rank,
-                    // dob: moment(Date.parse(applicationInfo.dob) - 28800000).format('YYYY-MM-DD'),
-                    // lastACFT: moment(Date.parse(applicationInfo.lastACFT) - 28800000).format('YYYY-MM-DD'),
                     dob: formatDate(applicationInfo.dob),
                     lastACFT: formatDate(applicationInfo.lastACFT),
                     acftScore: applicationInfo.acftScore,
@@ -311,12 +336,19 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     referencePhone3: applicationInfo.referencePhone3,
                     dateSubmitted: formatDate(new Date())
                 }).then((r) => {
-                    setMessageTitle("Thank you for applying");
-                    setMessage(`Your reference number is ${applicationInfo.dodId} please feel free to check back for a status update`)
-                    setActiveStep(activeStep + 1)
+                    if(r.wasError) {
+                        setMessageTitle("Something went wrong.");
+                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
+                        setActiveStep(activeStep + 1);
+                    } else {
+                        setMessageTitle("Thank you for applying.");
+                        setMessage(`Please periodically check your Application Status tab for status updates.`);
+                        setActiveStep(activeStep + 1);
+                    }
                 })
                     .catch((r) => {
-                        setMessageTitle("Something went wrong please try again later")
+                        setMessageTitle("Something went wrong.");
+                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
                         setActiveStep(activeStep + 1)
                     })
             }
@@ -334,7 +366,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     if (isEditing === true) {
         saveOrSubmit = "Save";
     } else {
-        saveOrSubmit = "ApplicationForm";
+        saveOrSubmit = "Submit";
     }
 
     return (
@@ -362,21 +394,28 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                         ) : (
                             <React.Fragment>
                                 {getStepContent(activeStep)}
-                                <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                                    {activeStep !== 0 && (
-                                        <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
-                                            Back
-                                        </Button>
-                                    )}
+                                <Grid container>
+                                    <Grid item xs={8} sx={{pl: '2%', color: "red", display: "flex", justifyContent: "flex-end", flexDirection: "column"}}>
+                                        {errorMessageOnNext.join(", ")}
+                                    </Grid>
+                                    <Grid item xs={4}>
+                                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+                                            {activeStep !== 0 && (
+                                                <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
+                                                    Back
+                                                </Button>
+                                            )}
 
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{mt: 3, ml: 1}}
-                                    >
-                                        {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
-                                    </Button>
-                                </Box>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleNext}
+                                                sx={{mt: 3, ml: 1}}
+                                            >
+                                                {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
+                                            </Button>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </React.Fragment>
                         )}
                     </React.Fragment>

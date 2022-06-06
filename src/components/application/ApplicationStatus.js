@@ -1,57 +1,65 @@
-import {TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import ApplicationList from "./ApplicationList";
-import {useContext, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
-import ReviewerApplicationView from "../reviewer/ReviewerApplicationView";
+import UserViewAddEditParent from "../user/UserViewAddEditParent";
+import Typography from "@mui/material/Typography";
 
-export default function ApplicationStatus({setRefNumber, handleClick}) {
+
+export default function ApplicationStatus({setShowList, showList}) {
     const appContext = useContext(AppContext);
-    const [showList, setShowList] = useState(true);
+    //const [showList, setShowList] = useState(true);
     const [currentApplicationId, setCurrentApplicationId] = useState(null);
     const [applicants, setApplicants] = useState([]);
     const [filteredApplications, setFilteredApplications] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getApplications = useCallback(async () => {
+        const response = await apiCall('getApplicationByUser', 'read', appContext.user.id);
+
+        if (response.apiErrorMsg) {
+            //console.log(response.apiErrorMsg.response.data);
+            await setApplicants([]);
+            await setFilteredApplications([]);
+
+        } else {
+            await setApplicants(response.apiData);
+            await setFilteredApplications(response.apiData);
+        }
+        await setIsLoading(false);
+    }, [appContext.user.id]);
 
     useEffect(() => {
-        getApplications();
-    }, []);
+        getApplications().then(r=>r);
+    }, [getApplications]);
 
-    const getApplications = async () => {
-        const response = await apiCall('getApplicationByUser', 'read', appContext.user.id);
-        await setApplicants(response.apiData);
-        await setFilteredApplications(response.apiData);
-    }
+    if (isLoading) {
+        return <></>
+    } else {
+        return (
+            <Container component="main" sx={{mb: 4}}>
 
-    return (
-        <Container component="main" maxWidth="sm" sx={{mb: 4}}>
-            <Paper
-                variant="outlined"
-                sx={{
-                    my: {xs: 3, md: 6}, p: {xs: 2, md: 3},
-                    textAlign: "center",
-                    boxShadow: 20
-                }}>
-
-                {   showList ?
-                    <ApplicationList
-                        setShowList={setShowList}
-                        setCurrentApplicationId={setCurrentApplicationId}
-                        applicants={applicants}
-                        setApplicants={setApplicants}
-                        filteredApplications={filteredApplications}
-                        setFilteredApplications={setFilteredApplications}
-                    />
+                {showList ? (applicants.length === 0) ?
+                        <><br/><br/><Typography variant={"h5"}> You have not yet started an application. Please start the
+                            application
+                            process by clicking on "New Application" on the main menu. </Typography></>
+                        :
+                        <ApplicationList
+                            setShowList={setShowList}
+                            setCurrentApplicationId={setCurrentApplicationId}
+                            applicants={applicants}
+                            setApplicants={setApplicants}
+                            filteredApplications={filteredApplications}
+                            setFilteredApplications={setFilteredApplications}
+                        />
                     :
-                    <ReviewerApplicationView
-                    id={currentApplicationId}
-                    setShowList={setShowList}
+                    <UserViewAddEditParent
+                        id={currentApplicationId}
+                        setShowList={setShowList}
                     />
                 }
-            </Paper>
-        </Container>
-    );
+            </Container>
+        );
+    }
 }

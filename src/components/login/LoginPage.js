@@ -2,16 +2,25 @@ import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+<<<<<<< HEAD
 import {useContext, useState,useEffect} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import {useNavigate} from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
+=======
+import {useContext, useEffect, useState} from "react";
+import apiCall from "../api/api";
+import AppContext from "../contexts/AppContext";
+import {useNavigate} from "react-router-dom";
+import AppSnackBar from "../ui/AppSnackBar";
+>>>>>>> 7d89f28ce1cf972dbd2070ca1fea5c96c7af5ceb
 
 export default function LoginPage({userCreated}) {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
+<<<<<<< HEAD
     const handleCallBack = (r) => {
         console.log("hey")
         console.log(jwtDecode(r.credential))
@@ -33,6 +42,19 @@ export default function LoginPage({userCreated}) {
         console.log(document.cookie)
       
     }, [])
+=======
+    const [showSnackBar, setShowSnackBar] = useState(false);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+
+        if (queryParams.get("newAccount") === "true") {
+            setShowSnackBar(true);
+        }
+
+    }, []);
+
+>>>>>>> 7d89f28ce1cf972dbd2070ca1fea5c96c7af5ceb
 
     let navigate = useNavigate();
 
@@ -51,7 +73,6 @@ export default function LoginPage({userCreated}) {
         if (r.wasError) {
             setErrorMessage("Wrong Username or Password")
         } else {
-            console.log(r.apiData);
             appContext.setIsValidated(true)
             appContext.setUser(r.apiData)
             localStorage.setItem("isValidated", 'true');
@@ -71,6 +92,7 @@ export default function LoginPage({userCreated}) {
             }}>
             {userCreated ? <> <Typography>Account Created Successfully!</Typography> <br/> </> : ""}
 
+<<<<<<< HEAD
             <Typography>Login Page</Typography>
                 <div id="signInDiv">
 
@@ -78,30 +100,37 @@ export default function LoginPage({userCreated}) {
 
 
 
+=======
+            <Typography variant={"h4"}>Login</Typography>
+>>>>>>> 7d89f28ce1cf972dbd2070ca1fea5c96c7af5ceb
 
             <br/>
             <form onSubmit={login}>
                 <TextField
                     required
-                    error={errorMessage ? true : false}
+                    error={!!errorMessage}
                     variant="outlined"
                     label="User Name"
                     id="userName"
-
-                /><br/><br/>
+                />
+                <br/><br/>
                 <TextField
                     required
-                    error={errorMessage ? true : false}
+                    error={!!errorMessage}
                     id="password"
                     variant="outlined"
                     label="Password"
                     type={"password"}
-
-                /><br/><br/>
+                />
+                <br/><br />
                 <Typography color='error'>{errorMessage}</Typography>
+                <br/>
                 <Button variant={"contained"} sx={{mr: '3%'}} type="submit">Login</Button>
                 <Button variant={"contained"} onClick={() => changePage("/create_account")}>Create User</Button>
             </form>
+            {showSnackBar && <AppSnackBar isShown={showSnackBar}
+                                          message={"Account successfuly created. Please login with new username/password."}
+                                          severity={"success"}/>}
         </Paper>
     )
 }

@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {useContext} from "react";
@@ -24,7 +23,7 @@ export default function ReviewerButtons({status, approveApplication, setShowList
         <Grid item xs={6} sx={{textAlign: "right"}}>
             <Button
                 color="success"
-                disabled={status === "approved" ? true : false}
+                disabled={status === "approved"}
                 variant="contained"
                 sx={{ml: 2}}
                 onClick={() => approveApplication("approved")}
@@ -33,7 +32,7 @@ export default function ReviewerButtons({status, approveApplication, setShowList
             </Button>
             <Button
                 color="warning"
-                disabled={status === "pending" ? true : false}
+                disabled={status === "pending"}
                 variant="contained"
                 sx={{ml: 2}}
                 onClick={() => approveApplication("pending")}
@@ -42,7 +41,7 @@ export default function ReviewerButtons({status, approveApplication, setShowList
             </Button>
             <Button
                 color="error"
-                disabled={status === "denied" ? true : false}
+                disabled={status === "denied"}
                 variant="contained"
                 sx={{ml: 2}}
                 onClick={() => approveApplication("denied")}

@@ -20,25 +20,33 @@ export default function UserProfile() {
         setErrorMessage("");
         e.preventDefault();
 
-        const dataToUpdate = {
-            id: appContext.user.id,
-            fName: e.target.fName.value,
-            lName: e.target.lName.value,
-            mI: e.target.mI.value,
-            dodId: e.target.dodId.value,
-            rank: rank,
-            dob: formatDate(dob)
-        };
+        if (!e.target.dodId.value.match(/^\d{10}$/)) {
+            setErrorMessage("DODID has incorrect format.");
+        } else if (!dob) {
+            setErrorMessage("Date of Birth is required.");
+        } else {
+            const dataToUpdate = {
+                id: appContext.user.id,
+                fName: e.target.fName.value,
+                lName: e.target.lName.value,
+                mI: e.target.mI.value,
+                dodId: e.target.dodId.value,
+                rank: rank,
+                dob: formatDate(dob)
+            };
 
-        apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
+            console.log(dataToUpdate);
+
+            apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
+        }
     }
 
     const handleResults = (r, dataToUpdate) => {
         if (r.wasError) {
             setErrorMessage("Something went wrong. User Profile was not updated.");
-            console.log(r.apiErrorMsg.response.data)
+            console.log(r.apiErrorMsg.response.data);
         } else {
-            appContext.setUser({...appContext.user, ...dataToUpdate})
+            appContext.setUser({...appContext.user, ...dataToUpdate});
             localStorage.setItem('userData', JSON.stringify({...appContext.user, ...dataToUpdate}));
 
             setErrorMessage("User Profile Updated.");
@@ -65,8 +73,9 @@ export default function UserProfile() {
                     <UserProfileFormFields dob={dob} setDob={setDob} userData={appContext.user} rank={rank}
                                            setRank={setRank}/>
                 </Grid>
-
-                <Typography color='error'>{errorMessage}</Typography>
+                <br/>
+                <Typography
+                    color={(errorMessage === 'User Profile Updated.') ? 'green' : 'error'}>{errorMessage}</Typography>
 
                 <Button
                     variant="contained"
