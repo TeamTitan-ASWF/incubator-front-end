@@ -28,7 +28,6 @@ const Referral = ({
                     name={"referenceName" + (referenceNumber ?? '')}
                     label="Reference Name"
                     fullWidth
-                    autoComplete="given-name"
                     variant="standard"
                     onChange={(e) => {
                         updateState(e);

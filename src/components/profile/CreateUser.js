@@ -26,7 +26,9 @@ export default function CreateUser() {
         setErrorMessage("");
         e.preventDefault();
 
-        if (e.target.password.value !== e.target.confirmPassword.value) {
+        if(e.target.password.value.length < 6) {
+            setErrorMessage("Password must be at least 6 characters.")
+        } else if (e.target.password.value !== e.target.confirmPassword.value) {
             setErrorMessage("Passwords do not match")
         } else if (!e.target.dodId.value.match(/^\d{10}$/)) {
             setErrorMessage("DODID has incorrect format.");

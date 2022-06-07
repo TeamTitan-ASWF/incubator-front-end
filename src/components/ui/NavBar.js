@@ -136,7 +136,7 @@ const NavBar = ({setShowList, showList}) => {
                         </IconButton>}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }} sx={{mr: '2%'}}>
+                    <Box sx={{ flexGrow: 0, mr: '2%' }}>
                         {appContext.isValidated && <Typography component={"span"} variant={"subtitle2"}>Logged in as: {appContext.user?.userName ?? ''}</Typography>}
                     </Box>
 

@@ -4,24 +4,19 @@ const AppContext = React.createContext({
     isValidated: false,
     setIsValidated: () => {},
     user: {},
-    setUser: () => {},
-    isGoogleAcct: false,
-    setIsGoogleAcct: () => {}
+    setUser: () => {}
 });
 
 export const AppContextProvider = ({children}) => {
     const [isValidated, setIsValidated] = useState(localStorage.getItem("isValidated") ?? false);
     const [user, setUser] = useState((localStorage.getItem("userData")) ? JSON.parse(localStorage.getItem("userData")) : {});
-    const [isGoogleAcct, setIsGoogleAccount] = useState(localStorage.getItem("isGoogleAcct") ?? false);
-    
+
     return (
         <AppContext.Provider value={{
             isValidated,
             setIsValidated,
             user,
-            setUser,
-            isGoogleAcct,
-            setIsGoogleAccount
+            setUser
         }}>
             {children}
         </AppContext.Provider>
