@@ -1,4 +1,4 @@
-import {TextField} from "@mui/material";
+import {Divider, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -8,6 +8,7 @@ import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import {useNavigate} from "react-router-dom";
 import AppSnackBar from "../ui/AppSnackBar";
+import Grid from "@mui/material/Grid";
 
 export default function LoginPage({userCreated}) {
     const appContext = useContext(AppContext);
@@ -64,30 +65,24 @@ export default function LoginPage({userCreated}) {
                 // google account, not new account
                 appContext.setIsValidated(true);
                 appContext.setUser(r.apiData);
-                appContext.setIsGoogleAcct(true);
                 localStorage.setItem("isValidated", 'true');
                 localStorage.setItem("userData", JSON.stringify(r.apiData));
-                localStorage.setItem("isGoogleAcct", 'true');
 
                 changePage("/");
             } else if (r.apiStatus === 201) {
                 // google acct, new account/created
                 appContext.setIsValidated(true);
                 appContext.setUser(r.apiData);
-                appContext.setIsGoogleAcct(true);
                 localStorage.setItem("isValidated", 'true');
                 localStorage.setItem("userData", JSON.stringify(r.apiData));
-                localStorage.setItem("isGoogleAcct", 'true');
 
                 changePage("/profile");
             } else if (r.apiStatus === 200) {
                 // regular login, not google
                 appContext.setIsValidated(true);
                 appContext.setUser(r.apiData);
-                appContext.setIsGoogleAcct(true);
                 localStorage.setItem("isValidated", 'true');
                 localStorage.setItem("userData", JSON.stringify(r.apiData));
-                localStorage.setItem("isGoogleAcct", 'false');
 
                 changePage("/");
             } else {
@@ -108,31 +103,48 @@ export default function LoginPage({userCreated}) {
             {/*<Typography>Login Page</Typography>*/}
             <Typography variant={"h4"}>Login</Typography>
             <br/>
-            <form onSubmit={login}>
-                <TextField
-                    required
-                    error={!!errorMessage}
-                    variant="outlined"
-                    label="E-mail Address"
-                    id="email"
-                />
-                <br/><br/>
-                <TextField
-                    required
-                    error={!!errorMessage}
-                    id="password"
-                    variant="outlined"
-                    label="Password"
-                    type={"password"}
-                />
-                <br/><br/>
-                <Typography color='error'>{errorMessage}</Typography>
-                <br/>
-                <div id="signInDiv"></div>
-                <br/>
-                <Button variant={"contained"} sx={{mr: '3%'}} type="submit">Login</Button>
-                <Button variant={"contained"} onClick={() => changePage("/create_account")}>Create User</Button>
-            </form>
+            <Grid container spacing={2}>
+                <Grid item xs={5}>
+                    <form onSubmit={login}>
+                        <TextField
+                            required
+                            error={!!errorMessage}
+                            variant="outlined"
+                            label="E-mail Address"
+                            id="email"
+                        />
+                        <br/><br/>
+                        <TextField
+                            required
+                            error={!!errorMessage}
+                            id="password"
+                            variant="outlined"
+                            label="Password"
+                            type={"password"}
+                        />
+                        <br/><br/>
+                        <Typography color='error'>{errorMessage}</Typography>
+                        <br/>
+
+                        <br/>
+                        <Button variant={"contained"} sx={{mr: '3%'}} type="submit">Login</Button>
+                        <Button variant={"contained"} onClick={() => changePage("/create_account")}>Create Account</Button>
+                    </form>
+                </Grid>
+                <Grid item xs={2}>
+                    <Divider orientation={"vertical"}><Typography component={"span"} variant={"h6"}>Or</Typography></Divider>
+                </Grid>
+
+                <Grid item xs={5}>
+                    <Typography variant={"h6"}>Authenticate using your Google Account</Typography>
+                    <br /><br/>
+                    <div align={"center"} id="signInDiv"></div>
+                </Grid>
+
+            </Grid>
+
+
+
             {showSnackBar && <AppSnackBar isShown={showSnackBar}
                                           message={"Account successfully created. Please login with new username/password."}
                                           severity={"success"}/>}
