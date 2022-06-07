@@ -68,7 +68,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
                             </Button>
                             <Button
                                 sx={{}}
-                                disabled={(application.status !== "pending")}
+                                disabled={(application.status !== "pending" && application.status !== "in progress")}
                                 variant="contained"
                                 onClick={() => {
                                     setIsEditing(true)
