@@ -2,9 +2,9 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Referral from "./Referral";
-import {useEffect, useState} from "react";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+// import {useEffect, useState} from "react";
+// import AddCircleIcon from '@mui/icons-material/AddCircle';
+// import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export default function ReferralsForm({updateState, applicationInfo, errorList, onChangeValidate}) {
     //const [numReferrals, setNumReferrals] = useState(1);
