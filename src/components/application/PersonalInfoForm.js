@@ -135,7 +135,6 @@ export default function PersonalInfoForm({
                         label="ACFT Score"
                         fullWidth
                         value={applicationInfo.acftScore || ""}
-                        autoComplete="acftScore"
                         variant="standard"
                         onBlur={onChangeValidate}
                         onChange={(e) => {
@@ -159,7 +158,6 @@ export default function PersonalInfoForm({
                         label="Height in inches"
                         fullWidth
                         value={applicationInfo.height || ""}
-                        autoComplete="height"
                         variant="standard"
                         onChange={(e) => {
                             const currentValue = e.target.value;
@@ -179,7 +177,6 @@ export default function PersonalInfoForm({
                         error={errorList.includes("weight")}
                         name="weight"
                         label="Weight lbs"
-                        autoComplete="weight"
                         value={applicationInfo.weight || ""}
                         fullWidth
                         variant="standard"
