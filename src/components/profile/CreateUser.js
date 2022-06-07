@@ -34,7 +34,7 @@ export default function CreateUser() {
             setErrorMessage("Date of Birth is required.");
         } else {
             apiCall("user", 'add', {
-                userName: e.target.userName.value,
+                userName: e.target.email.value,
                 password: e.target.password.value,
                 fName: e.target.fName.value,
                 lName: e.target.lName.value,
@@ -49,12 +49,11 @@ export default function CreateUser() {
     const handleResults = (r) => {
         if (r.wasError) {
             if(r.apiErrorMsg.response.data.includes("already taken")) {
-                setErrorMessage("Username is already taken. Please choose another username.");
+                setErrorMessage("E-mail address is already used. Please choose another e-mail address or log in with the existing account.");
             } else {
                 setErrorMessage("Something went wrong. Please try again later.");
             }
 
-            console.log(r.apiErrorMsg.response.data)
         } else {
             changePage('/login?newAccount=true');
         }
@@ -82,8 +81,9 @@ export default function CreateUser() {
                             <TextField
                                 required
                                 variant="outlined"
-                                label="User Name"
-                                id="userName"
+                                type={"email"}
+                                label="E-mail Address"
+                                id="email"
                             />
                         </Grid>
 
