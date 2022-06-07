@@ -135,6 +135,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
     const [showRescinded, setShowRescinded] = useState(true);
+    const [showInProgress, setShowInProgress] = useState(false);
 
     const filterResults =  (event, checked) => {
         //needed because of state batching
@@ -142,6 +143,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
         let approvedChecked = showApproved;
         let deniedChecked = showDenied;
         let rescindedChecked = showRescinded;
+        let inprogressChecked = showInProgress;
 
         switch (event.target.id) {
             case "chkPending":
@@ -160,11 +162,15 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                 setShowRescinded(checked);
                 rescindedChecked = checked;
                 break;
+            case "chkInProgress":
+                setShowInProgress(checked);
+                inprogressChecked = checked;
+                break;
             default:
                 // should not get here
         }
 
-        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked) {
+        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked|| !inprogressChecked) {
             const filteredResults = applicants.filter(applicant => {
                 switch (applicant.status) {
                     case "pending":
@@ -175,6 +181,8 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                         return deniedChecked;
                     case "rescinded":
                         return rescindedChecked;
+                    case "in progress":
+                        return inprogressChecked;
                     default:
                         return false;
                 }
@@ -284,6 +292,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                         <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
                                         <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
                                         <FormControlLabel control={<Checkbox id={"chkRescinded"} onChange={(event, checked) => filterResults(event, checked)} checked={showRescinded} />} label="Rescinded"/>
+                                        <FormControlLabel control={<Checkbox id={"chkInProgress"} onChange={(event, checked) => filterResults(event, checked)} checked={showInProgress} />} label="In Progress"/>
                                     </FormGroup>
                             </Popover>
                         </div>
@@ -356,11 +365,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                         label="Dense padding"
                     />
                 </Paper>
-            </Box>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+            </Box><br/><br/><br/><br/>
         </>
     );
 }

@@ -28,9 +28,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
     let secondStepArray = ['techBG', 'motivation'];
     let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone'];
+    const [appId, setAppId] = useState(currentApplicationId);
+    const [showSnackBar, setShowSnackBar] = useState(false);
+    const [snackBarMessage, setSnackBarMessage] = useState("");
 
-    // const [clickSave, setClickSave] = useState(false);
-    // const [clickNext, setClickNext] = useState(false);
     const [message, setMessage] = useState("");
     const [messageTitle, setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
@@ -62,7 +63,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         referenceRank3: "E1",
         referenceEmail3: "",
         referencePhone3: "",
-        status: "pending",
+        status: "in progress",
         dateSubmitted: "",
     })
     useEffect(() => {
@@ -95,7 +96,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 // referenceEmail3: currentApplicationInfo.referenceEmail3,
                 // referencePhone3: currentApplicationInfo.referencePhone3,
                 lastACFT: fixTimeZone(currentApplicationInfo.lastACFT),
-                status: "pending",
+                status: "in progress",
                 dateSubmitted: "",
             })
         }
@@ -131,7 +132,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 referenceRank3: "E5",
                 referenceEmail3: "bigbucky17@gmail.com",
                 referencePhone3: "1234567890",
-                status: "Pending",
+                status: "in progress",
                 dateSubmitted: ""
             }
         )
@@ -170,7 +171,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     };
 
     function updateState(e) {
-
         setApplicationInfo(
             {
                 fName: (e.target.id === "fName") ? e.target.value : applicationInfo.fName,
@@ -242,12 +242,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
 
         stepArray.forEach(element => {
             try {
-
                 if (inputValidation(applicationInfo[element], element).output) {
                     const handlerOutput = inputValidation(applicationInfo[element], element);
                     outputMessage.push(handlerOutput.reason); //If element is not validated, add the elements name to this list
                 }
-
             } catch (error) {
                 //console.log(error);
                 outputMessage.push(element + " required");
@@ -268,11 +266,12 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         }
 
         // ApplicationForm the form instead of going
-        if (isEditing === true || activeStep >= 1 ) {
+        //if (isEditing === true || activeStep >= 1 ) {
+        if (appId) {
             //console.log(applicationInfo);
 
             apiCall('application', 'update', {
-                id: currentApplicationId,
+                id: appId,
                 fName: applicationInfo.fName,
                 lName: applicationInfo.lName,
                 mI: applicationInfo.mI,
@@ -298,7 +297,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 referenceRank3: applicationInfo.referenceRank3,
                 referenceEmail3: applicationInfo.referenceEmail3,
                 referencePhone3: applicationInfo.referencePhone3,
-                //status: applicationInfo.status,
+                status: (activeStep === steps.length - 1) ? "pending" : "in progress",
                 dateSubmitted: formatDate(new Date())
             })
                 .then((r) => {
@@ -350,6 +349,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     setMessageTitle("Something went wrong.");
                     setMessage('Unfortunately there was an error submitting your application. Please try again later.');
                 } else {
+                        console.log(r.apiData.id);
+                        setAppId(r.apiData.id);
+
+
                     setMessageTitle("Thank you for applying.");
                     setMessage(`Please periodically check your Application Status tab for status updates.`);
 
@@ -381,9 +384,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     }
 
     const displaySnackBar = () => {
-        return (
-            <AppSnackBar isShown={true} severity={"success"} message={"Saved"}/>
-        );
+        //alert("got here");
+        setSnackBarMessage("Saved");
+        setShowSnackBar(true);
+        //setShowSnackBar(false);
     }
 
     return (
@@ -441,9 +445,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                                                 </Button>)}
                                             <Button
                                                 variant="contained"
-                                                onClick= {() => {
-                                                    handleNext(true);
-                                                }}
+                                                onClick= {() => handleNext(true)}
                                                 sx={{mt: 3, ml: 1}}
                                             >
                                                 {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
@@ -455,6 +457,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                         )}
                     </React.Fragment>
                 </Paper>
+                {showSnackBar && <AppSnackBar isShown={showSnackBar} resetCallBack={setShowSnackBar} severity={"success"}
+                              message={snackBarMessage}/>}
             </Container>
             <br/><br/><br/><br/>
         </>
