@@ -18,6 +18,7 @@ import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunction
 import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
 import Grid from "@mui/material/Grid";
+import AppSnackBar from "../ui/AppSnackBar";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
@@ -28,6 +29,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     let secondStepArray = ['techBG', 'motivation'];
     let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone'];
 
+    // const [clickSave, setClickSave] = useState(false);
+    // const [clickNext, setClickNext] = useState(false);
     const [message, setMessage] = useState("");
     const [messageTitle, setMessageTitle] = useState("");
     const [activeStep, setActiveStep] = React.useState(0);
@@ -255,7 +258,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         setErrorList(outputMessage);
     }
 
-    const handleNext = () => {
+    const handleNext = (clickNext) => {
 
         validatePage();
         // This makes sure steps 1-3 are not empty
@@ -264,99 +267,106 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
             return;
         }
 
-        if (activeStep === 3) { // ApplicationForm the form instead of going
-            if (isEditing === true) {
-                //console.log(applicationInfo);
+        // ApplicationForm the form instead of going
+        if (isEditing === true || activeStep >= 1 ) {
+            //console.log(applicationInfo);
 
-                apiCall('application', 'update', {
-                    id: currentApplicationId,
-                    fName: applicationInfo.fName,
-                    lName: applicationInfo.lName,
-                    mI: applicationInfo.mI,
-                    dodId: applicationInfo.dodId.toString(),
-                    rank: applicationInfo.rank,
-                    dob: formatDate(applicationInfo.dob),
-                    user: appContext.user.id,
-                    lastACFT: formatDate(applicationInfo.lastACFT),
-                    acftScore: applicationInfo.acftScore,
-                    height: applicationInfo.height,
-                    weight: applicationInfo.weight,
-                    techBG: applicationInfo.techBG,
-                    motivation: applicationInfo.motivation,
-                    referenceName: applicationInfo.referenceName,
-                    referenceRank: applicationInfo.referenceRank,
-                    referenceEmail: applicationInfo.referenceEmail,
-                    referencePhone: applicationInfo.referencePhone,
-                    referenceName2: applicationInfo.referenceName2,
-                    referenceRank2: applicationInfo.referenceRank2,
-                    referenceEmail2: applicationInfo.referenceEmail2,
-                    referencePhone2: applicationInfo.referencePhone2,
-                    referenceName3: applicationInfo.referenceName3,
-                    referenceRank3: applicationInfo.referenceRank3,
-                    referenceEmail3: applicationInfo.referenceEmail3,
-                    referencePhone3: applicationInfo.referencePhone3,
-                    //status: applicationInfo.status,
-                    dateSubmitted: formatDate(new Date())
-                })
-                    .then((r) => {
-                        setMessageTitle("Your application has been updated successfully");
-                        setMessage(`Please periodically check your Application Status tab for status updates.`);
-                        setActiveStep(activeStep + 1)
-                        //setIsEditing (false);
-                    })
-                    .catch((r) => {
-                        setMessageTitle("Something went wrong please try again later")
-                        setActiveStep(activeStep + 1)
-                    })
-            } else {
-                apiCall('application', 'add', {
-                    user: appContext.user.id,
-                    fName: applicationInfo.fName,
-                    lName: applicationInfo.lName,
-                    mI: applicationInfo.mI,
-                    dodId: applicationInfo.dodId,
-                    rank: applicationInfo.rank,
-                    dob: formatDate(applicationInfo.dob),
-                    lastACFT: formatDate(applicationInfo.lastACFT),
-                    acftScore: applicationInfo.acftScore,
-                    height: applicationInfo.height,
-                    weight: applicationInfo.weight,
-                    techBG: applicationInfo.techBG,
-                    motivation: applicationInfo.motivation,
-                    referenceName: applicationInfo.referenceName,
-                    referenceRank: applicationInfo.referenceRank,
-                    referenceEmail: applicationInfo.referenceEmail,
-                    referencePhone: applicationInfo.referencePhone,
-                    referenceName2: applicationInfo.referenceName2,
-                    referenceRank2: applicationInfo.referenceRank2,
-                    referenceEmail2: applicationInfo.referenceEmail2,
-                    referencePhone2: applicationInfo.referencePhone2,
-                    referenceName3: applicationInfo.referenceName3,
-                    referenceRank3: applicationInfo.referenceRank3,
-                    referenceEmail3: applicationInfo.referenceEmail3,
-                    referencePhone3: applicationInfo.referencePhone3,
-                    dateSubmitted: formatDate(new Date())
-                }).then((r) => {
-                    if (r.wasError) {
-                        setMessageTitle("Something went wrong.");
-                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
+            apiCall('application', 'update', {
+                id: currentApplicationId,
+                fName: applicationInfo.fName,
+                lName: applicationInfo.lName,
+                mI: applicationInfo.mI,
+                dodId: applicationInfo.dodId.toString(),
+                rank: applicationInfo.rank,
+                dob: formatDate(applicationInfo.dob),
+                user: appContext.user.id,
+                lastACFT: formatDate(applicationInfo.lastACFT),
+                acftScore: applicationInfo.acftScore,
+                height: applicationInfo.height,
+                weight: applicationInfo.weight,
+                techBG: applicationInfo.techBG,
+                motivation: applicationInfo.motivation,
+                referenceName: applicationInfo.referenceName,
+                referenceRank: applicationInfo.referenceRank,
+                referenceEmail: applicationInfo.referenceEmail,
+                referencePhone: applicationInfo.referencePhone,
+                referenceName2: applicationInfo.referenceName2,
+                referenceRank2: applicationInfo.referenceRank2,
+                referenceEmail2: applicationInfo.referenceEmail2,
+                referencePhone2: applicationInfo.referencePhone2,
+                referenceName3: applicationInfo.referenceName3,
+                referenceRank3: applicationInfo.referenceRank3,
+                referenceEmail3: applicationInfo.referenceEmail3,
+                referencePhone3: applicationInfo.referencePhone3,
+                //status: applicationInfo.status,
+                dateSubmitted: formatDate(new Date())
+            })
+                .then((r) => {
+                    setMessageTitle("Your application has been updated successfully");
+                    setMessage(`Please periodically check your Application Status tab for status updates.`);
+
+                    if (clickNext) {
                         setActiveStep(activeStep + 1);
                     } else {
-                        setMessageTitle("Thank you for applying.");
-                        setMessage(`Please periodically check your Application Status tab for status updates.`);
-                        setActiveStep(activeStep + 1);
+                        //
                     }
-                })
-                    .catch((r) => {
-                        setMessageTitle("Something went wrong.");
-                        setMessage('Unfortunately there was an error submitting your application. Please try again later.');
-                        setActiveStep(activeStep + 1)
-                    })
-            }
 
+                    //setIsEditing (false);
+                })
+                .catch((r) => {
+                    setMessageTitle("Something went wrong please try again later")
+                    setActiveStep(activeStep + 1)
+                })
         } else {
-            setActiveStep(activeStep + 1);
+            apiCall('application', 'add', {
+                user: appContext.user.id,
+                fName: applicationInfo.fName,
+                lName: applicationInfo.lName,
+                mI: applicationInfo.mI,
+                dodId: applicationInfo.dodId,
+                rank: applicationInfo.rank,
+                dob: formatDate(applicationInfo.dob),
+                lastACFT: formatDate(applicationInfo.lastACFT),
+                acftScore: applicationInfo.acftScore,
+                height: applicationInfo.height,
+                weight: applicationInfo.weight,
+                techBG: applicationInfo.techBG,
+                motivation: applicationInfo.motivation,
+                referenceName: applicationInfo.referenceName,
+                referenceRank: applicationInfo.referenceRank,
+                referenceEmail: applicationInfo.referenceEmail,
+                referencePhone: applicationInfo.referencePhone,
+                referenceName2: applicationInfo.referenceName2,
+                referenceRank2: applicationInfo.referenceRank2,
+                referenceEmail2: applicationInfo.referenceEmail2,
+                referencePhone2: applicationInfo.referencePhone2,
+                referenceName3: applicationInfo.referenceName3,
+                referenceRank3: applicationInfo.referenceRank3,
+                referenceEmail3: applicationInfo.referenceEmail3,
+                referencePhone3: applicationInfo.referencePhone3,
+                dateSubmitted: formatDate(new Date())
+            }).then((r) => {
+                if (r.wasError) {
+                    setMessageTitle("Something went wrong.");
+                    setMessage('Unfortunately there was an error submitting your application. Please try again later.');
+                } else {
+                    setMessageTitle("Thank you for applying.");
+                    setMessage(`Please periodically check your Application Status tab for status updates.`);
+
+                    if (clickNext) {
+                        setActiveStep(activeStep + 1);
+                    } else {
+                        // call snackbar here
+                    }
+                }
+            })
+                .catch((r) => {
+                    setMessageTitle("Something went wrong.");
+                    setMessage('Unfortunately there was an error submitting your application. Please try again later.');
+                    setActiveStep(activeStep + 1)
+                })
         }
+
     };
 
     const handleBack = () => {
@@ -368,6 +378,12 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         saveOrSubmit = "Save";
     } else {
         saveOrSubmit = "Submit";
+    }
+
+    const displaySnackBar = () => {
+        return (
+            <AppSnackBar isShown={true} severity={"success"} message={"Saved"}/>
+        );
     }
 
     return (
@@ -416,15 +432,18 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                                                 <Button
                                                     variant="contained"
                                                     sx={{mt: 3, ml: 1}}
-                                                    onClick={() => {
-                                                        //nothing yet
-                                                    }}
+                                                    onClick= {() => {
+                                                        handleNext(false);
+                                                        displaySnackBar();
+                                                }}
                                                 >
                                                     Save
                                                 </Button>)}
                                             <Button
                                                 variant="contained"
-                                                onClick={handleNext}
+                                                onClick= {() => {
+                                                    handleNext(true);
+                                                }}
                                                 sx={{mt: 3, ml: 1}}
                                             >
                                                 {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
