@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 // import Rank from "./Rank";
 // import DOB from "./DOB";
 import LastACFT from "./LastACFT";
-import {fixTimeZone, formatDate} from "../inputValidation/dateValidationFunctions";
+import {fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext, useEffect} from "react";
 import AppContext from "../contexts/AppContext";
 import Rank from "./Rank";

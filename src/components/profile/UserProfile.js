@@ -13,7 +13,7 @@ import Grid from "@mui/material/Grid";
 export default function UserProfile() {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
-    const [dob, setDob] = useState((appContext?.user?.dob) ? fixTimeZone(appContext.user.dob) : null);
+    const [dob, setDob] = useState((appContext?.user?.dob) ? fixTimeZone(appContext.user.dob) : "1990-01-02");
     const [rank, setRank] = useState(appContext?.user?.rank ?? 'E1');
 
     const submitForm = (e) => {
@@ -35,7 +35,7 @@ export default function UserProfile() {
                 dob: formatDate(dob)
             };
 
-            console.log(dataToUpdate);
+            //console.log(dataToUpdate);
 
             apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
         }
