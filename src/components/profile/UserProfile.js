@@ -35,7 +35,7 @@ export default function UserProfile() {
                 dob: formatDate(dob)
             };
 
-            console.log(dataToUpdate);
+            //console.log(dataToUpdate);
 
             apiCall("user", 'update', dataToUpdate).then((r) => handleResults(r, dataToUpdate));
         }
