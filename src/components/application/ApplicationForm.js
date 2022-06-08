@@ -4,7 +4,6 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PersonalInfoForm from "./PersonalInfoForm";
@@ -231,7 +230,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
 
         // ApplicationForm the form instead of going
 
-        if (appId && (activeStep === steps.length - 1) && applicationInfo.lastACFT!="" && applicationInfo.acftScore!=0 && applicationInfo.height!=0 && applicationInfo.weight!=0 && applicationInfo.techBG!="" && applicationInfo.motivation!="" && applicationInfo.referenceName!="" && applicationInfo.referenceRank!="" && applicationInfo.referencePhone!="" && applicationInfo.referenceEmail!="") {
+        if (appId && (activeStep === steps.length - 1) && applicationInfo.lastACFT!=="" && applicationInfo.acftScore!==0 && applicationInfo.height!==0 && applicationInfo.weight!==0 && applicationInfo.techBG!=="" && applicationInfo.motivation!=="" && applicationInfo.referenceName!=="" && applicationInfo.referenceRank!=="" && applicationInfo.referencePhone!=="" && applicationInfo.referenceEmail!=="") {
             apiCall('application', 'update', {
                 id: appId,
                 fName: applicationInfo.fName,
@@ -406,7 +405,11 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
             <Container component="main" maxWidth="md" sx={{mb: 4}}>
                 <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
                     <Typography variant={"h5"}>
-                        There is already a "Pending" or "In Progress" application for this account. If you would like to make changes to your application, please select it from the Application Status menu to make edits. Thank you!
+                        There is already a "Pending" or "In Progress" application for this account.
+                    </Typography>
+                    <br />
+                    <Typography variant={"h6"}>
+                        If you would like to make changes to your application, please select it from the Application Status menu to make edits. Thank you!
                     </Typography>
                 </Paper>
             </Container>
