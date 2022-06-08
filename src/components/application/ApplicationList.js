@@ -50,6 +50,7 @@ function getComparator(order, orderBy) {
 //     borderRadius: 10,
 // };
 
+
 const headCells = [
     {
         id: 'lName',
@@ -120,7 +121,7 @@ function EnhancedTableHead(props) {
     );
 }
 
-export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setApplicants, setFilteredApplications, filteredApplications}) {
+export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setFilteredApplications, filteredApplications}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
@@ -132,19 +133,20 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
-    const [showRescinded, setShowRescinded] = useState(true);
+    const [showRescinded, setShowRescinded] = useState((!appContext.user?.isReviewer));
     const [showInProgress, setShowInProgress] = useState((!appContext.user?.isReviewer));
+
 
     const filterResults =  (event, checked) => {
 
-        console.log(appContext);
+        //console.log(appContext);
 
         //needed because of state batching
         let pendingChecked = showPending;
         let approvedChecked = showApproved;
         let deniedChecked = showDenied;
         let rescindedChecked = showRescinded;
-        let inprogressChecked = showInProgress;
+        let inProgressChecked = showInProgress;
 
         switch (event.target.id) {
             case "chkPending":
@@ -165,13 +167,13 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                 break;
             case "chkInProgress":
                 setShowInProgress(checked);
-                inprogressChecked = checked;
+                inProgressChecked = checked;
                 break;
             default:
                 // should not get here
         }
 
-        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked|| !inprogressChecked) {
+        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked|| !inProgressChecked) {
             const filteredResults = applicants.filter(applicant => {
                 switch (applicant.status) {
                     case "pending":
@@ -183,7 +185,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                     case "rescinded":
                         return rescindedChecked;
                     case "in progress":
-                        return inprogressChecked;
+                        return inProgressChecked;
                     default:
                         return false;
                 }
@@ -336,7 +338,10 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                                 <TableCell align="left">{row.rank}</TableCell>
                                                 <TableCell align="left">{row.dob}</TableCell>
                                                 <TableCell align="left">{row.dateSubmitted}</TableCell>
-                                                <TableCell align="left">{row.status}</TableCell>
+                                                {(row.status === "pending"  || row.status === "in progress") ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'orange',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "denied" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'red',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "approved" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'green',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "rescinded" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'gray', }}>{row.status}</TableCell> : <></>}
                                             </TableRow>
                                         );
                                     }) : []}
