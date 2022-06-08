@@ -22,7 +22,7 @@ import AppSnackBar from "../ui/AppSnackBar";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
-export default function ApplicationForm({currentApplicationInfo, isEditing, setIsEditing, currentApplicationId}) {
+export default function ApplicationForm({currentApplicationInfo, isEditing, currentApplicationId, getApplications}) {
     const appContext = useContext(AppContext);
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
@@ -37,6 +37,8 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     const [activeStep, setActiveStep] = React.useState(0);
     const [errorList, setErrorList] = useState([]);
     const [errorMessageOnNext, setErrorMessageOnNext] = useState([]);
+    const [alreadyHasPendingInProgressApp, setAlreadyHasPendingInProgressApp] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [applicationInfo, setApplicationInfo] = React.useState({
         fName: appContext.user?.fName ?? "",
         lName: appContext.user?.lName ?? "",
@@ -67,34 +69,15 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         dateSubmitted: "",
     })
     useEffect(() => {
+        if (!appId) {
+            checkForPendingApplications().then(() => setIsLoading(false));
+        } else {
+            setIsLoading(false);
+        }
+
         if (isEditing) {
             setApplicationInfo({
                 ...currentApplicationInfo,
-                // refNum: currentApplicationInfo.refNum,
-                // fName: currentApplicationInfo.fName,
-                // lName: currentApplicationInfo.lName,
-                // mI: currentApplicationInfo.mI,
-                // dodId: currentApplicationInfo.dodId,
-                // rank: currentApplicationInfo.rank,
-                // dob: currentApplicationInfo.dob,
-                // lastACFT: currentApplicationInfo.lastACFT,
-                // acftScore: currentApplicationInfo.acftScore,
-                // height: currentApplicationInfo.height,
-                // weight: currentApplicationInfo.weight,
-                // techBG: currentApplicationInfo.techBG,
-                // motivation: currentApplicationInfo.motivation,
-                // referenceName: currentApplicationInfo.referenceName,
-                // referenceRank: currentApplicationInfo.referenceRank,
-                // referenceEmail: currentApplicationInfo.referenceEmail,
-                // referencePhone: currentApplicationInfo.referencePhone,
-                // referenceName2: currentApplicationInfo.referenceName2,
-                // referenceRank2: currentApplicationInfo.referenceRank2,
-                // referenceEmail2: currentApplicationInfo.referenceEmail2,
-                // referencePhone2: currentApplicationInfo.referencePhone2,
-                // referenceName3: currentApplicationInfo.referenceName3,
-                // referenceRank3: currentApplicationInfo.referenceRank3,
-                // referenceEmail3: currentApplicationInfo.referenceEmail3,
-                // referencePhone3: currentApplicationInfo.referencePhone3,
                 lastACFT: fixTimeZone(currentApplicationInfo.lastACFT),
                 status: "in progress",
                 dateSubmitted: "",
@@ -102,41 +85,53 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
         }
     }, [currentApplicationInfo, isEditing])
 
+    const checkForPendingApplications = async () => {
+        const response = await apiCall('getApplicationByUser', 'read', appContext.user.id);
 
-    const fillFields = () => {
-        setApplicationInfo({
-                // fName: "Steven",
-                // lName: "Rodgers",
-                // mI: "G",
-                // dodId: "1234567890",
-                // rank: "O3",
-                // dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
-                lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
-                acftScore: 600,
-                height: 74,
-                weight: 240,
-                techBG: `Steve Rogers was born during the Depression and grew up a frail youth in a poor family. His father died when he was a child, his mother when he was in his late teens. Horrified by newsreel footage of the Nazis in Europe, Rogers was inspired to try to enlist in the Army. However, because of his frailty and sickness, he was rejected. Overhearing the boy's earnest plea to be accepted, General Chester Phillips of the U.S. Army offered Rogers the opportunity to take part in a special experiment called Operation: Rebirth. Rogers agreed and was taken to a secret laboratory in Washington, D.C. where he was introduced to Dr. Abrahan Erskine (code named: Prof. Reinstein), the creator to the Super-Soldier formula
-    After weeks of tests, Rogers was at last administered the Super-Soldier serum. Given part of the compound intravenously and another part orally, Rogers was then bombarded by "vita-rays," a special combination of exotic (in 1941) wavelengths of radiation designed to accelerate and stabilize the serum's effect on his body. Steve Rogers emerged from the vita-ray chamber with a body as perfect as a body can be and still be human. A Nazi spy who observed the experiment murdered Dr. Erskine mere minutes after its conclusion. Erskine died without fully committing the Super-Soldier formula to paper, leaving Steve Rogers the Sole beneficiary of his genius.
-    Roger was then put through an intensive physical and tactical training program,teaching him gymnastics, hand-to-hand combat and military strategy. Three months later, he was given his first assignment, to stop the Nazi agent called the Red Skull. To help him become a symbolic counterpart to the Red Skull, Rogers was given the red, white, and blue costume of Captain America.
-    During the war, he served as both a symbol of freedom and America's most effective special operative. Then, during the final days of the war, he was trying to stop a bomb-loaded drone-plane launched by Nazi technician Baron Heinrich Zemo when the plane exploded, killing his partner Bucky; and throwing him unhurt into icy Arctic waters. The Super-Soldier formula prevented crystallization of Captain America's bodily fluid, allowing him to enter a state of suspended animation. Decades later, he was rescued by the newly-formed Avengers and became a cornerstone of the team. His might undiminished. Captain America remains a symbol of liberty and justice.`,
-                motivation: "I'm just a kid from brooklyn",
-                referenceName: "Bucky Barnes",
-                referenceRank: "E5",
-                referenceEmail: "bigbucky17@gmail.com",
-                referencePhone: "1234567890",
-                referenceName2: "Bucky Barnes",
-                referenceRank2: "E5",
-                referenceEmail2: "bigbucky17@gmail.com",
-                referencePhone2: "1234567890",
-                referenceName3: "Bucky Barnes",
-                referenceRank3: "E5",
-                referenceEmail3: "bigbucky17@gmail.com",
-                referencePhone3: "1234567890",
-                status: "in progress",
-                dateSubmitted: ""
+        if (!response.apiErrorMsg) {
+            const userApplications = await response.apiData;
+            for (let i = 0; i < userApplications.length; i++) {
+                if (userApplications[i].status === 'pending' || userApplications[i].status === 'in progress') {
+                    setAlreadyHasPendingInProgressApp(true);
+                }
             }
-        )
-    }
+        }
+    };
+
+    // const fillFields = () => {
+    //     setApplicationInfo({
+    //             // fName: "Steven",
+    //             // lName: "Rodgers",
+    //             // mI: "G",
+    //             // dodId: "1234567890",
+    //             // rank: "O3",
+    //             // dob: 'Tue Jul 04 1918 18:00:00 GMT-0600 (Central Standard Time)',
+    //             lastACFT: 'Tue Jan 10 2022 18:00:00 GMT-0600 (Central Standard Time)',
+    //             acftScore: 600,
+    //             height: 74,
+    //             weight: 240,
+    //             techBG: `Steve Rogers was born during the Depression and grew up a frail youth in a poor family. His father died when he was a child, his mother when he was in his late teens. Horrified by newsreel footage of the Nazis in Europe, Rogers was inspired to try to enlist in the Army. However, because of his frailty and sickness, he was rejected. Overhearing the boy's earnest plea to be accepted, General Chester Phillips of the U.S. Army offered Rogers the opportunity to take part in a special experiment called Operation: Rebirth. Rogers agreed and was taken to a secret laboratory in Washington, D.C. where he was introduced to Dr. Abrahan Erskine (code named: Prof. Reinstein), the creator to the Super-Soldier formula
+    // After weeks of tests, Rogers was at last administered the Super-Soldier serum. Given part of the compound intravenously and another part orally, Rogers was then bombarded by "vita-rays," a special combination of exotic (in 1941) wavelengths of radiation designed to accelerate and stabilize the serum's effect on his body. Steve Rogers emerged from the vita-ray chamber with a body as perfect as a body can be and still be human. A Nazi spy who observed the experiment murdered Dr. Erskine mere minutes after its conclusion. Erskine died without fully committing the Super-Soldier formula to paper, leaving Steve Rogers the Sole beneficiary of his genius.
+    // Roger was then put through an intensive physical and tactical training program,teaching him gymnastics, hand-to-hand combat and military strategy. Three months later, he was given his first assignment, to stop the Nazi agent called the Red Skull. To help him become a symbolic counterpart to the Red Skull, Rogers was given the red, white, and blue costume of Captain America.
+    // During the war, he served as both a symbol of freedom and America's most effective special operative. Then, during the final days of the war, he was trying to stop a bomb-loaded drone-plane launched by Nazi technician Baron Heinrich Zemo when the plane exploded, killing his partner Bucky; and throwing him unhurt into icy Arctic waters. The Super-Soldier formula prevented crystallization of Captain America's bodily fluid, allowing him to enter a state of suspended animation. Decades later, he was rescued by the newly-formed Avengers and became a cornerstone of the team. His might undiminished. Captain America remains a symbol of liberty and justice.`,
+    //             motivation: "I'm just a kid from brooklyn",
+    //             referenceName: "Bucky Barnes",
+    //             referenceRank: "E5",
+    //             referenceEmail: "bigbucky17@gmail.com",
+    //             referencePhone: "1234567890",
+    //             referenceName2: "Bucky Barnes",
+    //             referenceRank2: "E5",
+    //             referenceEmail2: "bigbucky17@gmail.com",
+    //             referencePhone2: "1234567890",
+    //             referenceName3: "Bucky Barnes",
+    //             referenceRank3: "E5",
+    //             referenceEmail3: "bigbucky17@gmail.com",
+    //             referencePhone3: "1234567890",
+    //             status: "in progress",
+    //             dateSubmitted: ""
+    //         }
+    //     )
+    // }
 
     const onChangeValidate = (e) => {
         let errorListCopy = JSON.parse(JSON.stringify(errorList));
@@ -301,20 +296,22 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                 dateSubmitted: formatDate(new Date())
             })
                 .then((r) => {
+
+                    // needed to refresh application status list if editing (since route is always /status for edits)
+                    if(isEditing) {
+                        getApplications();
+                    }
+
                     setMessageTitle("Your application has been updated successfully");
                     setMessage(`Please periodically check your Application Status tab for status updates.`);
 
                     if (clickNext) {
                         setActiveStep(activeStep + 1);
-                    } else {
-                        //
                     }
-
-                    //setIsEditing (false);
                 })
                 .catch((r) => {
-                    setMessageTitle("Something went wrong please try again later")
-                    setActiveStep(activeStep + 1)
+                    setMessageTitle("Something went wrong please try again later");
+                    setActiveStep(activeStep + 1);
                 })
         } else {
             apiCall('application', 'add', {
@@ -349,17 +346,13 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     setMessageTitle("Something went wrong.");
                     setMessage('Unfortunately there was an error submitting your application. Please try again later.');
                 } else {
-                        console.log(r.apiData.id);
-                        setAppId(r.apiData.id);
-
+                    setAppId(r.apiData.id);
 
                     setMessageTitle("Thank you for applying.");
                     setMessage(`Please periodically check your Application Status tab for status updates.`);
 
                     if (clickNext) {
                         setActiveStep(activeStep + 1);
-                    } else {
-                        // call snackbar here
                     }
                 }
             })
@@ -369,7 +362,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
                     setActiveStep(activeStep + 1)
                 })
         }
-
     };
 
     const handleBack = () => {
@@ -384,84 +376,97 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, setI
     }
 
     const displaySnackBar = () => {
-        //alert("got here");
         setSnackBarMessage("Saved");
         setShowSnackBar(true);
-        //setShowSnackBar(false);
     }
 
-    return (
-        <>
+    if(isLoading) {
+        return <></>;
+    } else if (alreadyHasPendingInProgressApp) {
+        return (
             <Container component="main" maxWidth="md" sx={{mb: 4}}>
                 <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
-                    <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <React.Fragment>
-                        <Button onClick={fillFields}>Auto-populate</Button>
-                        {activeStep === steps.length ? (
-                            <React.Fragment>
-                                <Typography variant="h5" gutterBottom>
-                                    {messageTitle}
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    {message}
-                                </Typography>
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                {getStepContent(activeStep)}
-                                <Grid container>
-                                    <Grid item xs={8} sx={{
-                                        pl: '2%',
-                                        color: "red",
-                                        display: "flex",
-                                        justifyContent: "flex-end",
-                                        flexDirection: "column"
-                                    }}>
-                                        {errorMessageOnNext.join(", ")}
-                                    </Grid>
-                                    <Grid item xs={4}>
-                                        <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-                                            {activeStep !== 0 && (
-                                                <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
-                                                    Back
-                                                </Button>
-                                            )}
-                                            {activeStep !== steps.length - 1 && (
+                    <Typography variant={"h5"}>
+                        There is already a "Pending" or "In Progress" application for this account. If you would like to make changes to your application, please select it from the Application Status menu to make edits. Thank you!
+                    </Typography>
+                </Paper>
+            </Container>
+        );
+    } else {
+        return (
+            <>
+                <Container component="main" maxWidth="md" sx={{mb: 4}}>
+                    <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
+                        <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <React.Fragment>
+                            {/*<Button onClick={fillFields}>Auto-populate</Button>*/}
+                            {activeStep === steps.length ? (
+                                <React.Fragment>
+                                    <Typography variant="h5" gutterBottom>
+                                        {messageTitle}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        {message}
+                                    </Typography>
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    {getStepContent(activeStep)}
+                                    <Grid container>
+                                        <Grid item xs={8} sx={{
+                                            pl: '2%',
+                                            color: "red",
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            flexDirection: "column"
+                                        }}>
+                                            {errorMessageOnNext.join(", ")}
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+                                                {activeStep !== 0 && (
+                                                    <Button onClick={handleBack} sx={{mt: 3, ml: 1}}>
+                                                        Back
+                                                    </Button>
+                                                )}
+                                                {activeStep !== steps.length - 1 && (
+                                                    <Button
+                                                        variant="contained"
+                                                        sx={{mt: 3, ml: 1}}
+                                                        onClick={() => {
+                                                            handleNext(false);
+                                                            displaySnackBar();
+                                                        }}
+                                                    >
+                                                        Save
+                                                    </Button>)}
                                                 <Button
                                                     variant="contained"
+                                                    onClick={() => handleNext(true)}
                                                     sx={{mt: 3, ml: 1}}
-                                                    onClick= {() => {
-                                                        handleNext(false);
-                                                        displaySnackBar();
-                                                }}
                                                 >
-                                                    Save
-                                                </Button>)}
-                                            <Button
-                                                variant="contained"
-                                                onClick= {() => handleNext(true)}
-                                                sx={{mt: 3, ml: 1}}
-                                            >
-                                                {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
-                                            </Button>
-                                        </Box>
+                                                    {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
+                                                </Button>
+                                            </Box>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </React.Fragment>
-                        )}
-                    </React.Fragment>
-                </Paper>
-                {showSnackBar && <AppSnackBar isShown={showSnackBar} resetCallBack={setShowSnackBar} severity={"success"}
-                              message={snackBarMessage}/>}
-            </Container>
-            <br/><br/><br/><br/>
-        </>
-    );
+                                </React.Fragment>
+                            )}
+                        </React.Fragment>
+                    </Paper>
+                    {showSnackBar &&
+                        <AppSnackBar isShown={showSnackBar} resetCallBack={setShowSnackBar} severity={"success"}
+                                     message={snackBarMessage}/>}
+                </Container>
+                <br/><br/><br/><br/>
+            </>
+        );
+    }
 }
 

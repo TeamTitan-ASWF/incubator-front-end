@@ -88,6 +88,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
                 currentApplicationInfo={application}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
+                getApplications={getApplications}
                 currentApplicationId={id}/>
         )
     }

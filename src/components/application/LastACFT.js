@@ -4,7 +4,7 @@ import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import React from "react";
 
-export default function LastACFT({updateState, applicationInfo, setApplicationInfo}) {
+export default function LastACFT({applicationInfo, setApplicationInfo}) {
 
 
     return (
@@ -20,9 +20,9 @@ export default function LastACFT({updateState, applicationInfo, setApplicationIn
                 value={applicationInfo.lastACFT}
                 disableFuture={true}
                 onChange={(newValue) => {
-                    let applicationCopy = JSON.parse(JSON.stringify(applicationInfo))
+                    let applicationCopy = JSON.parse(JSON.stringify(applicationInfo));
                     applicationCopy.lastACFT = newValue;
-                    setApplicationInfo(applicationCopy)
+                    setApplicationInfo(applicationCopy);
                 }
                 }
                 renderInput={(params) => <TextField {...params} onKeyDown={(e) => {

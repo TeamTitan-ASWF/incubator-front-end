@@ -19,7 +19,6 @@ const currentCreateUserAppAPI = (useRemote) ? SERVER_API_URL_CREATE_USER : LOCAL
 const currentLoginAPI = (useRemote) ? SERVER_API_URL_LOGIN : LOCAL_API_URL_LOGIN;
 const currentApplicationByUser = (useRemote) ? SERVER_API_URL_APPLICATION_BY_USER : LOCAL_API_URL_APPLICATION_BY_USER;
 
-
 const apiCall = async (entity, action, newData, path = '') => {
     let apiErrorMsg = '';
     let wasError = false;

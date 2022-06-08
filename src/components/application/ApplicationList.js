@@ -15,8 +15,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Checkbox, FormGroup, Popover} from "@mui/material";
+import AppContext from "../contexts/AppContext";
 
 function descendingComparator(a, b, orderBy) {
 
@@ -125,19 +126,18 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    // const [showModal, setShowModal] = useState(false);
-
-    // const handleFilter = () => {
-    //     setShowModal(true);
-    // }
+    const appContext = useContext(AppContext);
 
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
     const [showRescinded, setShowRescinded] = useState(true);
-    const [showInProgress, setShowInProgress] = useState(false);
+    const [showInProgress, setShowInProgress] = useState((!appContext.user?.isReviewer));
 
     const filterResults =  (event, checked) => {
+
+        console.log(appContext);
+
         //needed because of state batching
         let pendingChecked = showPending;
         let approvedChecked = showApproved;

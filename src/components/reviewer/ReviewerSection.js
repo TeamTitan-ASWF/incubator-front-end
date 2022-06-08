@@ -18,6 +18,17 @@ const ReviewerSection = ({showList, setShowList}) => {
         const response = await apiCall('application', 'list');
         await setApplicants(response.apiData);
         await setFilteredApplications(response.apiData);
+
+        const filteredResults = await response.apiData.filter(applicant => {
+            switch (applicant.status) {
+                case "in progress":
+                    return false;
+                default:
+                    return true;
+            }
+        });
+
+        await setFilteredApplications(filteredResults);
     }
 
     return (
