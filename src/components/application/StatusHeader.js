@@ -5,18 +5,6 @@ import {styled} from "@mui/material";
 
 
 export default function StatusHeader({applicationInfo}) {
-    let pendingStatus;
-
-    if (applicationInfo.status === "approved") {
-        // eslint-disable-next-line
-        pendingStatus = "green";
-    } else if (applicationInfo.status === "denied") {
-        // eslint-disable-next-line
-        pendingStatus = "red";
-    } else {
-        // eslint-disable-next-line
-        pendingStatus = "orange";
-    }
 
     const StatusButtonPending = styled(Button)`
           background-color: white;
@@ -81,68 +69,46 @@ export default function StatusHeader({applicationInfo}) {
           }
         `;
 
+    const StatusButtonRescinded = styled(Button)`
+          background-color: white;
+          color: gray;
+          padding: 6px 12px;
+          border: 1px solid gray;
+          margin-left: 5px;
+          &:focus {
+            background-color: white;
+            color: orange;
+          }
+          &:hover {
+            background-color: white;
+            color: gray;
+            cursor : 'default',
+          }
+          &:active {
+            background-color: white;
+            color: gray;
+          }
+        `;
 
-    if (applicationInfo.status === "denied") {
-        return (
-            <Grid container sx={{my: 2}}>
-                <Grid item xs={6}>
-                    <Typography variant="h6">
-                        {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
-                    </Typography>
-                </Grid>
-                <Grid item xs={6} sx={{textAlign: "right"}}>
-                    <Typography variant="h6">
-                        Application Status:
-                        <StatusButtonDenied
-                            sx={{
-                                cursor : 'default',
-                            }}
-                        >{applicationInfo.status}</StatusButtonDenied>
-                    </Typography>
-                </Grid>
+    return (
+        <Grid container sx={{my: 2}}>
+            <Grid item xs={6}>
+                <Typography variant="h6">
+                    {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
+                </Typography>
             </Grid>
-        );
-    } else if (applicationInfo.status === "approved") {
-        return (
-            <Grid container sx={{my: 2}}>
-                <Grid item xs={6}>
-                    <Typography variant="h6">
-                        {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
-                    </Typography>
-                </Grid>
-                <Grid item xs={6} sx={{textAlign: "right"}}>
-                    <Typography variant="h6">
-                        Application Status:
-                        <StatusButtonApproved
-                            sx={{
-                                cursor : 'default',
-                            }}
-                        >{applicationInfo.status}</StatusButtonApproved>
-                    </Typography>
-                </Grid>
+            <Grid item xs={6} sx={{textAlign: "right"}}>
+                <Typography variant="h6">
+                    Application Status:
+                    {((applicationInfo.status === "pending" || applicationInfo.status === "in progress") ? <StatusButtonPending sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonPending> : <></>)}
+                    {(applicationInfo.status === "denied" ? <StatusButtonDenied sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonDenied> : <></>)}
+                    {(applicationInfo.status === "approved" ? <StatusButtonApproved sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonApproved> : <></>)}
+                    {(applicationInfo.status === "rescinded" ? <StatusButtonRescinded sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonRescinded> : <></>)}
+                </Typography>
             </Grid>
-        );
-    } else {
-        return (
-            <Grid container sx={{my: 2}}>
-                <Grid item xs={6}>
-                    <Typography variant="h6">
-                        {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
-                    </Typography>
-                </Grid>
-                <Grid item xs={6} sx={{textAlign: "right"}}>
-                    <Typography variant="h6">
-                        Application Status:
-                        <StatusButtonPending
-                            sx={{
-                                cursor : 'default',
-                            }}
-                        >{applicationInfo.status}</StatusButtonPending>
-                    </Typography>
-                </Grid>
-            </Grid>
-        );
-    }
+        </Grid>
+    );
+
 
 
 }

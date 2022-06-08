@@ -368,12 +368,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         setActiveStep(activeStep - 1);
     };
 
-    let saveOrSubmit = "";
-    if (isEditing === true) {
-        saveOrSubmit = "Save";
-    } else {
-        saveOrSubmit = "Submit";
-    }
 
     const displaySnackBar = () => {
         setSnackBarMessage("Saved");
@@ -451,7 +445,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                                     onClick={() => handleNext(true)}
                                                     sx={{mt: 3, ml: 1}}
                                                 >
-                                                    {activeStep === steps.length - 1 ? saveOrSubmit : 'Next'}
+                                                    {activeStep === steps.length - 1 ? "Submit" : 'Next'}
                                                 </Button>
                                             </Box>
                                         </Grid>

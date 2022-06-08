@@ -37,7 +37,7 @@ export default function ReferralsForm({updateState, applicationInfo, errorList, 
             </Typography>
             <br/>
             <Grid container spacing={3}>
-                <Grid ml={'3%'} item xs={12} sm={9}>
+                <Grid ml={'3%'} item xs={12} sm={12}>
                     <Referral
                         updateState={updateState}
                         errorList={errorList}
