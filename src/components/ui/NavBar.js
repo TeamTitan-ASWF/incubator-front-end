@@ -100,7 +100,7 @@ const NavBar = ({setShowList, showList}) => {
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
-                                animation: `${glow} 5s infinite ease`,
+                                animation: `${glow} 2s infinite ease`,
                             }}
                         >
                             INCUBATOR

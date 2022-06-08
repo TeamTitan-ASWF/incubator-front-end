@@ -2,7 +2,6 @@ import {Divider, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-// import jwtDecode from "jwt-decode";
 import {useContext, useEffect, useState} from "react";
 import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
@@ -10,7 +9,7 @@ import {useNavigate} from "react-router-dom";
 import AppSnackBar from "../ui/AppSnackBar";
 import Grid from "@mui/material/Grid";
 
-export default function LoginPage({userCreated}) {
+export default function LoginPage() {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
 

@@ -11,7 +11,7 @@ import swLogo from "../images/sf_logo.svg";
 import Box from "@mui/material/Box";
 import {useNavigate} from "react-router-dom";
 
-export default function LandingPage({setShowReviewer}) {
+export default function LandingPage() {
     let navigate = useNavigate();
 
     const changePage = (path) => {
