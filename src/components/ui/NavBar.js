@@ -83,9 +83,9 @@ const NavBar = ({setShowList, showList}) => {
         <AppBar position="static">
             <Container maxWidth={"100%"} sx={{m: 0}}>
                 <Toolbar disableGutters>
-                    <EggIcon sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
+                    <EggIcon onClick={() => window.open('https://prod.d2pwoau11voqpy.amplifyapp.com')} sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }} />
 
-                    <Button key={"LandingPage"} onClick={() => changePage("/")} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Button key={"LandingPage"} onClick={() => changePage("/") } sx={{ my: 2, color: 'white', display: 'block' }}>
                         <Typography
                             variant="h6"
                             //noWrap

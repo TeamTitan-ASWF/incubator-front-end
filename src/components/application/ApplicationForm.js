@@ -268,7 +268,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                         getApplications();
                     }
 
-                    setMessageTitle("Your application has been updated successfully");
+                    setMessageTitle("Thank you for applying.");
                     setMessage(`Please periodically check your Application Status tab for status updates.`);
 
                     if (clickNext) {
