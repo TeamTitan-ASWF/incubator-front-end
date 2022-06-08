@@ -48,7 +48,7 @@ export default function ApplicationStatus({setShowList, showList}) {
                                 <Typography variant={"h5"}>
                                     You have not yet started an application. Please start the
                                     application
-                                    process by clicking on "New Application" on the main menu.
+                                    process by clicking on the New Application tab.
                                 </Typography>
                             </Paper>
                         </Container>
