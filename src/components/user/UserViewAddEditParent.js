@@ -64,7 +64,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
                                 variant="contained"
                                 onClick={() => handleRescind(id)}
                             >
-                                {application.status === "rescinded" ? "Un-rescind": "Rescind"}
+                                {application.status === "rescinded" ? "Resubmit": "Rescind"}
                             </Button>
                             <Button
                                 sx={{}}
