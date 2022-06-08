@@ -23,6 +23,8 @@ const ReviewerSection = ({showList, setShowList}) => {
             switch (applicant.status) {
                 case "in progress":
                     return false;
+                case "rescinded":
+                    return false;
                 default:
                     return true;
             }
