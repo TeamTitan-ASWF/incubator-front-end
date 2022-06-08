@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 export default function StatementsForm({updateState,errorList,applicationInfo,onChangeValidate}) {
+
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -13,7 +14,7 @@ export default function StatementsForm({updateState,errorList,applicationInfo,on
                 <Grid item xs={12} sm={12}>
                     <TextField
                         id="techBG"
-                        error = {errorList.includes("techBG")}
+                        error = {errorList.includes("techBG required")}
                         label="Please describe your technical background"
                         multiline
                         value = {applicationInfo.techBG}
@@ -35,7 +36,7 @@ export default function StatementsForm({updateState,errorList,applicationInfo,on
                     <TextField
                         id="motivation"
                         value = {applicationInfo.motivation}
-                        error = {errorList.includes("motivation")}
+                        error = {errorList.includes("motivation required")}
                         label="Why do you want to join the Army Software Factory?"
                         multiline
                         rows={4}

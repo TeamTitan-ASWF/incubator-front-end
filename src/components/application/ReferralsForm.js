@@ -10,7 +10,6 @@ export default function ReferralsForm({updateState, applicationInfo, errorList, 
     //const [numReferrals, setNumReferrals] = useState(1);
     const oddRowColor = '#fff';
     const evenRowColor = '#ccc';
-
     // useEffect(() => {
     //     if (applicationInfo.referenceName3) {
     //         setNumReferrals(3);

@@ -22,7 +22,7 @@ const Referral = ({
             <Grid item xs={12} sm={6}>
                 <TextField
                     required={(!referenceNumber)}
-                    error={errorList.includes("referenceName" + (referenceNumber ?? ''))}
+                    error={ referenceNumber ? false : errorList.includes("referenceName required")}
                     value={referenceName}
                     id={"referenceName" + (referenceNumber ?? '')}
                     name={"referenceName" + (referenceNumber ?? '')}
@@ -43,7 +43,7 @@ const Referral = ({
             <Grid item xs={12} sm={6}>
                 <TextField
                     required={(!referenceNumber)}
-                    error={errorList.includes("referenceEmail" + (referenceNumber ?? ''))}
+                    error={  referenceNumber ? false :  errorList.includes("referenceEmail required")}
                     value={referenceEmail}
                     id={"referenceEmail" + (referenceNumber ?? '')}
                     name={"referenceEmail" + (referenceNumber ?? '')}
@@ -61,7 +61,7 @@ const Referral = ({
             <Grid item xs={12} sm={6}>
                 <TextField
                     required={(!referenceNumber)}
-                    error={errorList.includes("referencePhone" + (referenceNumber ?? ''))}
+                    error={ referenceNumber ? false : errorList.includes("referencePhone required")}
                     id={"referencePhone" + (referenceNumber ?? '')}
                     name={"referencePhone" + (referenceNumber ?? '')}
                     value={referencePhone}
