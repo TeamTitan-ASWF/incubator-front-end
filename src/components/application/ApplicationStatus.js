@@ -5,6 +5,8 @@ import apiCall from "../api/api";
 import AppContext from "../contexts/AppContext";
 import UserViewAddEditParent from "../user/UserViewAddEditParent";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import * as React from "react";
 
 
 export default function ApplicationStatus({setShowList, showList}) {
@@ -41,9 +43,15 @@ export default function ApplicationStatus({setShowList, showList}) {
             <Container component="main" sx={{mb: 4}}>
 
                 {showList ? (applicants.length === 0) ?
-                        <><br/><br/><Typography variant={"h5"}> You have not yet started an application. Please start the
-                            application
-                            process by clicking on "New Application" on the main menu. </Typography></>
+                        <Container component="main" maxWidth="md" sx={{mb: 4}}>
+                            <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
+                                <Typography variant={"h5"}>
+                                    You have not yet started an application. Please start the
+                                    application
+                                    process by clicking on "New Application" on the main menu.
+                                </Typography>
+                            </Paper>
+                        </Container>
                         :
                         <ApplicationList
                             setShowList={setShowList}
