@@ -28,6 +28,7 @@ const Referral = ({
                     name={"referenceName" + (referenceNumber ?? '')}
                     label="Reference Name"
                     fullWidth
+
                     variant="standard"
                     onChange={(e) => {
                         updateState(e);
@@ -51,6 +52,7 @@ const Referral = ({
                     fullWidth
                     type="email"
                     variant="standard"
+                    placeholder = "Ex: email@provider.com"
                     onBlur={onChangeValidate}
                     onChange={(e) => {
                         updateState(e);
@@ -66,6 +68,7 @@ const Referral = ({
                     name={"referencePhone" + (referenceNumber ?? '')}
                     value={referencePhone}
                     label="Reference Phone"
+                    placeholder = "Ex: 3057119475"
                     fullWidth
                     variant="standard"
                     onBlur={onChangeValidate}
