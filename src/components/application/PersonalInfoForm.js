@@ -182,6 +182,7 @@ export default function PersonalInfoForm({
                         fullWidth
                         value={applicationInfo.acftScore || ""}
                         variant="standard"
+                        placeholder = "Ex: 600"
                         onBlur={onChangeValidate}
                         onChange={(e) => {
                             const currentValue = e.target.value;
@@ -203,6 +204,7 @@ export default function PersonalInfoForm({
                         name="height"
                         label="Height in inches"
                         fullWidth
+                        placeholder = "Ex: 72"
                         value={applicationInfo.height || ""}
                         variant="standard"
                         onChange={(e) => {
@@ -223,6 +225,7 @@ export default function PersonalInfoForm({
                         error={errorList.includes("weight required")}
                         name="weight"
                         label="Weight lbs"
+                        placeholder = "Ex: 102.5"
                         value={applicationInfo.weight || ""}
                         fullWidth
                         variant="standard"
