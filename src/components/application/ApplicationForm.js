@@ -19,6 +19,7 @@ import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
 import Grid from "@mui/material/Grid";
 import AppSnackBar from "../ui/AppSnackBar";
+import {StepButton} from "@mui/material";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
@@ -223,12 +224,65 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         validatePage();
         // This makes sure steps 1-3 are not empty
 
+
         if (outputMessage.length > 0) {
             return;
         }
 
         // ApplicationForm the form instead of going
-        //if (isEditing === true || activeStep >= 1 ) {
+
+        if (appId && (activeStep === steps.length - 1) && applicationInfo.lastACFT!="" && applicationInfo.acftScore!=0 && applicationInfo.height!=0 && applicationInfo.weight!=0 && applicationInfo.techBG!="" && applicationInfo.motivation!="" && applicationInfo.referenceName!="" && applicationInfo.referenceRank!="" && applicationInfo.referencePhone!="" && applicationInfo.referenceEmail!="") {
+            apiCall('application', 'update', {
+                id: appId,
+                fName: applicationInfo.fName,
+                lName: applicationInfo.lName,
+                mI: applicationInfo.mI,
+                dodId: applicationInfo.dodId.toString(),
+                rank: applicationInfo.rank,
+                dob: formatDate(applicationInfo.dob),
+                user: appContext.user.id,
+                lastACFT: formatDate(applicationInfo.lastACFT),
+                acftScore: applicationInfo.acftScore,
+                height: applicationInfo.height,
+                weight: applicationInfo.weight,
+                techBG: applicationInfo.techBG,
+                motivation: applicationInfo.motivation,
+                referenceName: applicationInfo.referenceName,
+                referenceRank: applicationInfo.referenceRank,
+                referenceEmail: applicationInfo.referenceEmail,
+                referencePhone: applicationInfo.referencePhone,
+                referenceName2: applicationInfo.referenceName2,
+                referenceRank2: applicationInfo.referenceRank2,
+                referenceEmail2: applicationInfo.referenceEmail2,
+                referencePhone2: applicationInfo.referencePhone2,
+                referenceName3: applicationInfo.referenceName3,
+                referenceRank3: applicationInfo.referenceRank3,
+                referenceEmail3: applicationInfo.referenceEmail3,
+                referencePhone3: applicationInfo.referencePhone3,
+                status: "pending" ,
+                dateSubmitted: formatDate(new Date())
+            })
+                .then((r) => {
+
+                    // needed to refresh application status list if editing (since route is always /status for edits)
+                    if(isEditing) {
+                        getApplications();
+                    }
+
+                    setMessageTitle("Your application has been updated successfully");
+                    setMessage(`Please periodically check your Application Status tab for status updates.`);
+
+                    if (clickNext) {
+                        setActiveStep(activeStep + 1);
+                    }
+                })
+                .catch((r) => {
+                    setMessageTitle("Something went wrong please try again later");
+                    setActiveStep(activeStep + 1);
+                })
+        };
+
+
         if (appId) {
             //console.log(applicationInfo);
 
@@ -259,7 +313,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                 referenceRank3: applicationInfo.referenceRank3,
                 referenceEmail3: applicationInfo.referenceEmail3,
                 referencePhone3: applicationInfo.referencePhone3,
-                status: (activeStep === steps.length - 1) ? "pending" : "in progress",
+                status: "in progress",
                 dateSubmitted: formatDate(new Date())
             })
                 .then((r) => {
@@ -335,6 +389,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         setActiveStep(activeStep - 1);
     };
 
+    const handleStep = (step) => () => {
+        setActiveStep(step);
+    };
+
 
     const displaySnackBar = () => {
         setSnackBarMessage("Saved");
@@ -358,13 +416,16 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
             <>
                 <Container component="main" maxWidth="md" sx={{mb: 4}}>
                     <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
-                        <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
+                        {/*<Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>*/}
+                            <Stepper nonLinear activeStep={activeStep} sx={{pt: 3, pb: 5}}>
+                                {steps.map((label, index) => (
+                                    <Step key={label} >
+                                        <StepButton color="inherit" onClick={handleStep(index)}>
+                                            {label}
+                                        </StepButton>
+                                    </Step>
+                                ))}
+                            </Stepper>
                         <React.Fragment>
                             {/*<Button onClick={fillFields}>Auto-populate</Button>*/}
                             {activeStep === steps.length ? (
