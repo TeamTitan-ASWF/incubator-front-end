@@ -3,15 +3,20 @@ import React, {useState} from "react";
 const AppContext = React.createContext({
     isValidated: false,
     setIsValidated: () => {},
+    user: {},
+    setUser: () => {}
 });
 
 export const AppContextProvider = ({children}) => {
-    const [isValidated, setIsValidated] = useState(false);
+    const [isValidated, setIsValidated] = useState(localStorage.getItem("isValidated") ?? false);
+    const [user, setUser] = useState((localStorage.getItem("userData")) ? JSON.parse(localStorage.getItem("userData")) : {});
 
     return (
         <AppContext.Provider value={{
             isValidated,
-            setIsValidated
+            setIsValidated,
+            user,
+            setUser
         }}>
             {children}
         </AppContext.Provider>

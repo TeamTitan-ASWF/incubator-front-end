@@ -1,4 +1,3 @@
-import {alpha} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,17 +11,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
-import {useEffect, useState} from "react";
-import apiCall from "../api/api";
-import AppModal from "../ui/AppModal";
-import {Checkbox, FormGroup} from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
-import Button from "@mui/material/Button";
+import {useContext, useState} from "react";
+import {Checkbox, FormGroup, Popover} from "@mui/material";
+import AppContext from "../contexts/AppContext";
 
 function descendingComparator(a, b, orderBy) {
 
@@ -42,17 +37,19 @@ function getComparator(order, orderBy) {
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-const filterStyle = {
-    position: 'absolute',
-    top: '30%',
-    left: '78%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+// const filterStyle = {
+//     position: 'absolute',
+//     top: '30%',
+//     left: '78%',
+//     transform: 'translate(-50%, -50%)',
+//     width: 400,
+//     bgcolor: 'background.paper',
+//     border: '2px solid #000',
+//     boxShadow: 24,
+//     p: 4,
+//     borderRadius: 10,
+// };
+
 
 const headCells = [
     {
@@ -65,7 +62,7 @@ const headCells = [
         id: 'rank',
         numeric: false,
         disablePadding: false,
-        label: 'Rank',
+        label: 'Grade',
     },
     {
         id: 'dob',
@@ -103,6 +100,7 @@ function EnhancedTableHead(props) {
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
+                        sx={{fontWeight: 'bold'}}
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
@@ -123,32 +121,32 @@ function EnhancedTableHead(props) {
     );
 }
 
-export default function ReviewerList({setShowList, setCurrentApplicationId}) {
+export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setFilteredApplications, filteredApplications}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
-    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const [applicants, setApplicants] = useState([]);
-    const [filteredApplications, setFilteredApplications] = useState([]);
-
-    //const {numSelected} = props;
-    const [showModal, setShowModal] = useState(false);
-
-    const handleFilter = () => {
-        setShowModal(true);
-    }
+    const appContext = useContext(AppContext);
 
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
+    const [showRescinded, setShowRescinded] = useState((!appContext.user?.isReviewer));
+    const [showInProgress, setShowInProgress] = useState((!appContext.user?.isReviewer));
+
 
     const filterResults =  (event, checked) => {
+
+        //console.log(appContext);
+
         //needed because of state batching
         let pendingChecked = showPending;
         let approvedChecked = showApproved;
         let deniedChecked = showDenied;
+        let rescindedChecked = showRescinded;
+        let inProgressChecked = showInProgress;
 
         switch (event.target.id) {
             case "chkPending":
@@ -163,11 +161,19 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                  setShowDenied(checked);
                 deniedChecked = checked;
                 break;
+            case "chkRescinded":
+                setShowRescinded(checked);
+                rescindedChecked = checked;
+                break;
+            case "chkInProgress":
+                setShowInProgress(checked);
+                inProgressChecked = checked;
+                break;
             default:
                 // should not get here
         }
 
-        if(!deniedChecked || !approvedChecked || !pendingChecked) {
+        if(!deniedChecked || !approvedChecked || !pendingChecked || !rescindedChecked|| !inProgressChecked) {
             const filteredResults = applicants.filter(applicant => {
                 switch (applicant.status) {
                     case "pending":
@@ -176,6 +182,10 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                         return approvedChecked;
                     case "denied":
                         return deniedChecked;
+                    case "rescinded":
+                        return rescindedChecked;
+                    case "in progress":
+                        return inProgressChecked;
                     default:
                         return false;
                 }
@@ -188,15 +198,15 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         }
     }
 
-    useEffect(() => {
-        getApplications();
-    }, []);
-
-    const getApplications = async () => {
-        const response = await apiCall('application', 'list');
-        await setApplicants(response.apiData);
-        await setFilteredApplications(response.apiData);
-    }
+    // useEffect(() => {
+    //     getApplications();
+    // }, []);
+    //
+    // const getApplications = async () => {
+    //     const response = await apiCall('application', 'list');
+    //     await setApplicants(response.apiData);
+    //     await setFilteredApplications(response.apiData);
+    // }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -222,6 +232,19 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
         setDense(event.target.checked);
     };
 
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClickFilter = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseFilter = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - applicants.length) : 0;
@@ -235,11 +258,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                     <Toolbar
                         sx={{
                             pl: {sm: 2},
-                            pr: {xs: 1, sm: 1},
-                            ...(0 > 0 && {
-                                bgcolor: (theme) =>
-                                    alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                            }),
+                            pr: {xs: 1, sm: 1}
                         }}
                     >
                         <Typography
@@ -250,12 +269,38 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                         >
                             Applications
                         </Typography>
-                        <Tooltip title="Filter list">
-                            <IconButton onClick={handleFilter}>
-                                <FilterListIcon/>
-                                Filter
+                        <div>
+                            <IconButton aria-describedby={id} variant="contained" onClick={handleClickFilter}>
+                                        <FilterListIcon/>
+                                        Filter
                             </IconButton>
-                        </Tooltip>
+                            <Popover
+                                id={id}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleCloseFilter}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                sx={{
+                                    // ml: -10
+                                }}
+                            >
+                                <br/>
+                                    <Typography component={"span"} variant={"h6"} sx={{p:3}}>Filter Applications by:</Typography>
+
+                                    <FormGroup sx={{p:2}}>
+                                        <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
+                                        <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
+                                        <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
+                                        <FormControlLabel control={<Checkbox id={"chkRescinded"} onChange={(event, checked) => filterResults(event, checked)} checked={showRescinded} />} label="Rescinded"/>
+                                        <FormControlLabel control={<Checkbox id={"chkInProgress"} onChange={(event, checked) => filterResults(event, checked)} checked={showInProgress} />} label="In Progress"/>
+                                    </FormGroup>
+                            </Popover>
+                        </div>
+
+
                     </Toolbar>
 
                     <TableContainer>
@@ -293,7 +338,10 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                                                 <TableCell align="left">{row.rank}</TableCell>
                                                 <TableCell align="left">{row.dob}</TableCell>
                                                 <TableCell align="left">{row.dateSubmitted}</TableCell>
-                                                <TableCell align="left">{row.status}</TableCell>
+                                                {(row.status === "pending"  || row.status === "in progress") ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'orange',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "denied" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'red',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "approved" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'green',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "rescinded" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'gray', }}>{row.status}</TableCell> : <></>}
                                             </TableRow>
                                         );
                                     }) : []}
@@ -323,21 +371,7 @@ export default function ReviewerList({setShowList, setCurrentApplicationId}) {
                         label="Dense padding"
                     />
                 </Paper>
-            </Box>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <AppModal showModal={showModal} setShowModal={setShowModal} styles={filterStyle}>
-                <Typography component={"span"} variant={"h6"} pr={2}>Filter All Applications by:</Typography>
-                <Button variant={"contained"} size={"small"} onClick={() => setShowModal(false)} endIcon={<CloseIcon />}>Close</Button>
-
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox id={"chkPending"} onChange={(event, checked) => filterResults(event, checked)} checked={showPending} />} label="Pending"/>
-                    <FormControlLabel control={<Checkbox id={"chkApproved"} onChange={(event, checked) => filterResults(event, checked)} checked={showApproved} />} label="Approved"/>
-                    <FormControlLabel control={<Checkbox id={"chkDenied"} onChange={(event, checked) => filterResults(event, checked)} checked={showDenied} />} label="Denied"/>
-                </FormGroup>
-            </AppModal>
+            </Box><br/><br/><br/><br/>
         </>
     );
 }

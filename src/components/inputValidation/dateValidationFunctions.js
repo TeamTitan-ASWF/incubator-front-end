@@ -31,8 +31,8 @@ export const convertMonthNameToDigits = (name) => {
 
 export const formatDate = (unformattedDate) => {
 
-    console.log(unformattedDate);
-    console.log(new Date());
+    //console.log(unformattedDate);
+    //console.log(new Date());
 
     if (unformattedDate.toString().length > 30) {
         //Wed Jan 04 1995 18:00:00 GMT-0600 (Central Standard Time)
@@ -49,5 +49,16 @@ export const formatDate = (unformattedDate) => {
         return unformattedDate.substring(0,10);
     } else {
         return unformattedDate.toString();
+    }
+}
+
+export const fixTimeZone = (unformattedDate) => {
+    if (unformattedDate.toString().length === 10 ) {
+        let fixedDate = new Date(unformattedDate);
+        fixedDate.setDate(fixedDate.getDate() + 1);
+
+        return fixedDate;
+    } else {
+        return unformattedDate;
     }
 }
