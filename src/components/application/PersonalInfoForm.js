@@ -127,9 +127,10 @@ export default function PersonalInfoForm({
                               setApplicationInfo={setApplicationInfo}/>
                 </Grid>
                 <Grid item xs={12} sm={6}>
+
                     <TextField
                         required
-                        error={errorList.includes("acftScore")}
+                        error={errorList.includes("acftScore required")}
                         id="acftScore"
                         name="acftScore"
                         label="ACFT Score"
@@ -153,7 +154,7 @@ export default function PersonalInfoForm({
                     <TextField
                         required
                         id="height"
-                        error={errorList.includes("height")}
+                        error={errorList.includes("height required")}
                         name="height"
                         label="Height in inches"
                         fullWidth
@@ -174,7 +175,7 @@ export default function PersonalInfoForm({
                     <TextField
                         required
                         id="weight"
-                        error={errorList.includes("weight")}
+                        error={errorList.includes("weight required")}
                         name="weight"
                         label="Weight lbs"
                         value={applicationInfo.weight || ""}
