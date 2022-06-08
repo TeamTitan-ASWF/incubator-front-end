@@ -34,15 +34,7 @@ export default function PersonalInfoForm({
     const [anchorEl, setAnchorEl] = useState(null);
     const [open,setOpen] = useState(false)
 
-    const handleClickOnDisabled = (e) => {
 
-        setAnchorEl(e.currentTarget)
-        setOpen(true)
-    }
-    const handleCloseFilter = () => {
-        setAnchorEl(null);
-        setOpen(false)
-    };
 
     // fName: appContext.user?.fName ?? "",
     // lName: appContext.user?.lName ?? "",
@@ -50,22 +42,7 @@ export default function PersonalInfoForm({
     // dodId: appContext.user?.dodId ?? "",
     // rank: appContext.user?.rank ?? "E1",
     // dob: (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)',
-useEffect(()=> {
-    let applicationInfoCopy = JSON.parse(JSON.stringify(applicationInfo));
-    applicationInfoCopy.dob =  (appContext.user?.dob) ? fixTimeZone(appContext.user?.dob) : 'Tue Jan 01 1995 18:00:00 GMT-0600 (Central Standard Time)';
-    applicationInfoCopy.rank = appContext.user?.rank ?? "E1";
-    applicationInfoCopy.dodId = appContext.user?.dodId ?? "";
-    applicationInfoCopy.mI = appContext.user?.mI ?? "";
-    applicationInfoCopy.lName = appContext.user?.lName ?? "";
-    applicationInfoCopy.fName = appContext.user?.fName ?? "";
 
-
-
-    setApplicationInfo(applicationInfoCopy)
-
-
-
-}, []   )
 
 
     return (
@@ -87,7 +64,7 @@ useEffect(()=> {
                         id="fName"
                         name="firstName"
                         label="First name"
-                        value={applicationInfo.fName}
+                        value={appContext.user?.fName || " "}
                         fullWidth
                         // autoComplete="given-name"
                         variant="standard"
@@ -96,7 +73,6 @@ useEffect(()=> {
                         //     onChangeValidate(e);
                         // }}
                         // onBlur={onChangeValidate}
-                        onClick = {handleClickOnDisabled}
                     />
 
                 </Grid>
@@ -108,7 +84,7 @@ useEffect(()=> {
                          required
                         disabled={true}
                         id="lName"
-                        value={applicationInfo.lName}
+                        value={appContext.user?.lName || " "}
                         // error = {errorList.includes("lName")}
                         name="lastName"
                         label="Last name"
@@ -120,7 +96,7 @@ useEffect(()=> {
                         //     onChangeValidate(e);
                         // }}
                         //  onBlur={onChangeValidate}
-                         onClick = {handleClickOnDisabled}
+
                     />
                 </Grid>
                 </Tooltip>
@@ -132,13 +108,13 @@ useEffect(()=> {
                         error = {errorList.includes("mI")}
                         id="mI"
                         name="mI"
-                        value={applicationInfo.mI}
+                        value={appContext.user?.mI || " "}
                         label="MI"
                         fullWidth
                         // autoComplete="middle-initial"
                         variant="standard"
                         // onChange={updateState}
-                        onClick = {handleClickOnDisabled}
+
 
                     />
                 </Grid>
@@ -152,7 +128,7 @@ useEffect(()=> {
                         error = {errorList.includes("dodId")}
                         id="dodId"
                         name="dodId"
-                        value={applicationInfo.dodId}
+                        value={appContext.user?.dodId || " "}
                         label="Dod ID"
                         type="number"
                         fullWidth
@@ -160,7 +136,7 @@ useEffect(()=> {
                         variant="standard"
                         // onChange={updateState}
                         // onBlur={onChangeValidate}
-                        onClick = {handleClickOnDisabled}
+
 
                     />
 
@@ -172,7 +148,7 @@ useEffect(()=> {
                 <Grid item xs={12} sm={3} alignContent={"center"} alignItems={"center"}>
                     {/*<Rank updateState={updateState} applicationInfo={applicationInfo} propsID={"rank"} value={applicationInfo.rank}/>*/}
                     <TextField id={"rank"} variant="standard" value={appContext.user?.rank ?? "E1"} disabled={true}
-                               label={"Grade"} onClick = {handleClickOnDisabled}/>
+                               label={"Grade"} />
                 </Grid>
                 </Tooltip>
                     <Tooltip title={'You must update your profile to edit this field'}>
@@ -180,7 +156,7 @@ useEffect(()=> {
                     
                     <TextField fullWidth={true} variant="standard" id={"dob"}
                                value={(appContext.user?.dob) ? formatDate(appContext.user?.dob) : ''} disabled={true}
-                               label={"DOB"}  onClick = {handleClickOnDisabled}/>
+                               label={"DOB"}/>
                 </Grid>
                     </Tooltip>
 
