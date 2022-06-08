@@ -43,7 +43,7 @@ export default function Footer() {
                 </Grid>
 
                 <Grid item xs={8} sx={{display: "flex", alignItems: "center"}}>
-                    <EggIcon sx={{color: "white"}}/>
+                    <EggIcon onClick={() => window.open('https://www.joshuamatos.com/')} sx={{color: "white"}}/>
                     <Typography
                         component={"span"}
                         variant="h6"
