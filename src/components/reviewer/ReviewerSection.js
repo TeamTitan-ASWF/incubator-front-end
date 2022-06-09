@@ -43,6 +43,7 @@ const ReviewerSection = ({showList, setShowList}) => {
                     setApplicants = {setApplicants}
                     filteredApplications = {filteredApplications}
                     setFilteredApplications = {setFilteredApplications}
+                    reviewerListView={true}
                 />}
             {!showList &&
                 <ReviewerApplicationView

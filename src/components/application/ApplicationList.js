@@ -121,21 +121,20 @@ function EnhancedTableHead(props) {
     );
 }
 
-export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setFilteredApplications, filteredApplications}) {
+export default function ApplicationList({setShowList, setCurrentApplicationId, applicants, setFilteredApplications, filteredApplications, reviewerListView}) {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('lName');
     const [page, setPage] = useState(0);
     const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const appContext = useContext(AppContext);
+    //const appContext = useContext(AppContext);
 
     const [showPending, setShowPending] = useState(true);
     const [showApproved, setShowApproved] = useState(true);
     const [showDenied, setShowDenied] = useState(true);
-    const [showRescinded, setShowRescinded] = useState((!appContext.user?.isReviewer));
-    const [showInProgress, setShowInProgress] = useState((!appContext.user?.isReviewer));
-
+    const [showRescinded, setShowRescinded] = useState((!reviewerListView));
+    const [showInProgress, setShowInProgress] = useState((!reviewerListView));
 
     const filterResults =  (event, checked) => {
 
@@ -324,9 +323,9 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={(event) => handleClick(event, row.id)}
+                                                onClick={(event) => handleClick(event, row.appId)}
                                                 tabIndex={-1}
-                                                key={row.id}>
+                                                key={row.appId}>
                                                 <TableCell
                                                     component="th"
                                                     id={labelId}

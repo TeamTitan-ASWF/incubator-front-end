@@ -61,6 +61,7 @@ export default function ApplicationStatus({setShowList, showList}) {
                             setApplicants={setApplicants}
                             filteredApplications={filteredApplications}
                             setFilteredApplications={setFilteredApplications}
+                            reviewerListView={false}
                         />
                     :
                     <UserViewAddEditParent
