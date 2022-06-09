@@ -336,7 +336,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                         showSavePopper();
                     }
 
-                    setMessageTitle("Thank you for applying.");
+                    setMessageTitle("Thank you for applying!");
                     setMessage(`Your application is now Pending and will be reviewed by the Army Software Factory soon. Please periodically check your Application Status tab for status updates. You may continue to make changes while your application is in a 'Pending' or 'In Progress' status.`);
 
                     // setMessageTitle("Your application has been updated successfully");
@@ -387,7 +387,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
 
                     showSavePopper();
 
-                    setMessageTitle("Thank you for applying.");
+                    setMessageTitle("Thank you for applying!");
                     setMessage(`Your application is now Pending and will be reviewed by the Army Software Factory soon. Please periodically check your Application Status tab for status updates. You may continue to make changes while your application is in a 'Pending' or 'In Progress' status.`);
 
                     if (clickNext) {

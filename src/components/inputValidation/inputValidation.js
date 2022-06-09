@@ -57,7 +57,7 @@ export default function inputValidation(input, type) {
             }
             break;
         case 'referencePhone':
-            if (input.length <= 9 || input.length >= 14) {
+            if (input.length <= 10 || input.length >= 14) {
                 outputSetter('Please enter a valid phone number (10-14 digits)');
             }
             break;
