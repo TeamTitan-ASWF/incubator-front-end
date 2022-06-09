@@ -88,7 +88,7 @@ export default function PersonalInfoForm({
                             id="dodId"
                             name="dodId"
                             value={appContext.user?.dodId || " "}
-                            label="Dod ID"
+                            label="DoD ID"
                             type="number"
                             fullWidth
                             variant="standard"
