@@ -37,7 +37,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
             <>
                 <Paper
                     variant="outlined"
-                    sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: '#444', color: 'white'}}
+                    sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: "#474a47", color: 'white'}}
                 >
                     <StatusHeader
                         applicationInfo={application}
