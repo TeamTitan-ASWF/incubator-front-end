@@ -461,7 +461,9 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                         {messageTitle}
                                     </Typography>
 
-                                    <ReactConfetti colors ={ ['White' ,'Gray' ,'Black','#4ceb34','Green']}   />
+                                    <ReactConfetti
+                                        colors ={ ['White' ,'Gray' ,'Black','#4ceb34','Green']}
+                                    />
                                     <Typography variant="subtitle1">
                                         {message}
                                     </Typography>
