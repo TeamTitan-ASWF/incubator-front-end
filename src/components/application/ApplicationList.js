@@ -337,10 +337,11 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                                 <TableCell align="left">{row.rank}</TableCell>
                                                 <TableCell align="left">{row.dob}</TableCell>
                                                 <TableCell align="left">{row.dateSubmitted}</TableCell>
-                                                {(row.status === "pending"  || row.status === "in progress") ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'orange',}}>{row.status}</TableCell> : <></>}
+                                                {row.status === "pending"  ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'orange',}}>{row.status}</TableCell> : <></>}
                                                 {row.status === "denied" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'red',}}>{row.status}</TableCell> : <></>}
                                                 {row.status === "approved" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'green',}}>{row.status}</TableCell> : <></>}
-                                                {row.status === "rescinded" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'gray', }}>{row.status}</TableCell> : <></>}
+                                                {row.status === "rescinded" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'black', }}>{row.status}</TableCell> : <></>}
+                                                {row.status === "in progress" ? <TableCell align="left" sx={{textTransform: 'capitalize', color: 'gray', }}>{row.status}</TableCell> : <></>}
                                             </TableRow>
                                         );
                                     }) : []}

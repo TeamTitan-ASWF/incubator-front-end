@@ -75,6 +75,28 @@ export default function StatusHeader({applicationInfo}) {
 
     const StatusButtonRescinded = styled(Button)`
           background-color: white;
+          color: black;
+          padding: 6px 12px;
+          border: 2px solid black;
+          margin-left: 5px;
+          font-weight: bold;
+          &:focus {
+            background-color: white;
+            color: black;
+          }
+          &:hover {
+            background-color: white;
+            color: black;
+            cursor : 'default',
+          }
+          &:active {
+            background-color: white;
+            color: black;
+          }
+        `;
+
+    const StatusButtonInProgress = styled(Button)`
+          background-color: white;
           color: gray;
           padding: 6px 12px;
           border: 2px solid gray;
@@ -82,7 +104,7 @@ export default function StatusHeader({applicationInfo}) {
           font-weight: bold;
           &:focus {
             background-color: white;
-            color: orange;
+            color: gray;
           }
           &:hover {
             background-color: white;
@@ -110,10 +132,11 @@ export default function StatusHeader({applicationInfo}) {
             <Grid item xs={6} sx={{textAlign: "right"}}>
                 <Typography variant="h6">
                     Application Status:
-                    {((applicationInfo.status === "pending" || applicationInfo.status === "in progress") ? <StatusButtonPending sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonPending> : <></>)}
+                    {(applicationInfo.status === "pending" ? <StatusButtonPending sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonPending> : <></>)}
                     {(applicationInfo.status === "denied" ? <StatusButtonDenied sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonDenied> : <></>)}
                     {(applicationInfo.status === "approved" ? <StatusButtonApproved sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonApproved> : <></>)}
                     {(applicationInfo.status === "rescinded" ? <StatusButtonRescinded sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonRescinded> : <></>)}
+                    {(applicationInfo.status === "in progress" ? <StatusButtonInProgress sx={{cursor: 'default',}}>{applicationInfo.status}</StatusButtonInProgress> : <></>)}
                 </Typography>
             </Grid>
         </Grid>
