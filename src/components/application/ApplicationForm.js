@@ -19,13 +19,15 @@ import AppContext from "../contexts/AppContext";
 import Grid from "@mui/material/Grid";
 // import AppSnackBar from "../ui/AppSnackBar";
 import {CircularProgress, Fade, Popper, StepButton} from "@mui/material";
+import ReactConfetti from "react-confetti";
+// import useWindowSize from 'react-use/lib/useWindowSize'
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function ApplicationForm({currentApplicationInfo, isEditing, currentApplicationId, getApplications}) {
     const appContext = useContext(AppContext);
     const popperRef = useRef(null);
-
+    // const {width, height} = useWindowSize();
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
     let secondStepArray = ['techBG', 'motivation'];
@@ -431,6 +433,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                         There is already a "Pending" or "In Progress" application for this account.
                     </Typography>
                     <br/>
+
                     <Typography variant={"h6"}>
                         If you would like to make changes to your application, please select it from the Application
                         Status menu to make edits. Thank you!
@@ -460,6 +463,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                     <Typography variant="h5" gutterBottom>
                                         {messageTitle}
                                     </Typography>
+
+                                    <ReactConfetti
+                                        colors ={ ['White' ,'Gray' ,'Black','#4ceb34','Green']}
+                                    />
                                     <Typography variant="subtitle1">
                                         {message}
                                     </Typography>
