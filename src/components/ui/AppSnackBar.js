@@ -14,7 +14,10 @@ export default function AppSnackBar({isShown, severity, message, resetCallBack})
             return;
         }
 
-        resetCallBack(false);
+        if(resetCallBack) {
+            resetCallBack(false);
+        }
+
         setOpen(false);
     };
 

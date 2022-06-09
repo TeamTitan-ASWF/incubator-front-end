@@ -1,4 +1,4 @@
-import {Divider, TextField} from "@mui/material";
+import {Divider, FormControl, Input, InputAdornment, InputLabel, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -8,10 +8,13 @@ import AppContext from "../contexts/AppContext";
 import {useNavigate} from "react-router-dom";
 import AppSnackBar from "../ui/AppSnackBar";
 import Grid from "@mui/material/Grid";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
 
 export default function LoginPage() {
     const appContext = useContext(AppContext);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleCallBack = (r) => {
         //console.log("hey")
@@ -46,6 +49,14 @@ export default function LoginPage() {
     const changePage = (path) => {
         navigate(path);
     }
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const login = (e) => {
         e.preventDefault();
@@ -105,22 +116,44 @@ export default function LoginPage() {
             <Grid container spacing={2}>
                 <Grid item xs={5}>
                     <form onSubmit={login}>
-                        <TextField
+                        <TextField sx={{ m: 1, width: '25ch' }}
                             required
                             error={!!errorMessage}
-                            variant="outlined"
+                            variant="standard"
                             label="E-mail Address"
                             id="email"
                         />
                         <br/><br/>
-                        <TextField
-                            required
-                            error={!!errorMessage}
-                            id="password"
-                            variant="outlined"
-                            label="Password"
-                            type={"password"}
-                        />
+
+                        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                            <InputLabel htmlFor="password">Password</InputLabel>
+                            <Input
+                                id="password"
+                                required
+                                error={!!errorMessage}
+                                type={showPassword ? 'text' : 'password'}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+
+                        {/*<TextField*/}
+                        {/*    required*/}
+                        {/*    error={!!errorMessage}*/}
+                        {/*    id="password"*/}
+                        {/*    variant="outlined"*/}
+                        {/*    label="Password"*/}
+                        {/*    type={"password"}*/}
+                        {/*/>*/}
                         <br/><br/>
                         <Typography color='error'>{errorMessage}</Typography>
                         <br/>

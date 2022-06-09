@@ -1,4 +1,4 @@
-import {TextField} from "@mui/material";
+import {FormControl, Input, InputAdornment, InputLabel, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -10,17 +10,28 @@ import * as React from "react";
 import {formatDate} from "../inputValidation/dateValidationFunctions";
 import UserProfileFormFields from "./UserProfileFormFields";
 import {useNavigate} from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 export default function CreateUser() {
     const [errorMessage, setErrorMessage] = useState("");
     const [dob, setDob] = useState("1990-01-02");
     const [rank, setRank] = useState('E1');
+    const [showPassword, setShowPassword] = useState(false);
 
     let navigate = useNavigate();
 
     const changePage = (path) => {
         navigate(path);
-    }
+    };
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const submitForm = (e) => {
         setErrorMessage("");
@@ -80,35 +91,97 @@ export default function CreateUser() {
 
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={4}>
-                            <TextField
-                                required
-                                variant="outlined"
-                                type={"email"}
-                                label="E-mail Address"
-                                id="email"
-                            />
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                                <InputLabel htmlFor="email">E-mail Address</InputLabel>
+                                <Input
+                                    id="email"
+                                    required
+                                    error={errorMessage === "Passwords do not match"}
+                                    type={"email"}
+                                />
+                            </FormControl>
+
+
+
+
+                            {/*<TextField*/}
+                            {/*    required*/}
+                            {/*    variant="standard"*/}
+                            {/*    type={"email"}*/}
+                            {/*    label="E-mail Address"*/}
+                            {/*    id="email"*/}
+                            {/*/>*/}
                         </Grid>
 
                         <Grid item xs={12} sm={4}>
-                            <TextField
-                                required
-                                id="password"
-                                error={errorMessage === "Passwords do not match"}
-                                variant="outlined"
-                                label="Password"
-                                type={"password"}
-                            />
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input
+                                    id="password"
+                                    required
+                                    error={errorMessage === "Passwords do not match"}
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+
+
+
+
+
+
+                            {/*<TextField*/}
+                            {/*    required*/}
+                            {/*    id="password"*/}
+                            {/*    error={errorMessage === "Passwords do not match"}*/}
+                            {/*    variant="outlined"*/}
+                            {/*    label="Password"*/}
+                            {/*    type={"password"}*/}
+                            {/*/>*/}
                         </Grid>
 
                         <Grid item xs={12} sm={4}>
-                            <TextField
-                                required
-                                variant="outlined"
-                                error={errorMessage === "Passwords do not match"}
-                                id="confirmPassword"
-                                label="Confirm"
-                                type={"password"}
-                            />
+                            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                                <InputLabel htmlFor="confirmPassword">Confirm</InputLabel>
+                                <Input
+                                    id="confirmPassword"
+                                    required
+                                    error={errorMessage === "Passwords do not match"}
+                                    type={showPassword ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                />
+                            </FormControl>
+
+
+
+                            {/*<TextField*/}
+                            {/*    required*/}
+                            {/*    variant="outlined"*/}
+                            {/*    error={errorMessage === "Passwords do not match"}*/}
+                            {/*    id="confirmPassword"*/}
+                            {/*    label="Confirm"*/}
+                            {/*    type={"password"}*/}
+                            {/*/>*/}
                         </Grid>
 
                         <UserProfileFormFields dob={dob} setDob={setDob} rank={rank} setRank={setRank}/>
