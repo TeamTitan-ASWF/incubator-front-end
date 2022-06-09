@@ -18,7 +18,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
 
     const getApplication = async (id) => {
         const res = await apiCall("application", "read", id)
-        console.log(res.apiData);
+        //console.log(res.apiData);
         setApplication(res.apiData);
     }
 
