@@ -7,7 +7,7 @@ const ApplicationView = ({id, applicationInfo}) => {
 
     return (
         <>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight='bold'>
                 Review
             </Typography>
 
@@ -34,7 +34,7 @@ const ApplicationView = ({id, applicationInfo}) => {
                 </Grid>
 
                 <Grid item xs={4}>
-                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>DOD ID #</Typography>
+                    <Typography variant={"h7"} style={{fontWeight: "bold"}}>DoD ID #</Typography>
                     <Typography variant={"subtitle1"}>{applicationInfo?.dodId || ''}</Typography>
                 </Grid>
 

@@ -130,7 +130,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         tempErrorMessage = tempErrorMessage.replace(/height/, "Height");
         tempErrorMessage = tempErrorMessage.replace(/weight/, "Weight");
         tempErrorMessage = tempErrorMessage.replace(/techBG/, "Technical Background");
-        tempErrorMessage = tempErrorMessage.replace(/motivation/, "'Why you want to join'");
+        tempErrorMessage = tempErrorMessage.replace(/motivation/, "Motivation");
         tempErrorMessage = tempErrorMessage.replace(/referenceName/, "Reference Name");
         tempErrorMessage = tempErrorMessage.replace(/referenceEmail/, "Reference Email");
         tempErrorMessage = tempErrorMessage.replace(/referencePhone/, "Reference Phone");
@@ -207,21 +207,24 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                 //to clear the warning shouldn't get here
                 break;
         }
+        let errorListCopy = JSON.parse(JSON.stringify(errorList));
 
         stepArray.forEach(element => {
             try {
                 if (inputValidation(applicationInfo[element], element).output) {
                     const handlerOutput = inputValidation(applicationInfo[element], element);
                     outputMessage.push(handlerOutput.reason); //If element is not validated, add the elements name to this list
+                    errorListCopy.push(handlerOutput.output)
                 }
             } catch (error) {
                 //console.log(error);
                 outputMessage.push(element + " required");
+                errorListCopy.push(element)
             }
         });
 
         setErrorMessageOnNext(cleanErrorMessage(outputMessage));
-        setErrorList(outputMessage)
+        setErrorList(errorListCopy)
 
     }
 
@@ -461,7 +464,9 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                         {messageTitle}
                                     </Typography>
 
-                                    <ReactConfetti colors ={ ['White' ,'Gray' ,'Black','#4ceb34','Green']}   />
+                                    <ReactConfetti
+                                        colors ={ ['White' ,'Gray' ,'Black','#4ceb34','Green']}
+                                    />
                                     <Typography variant="subtitle1">
                                         {message}
                                     </Typography>
@@ -522,7 +527,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                             {({TransitionProps}) => (
                                 <Fade {...TransitionProps} timeout={1000}>
                                     <Container sx={{
-
                                         border: '1px solid #fff',
                                         p: 1,
                                         m: 1,
@@ -535,7 +539,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                 </Fade>
                             )}
                         </Popper>}
-
                 </Container>
                 <br/><br/><br/><br/>
             </>

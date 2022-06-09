@@ -88,7 +88,7 @@ export default function PersonalInfoForm({
                             id="dodId"
                             name="dodId"
                             value={appContext.user?.dodId || " "}
-                            label="Dod ID"
+                            label="DoD ID"
                             type="number"
                             fullWidth
                             variant="standard"
@@ -127,7 +127,8 @@ export default function PersonalInfoForm({
 
                     <TextField
                         required
-                        error={errorList.includes("acftScore required")}
+
+                        error={errorList.includes("acftScore")}
                         id="acftScore"
                         name="acftScore"
                         label="ACFT Score"
@@ -150,7 +151,7 @@ export default function PersonalInfoForm({
                     <TextField
                         required
                         id="height"
-                        error={errorList.includes("height required")}
+                        error={errorList.includes("height")}
                         name="height"
                         label="Height in inches"
                         fullWidth
@@ -171,7 +172,7 @@ export default function PersonalInfoForm({
                     <TextField
                         required
                         id="weight"
-                        error={errorList.includes("weight required")}
+                        error={errorList.includes("weight")}
                         name="weight"
                         label="Weight lbs"
                         value={applicationInfo.weight || ""}

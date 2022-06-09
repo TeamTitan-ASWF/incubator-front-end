@@ -15,9 +15,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import {visuallyHidden} from '@mui/utils';
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {Checkbox, FormGroup, Popover} from "@mui/material";
-import AppContext from "../contexts/AppContext";
 
 function descendingComparator(a, b, orderBy) {
 
@@ -265,6 +264,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                             variant="h6"
                             id="tableTitle"
                             component="div"
+                            fontWeight="bold"
                         >
                             Applications
                         </Typography>
@@ -332,7 +332,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.fName + " " + row.mI + " " + row.lName}
+                                                    {row.fName + " " + row.lName}
                                                 </TableCell>
                                                 <TableCell align="left">{row.rank}</TableCell>
                                                 <TableCell align="left">{row.dob}</TableCell>
