@@ -35,15 +35,9 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
     if (isEditing === false) {
         return (
             <>
-                <Paper
-                    variant="outlined"
-                    sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: "#474a47", color: 'white'}}
-                >
                     <StatusHeader
                         applicationInfo={application}
                     />
-                </Paper>
-
 
                 <Paper
                     variant="outlined"

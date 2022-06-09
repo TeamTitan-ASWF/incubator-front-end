@@ -2,6 +2,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {styled} from "@mui/material";
+import Paper from "@mui/material/Paper";
 
 
 export default function StatusHeader({applicationInfo}) {
@@ -95,7 +96,12 @@ export default function StatusHeader({applicationInfo}) {
         `;
 
     return (
+        <Paper
+        variant="outlined"
+        sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: "#474a47", color: 'white'}}
+        >
         <Grid container sx={{my: 2}}>
+
             <Grid item xs={6}>
                 <Typography variant="h6">
                     {`Application - ${applicationInfo.fName}  ${applicationInfo.lName}`}
@@ -111,6 +117,7 @@ export default function StatusHeader({applicationInfo}) {
                 </Typography>
             </Grid>
         </Grid>
+        </Paper>
     );
 
 

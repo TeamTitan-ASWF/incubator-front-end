@@ -26,15 +26,9 @@ export default function ReviewerApplicationView({id, setShowList, getApplication
 
     return (
         <>
-            <Paper
-                variant="outlined"
-                sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: '#444', color: 'white'}}
-            >
                 <StatusHeader
                     applicationInfo={application}
                 />
-            </Paper>
-
 
             <Paper
                 variant="outlined"
