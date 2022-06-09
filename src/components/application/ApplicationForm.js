@@ -128,7 +128,7 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         tempErrorMessage = tempErrorMessage.replace(/height/, "Height");
         tempErrorMessage = tempErrorMessage.replace(/weight/, "Weight");
         tempErrorMessage = tempErrorMessage.replace(/techBG/, "Technical Background");
-        tempErrorMessage = tempErrorMessage.replace(/motivation/, "'Why you want to join'");
+        tempErrorMessage = tempErrorMessage.replace(/motivation/, "Motivation");
         tempErrorMessage = tempErrorMessage.replace(/referenceName/, "Reference Name");
         tempErrorMessage = tempErrorMessage.replace(/referenceEmail/, "Reference Email");
         tempErrorMessage = tempErrorMessage.replace(/referencePhone/, "Reference Phone");
@@ -517,7 +517,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                             {({TransitionProps}) => (
                                 <Fade {...TransitionProps} timeout={1000}>
                                     <Container sx={{
-
                                         border: '1px solid #fff',
                                         p: 1,
                                         m: 1,
@@ -530,7 +529,6 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                 </Fade>
                             )}
                         </Popper>}
-
                 </Container>
                 <br/><br/><br/><br/>
             </>
