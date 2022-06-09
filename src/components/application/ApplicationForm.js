@@ -10,27 +10,32 @@ import PersonalInfoForm from "./PersonalInfoForm";
 import StatementsForm from "./StatementsForm";
 import ReferralsForm from "./ReferralsForm";
 import apiCall from '../api/api';
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import ApplicationView from "./ApplicationView";
 import inputValidation from '../inputValidation/inputValidation';
 import {formatDate, fixTimeZone} from "../inputValidation/dateValidationFunctions";
 import {useContext} from "react";
 import AppContext from "../contexts/AppContext";
 import Grid from "@mui/material/Grid";
-import AppSnackBar from "../ui/AppSnackBar";
-import {StepButton} from "@mui/material";
+// import AppSnackBar from "../ui/AppSnackBar";
+import {CircularProgress, Fade, Popper, StepButton} from "@mui/material";
 
 const steps = ['Personal Information', 'Statements', 'Referrals', 'Review'];
 
 export default function ApplicationForm({currentApplicationInfo, isEditing, currentApplicationId, getApplications}) {
     const appContext = useContext(AppContext);
+    const popperRef = useRef(null);
+
     let outputMessage = [];
     let firstStepArray = ['fName', 'lName', 'dodId', 'acftScore', 'height', 'weight'];
     let secondStepArray = ['techBG', 'motivation'];
     let thirdStepArray = ['referenceName', 'referenceEmail', 'referencePhone'];
     const [appId, setAppId] = useState(currentApplicationId);
-    const [showSnackBar, setShowSnackBar] = useState(false);
-    const [snackBarMessage, setSnackBarMessage] = useState("");
+    // const [showSnackBar, setShowSnackBar] = useState(false);
+    // const [snackBarMessage, setSnackBarMessage] = useState("");
+    const [showPopper, setShowPopper] = useState(false);
+    const canBeOpen = showPopper && Boolean(popperRef);
+    const popperId = canBeOpen ? 'transition-popper' : undefined;
 
     const [message, setMessage] = useState("");
     const [messageTitle, setMessageTitle] = useState("");
@@ -223,63 +228,63 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         validatePage();
         // This makes sure steps 1-3 are not empty
 
-
         if (outputMessage.length > 0) {
             return;
         }
 
         // ApplicationForm the form instead of going
 
-        if (appId && (activeStep === steps.length - 1) && applicationInfo.lastACFT!=="" && applicationInfo.acftScore!==0 && applicationInfo.height!==0 && applicationInfo.weight!==0 && applicationInfo.techBG!=="" && applicationInfo.motivation!=="" && applicationInfo.referenceName!=="" && applicationInfo.referenceRank!=="" && applicationInfo.referencePhone!=="" && applicationInfo.referenceEmail!=="") {
-            apiCall('application', 'update', {
-                id: appId,
-                fName: applicationInfo.fName,
-                lName: applicationInfo.lName,
-                mI: applicationInfo.mI,
-                dodId: applicationInfo.dodId.toString(),
-                rank: applicationInfo.rank,
-                dob: formatDate(applicationInfo.dob),
-                user: appContext.user.id,
-                lastACFT: formatDate(applicationInfo.lastACFT),
-                acftScore: applicationInfo.acftScore,
-                height: applicationInfo.height,
-                weight: applicationInfo.weight,
-                techBG: applicationInfo.techBG,
-                motivation: applicationInfo.motivation,
-                referenceName: applicationInfo.referenceName,
-                referenceRank: applicationInfo.referenceRank,
-                referenceEmail: applicationInfo.referenceEmail,
-                referencePhone: applicationInfo.referencePhone,
-                referenceName2: applicationInfo.referenceName2,
-                referenceRank2: applicationInfo.referenceRank2,
-                referenceEmail2: applicationInfo.referenceEmail2,
-                referencePhone2: applicationInfo.referencePhone2,
-                referenceName3: applicationInfo.referenceName3,
-                referenceRank3: applicationInfo.referenceRank3,
-                referenceEmail3: applicationInfo.referenceEmail3,
-                referencePhone3: applicationInfo.referencePhone3,
-                status: "pending" ,
-                dateSubmitted: formatDate(new Date())
-            })
-                .then((r) => {
-
-                    // needed to refresh application status list if editing (since route is always /status for edits)
-                    if(isEditing) {
-                        getApplications();
-                    }
-
-                    setMessageTitle("Thank you for applying.");
-                    setMessage(`Please periodically check your Application Status tab for status updates.`);
-
-                    if (clickNext) {
-                        setActiveStep(activeStep + 1);
-                    }
-                })
-                .catch((r) => {
-                    setMessageTitle("Something went wrong please try again later");
-                    setActiveStep(activeStep + 1);
-                })
-        };
+        // if (appId && (activeStep === steps.length - 1) && applicationInfo.lastACFT !== "" && applicationInfo.acftScore !== 0 && applicationInfo.height !== 0 && applicationInfo.weight !== 0 && applicationInfo.techBG !== "" && applicationInfo.motivation !== "" && applicationInfo.referenceName !== "" && applicationInfo.referenceRank !== "" && applicationInfo.referencePhone !== "" && applicationInfo.referenceEmail !== "") {
+        //     apiCall('application', 'update', {
+        //         id: appId,
+        //         fName: applicationInfo.fName,
+        //         lName: applicationInfo.lName,
+        //         mI: applicationInfo.mI,
+        //         dodId: applicationInfo.dodId.toString(),
+        //         rank: applicationInfo.rank,
+        //         dob: formatDate(applicationInfo.dob),
+        //         user: appContext.user.id,
+        //         lastACFT: formatDate(applicationInfo.lastACFT),
+        //         acftScore: applicationInfo.acftScore,
+        //         height: applicationInfo.height,
+        //         weight: applicationInfo.weight,
+        //         techBG: applicationInfo.techBG,
+        //         motivation: applicationInfo.motivation,
+        //         referenceName: applicationInfo.referenceName,
+        //         referenceRank: applicationInfo.referenceRank,
+        //         referenceEmail: applicationInfo.referenceEmail,
+        //         referencePhone: applicationInfo.referencePhone,
+        //         referenceName2: applicationInfo.referenceName2,
+        //         referenceRank2: applicationInfo.referenceRank2,
+        //         referenceEmail2: applicationInfo.referenceEmail2,
+        //         referencePhone2: applicationInfo.referencePhone2,
+        //         referenceName3: applicationInfo.referenceName3,
+        //         referenceRank3: applicationInfo.referenceRank3,
+        //         referenceEmail3: applicationInfo.referenceEmail3,
+        //         referencePhone3: applicationInfo.referencePhone3,
+        //         status: "pending",
+        //         dateSubmitted: formatDate(new Date())
+        //     })
+        //         .then((r) => {
+        //
+        //             // needed to refresh application status list if editing (since route is always /status for edits)
+        //             if (isEditing) {
+        //                 getApplications();
+        //             }
+        //
+        //             setMessageTitle("Thank you for applying.");
+        //             setMessage(`Please periodically check your Application Status tab for status updates.`);
+        //
+        //             if (clickNext) {
+        //                 setActiveStep(activeStep + 1);
+        //             }
+        //         })
+        //         .catch((r) => {
+        //             setMessageTitle("Something went wrong please try again later");
+        //             setActiveStep(activeStep + 1);
+        //         })
+        // }
+        // ;
 
 
         if (appId) {
@@ -312,18 +317,25 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                 referenceRank3: applicationInfo.referenceRank3,
                 referenceEmail3: applicationInfo.referenceEmail3,
                 referencePhone3: applicationInfo.referencePhone3,
-                status: "in progress",
+                status: (activeStep === steps.length - 1) ? "pending" : "in progress",
                 dateSubmitted: formatDate(new Date())
             })
                 .then((r) => {
 
                     // needed to refresh application status list if editing (since route is always /status for edits)
-                    if(isEditing) {
+                    if (isEditing) {
                         getApplications();
                     }
 
-                    setMessageTitle("Your application has been updated successfully");
-                    setMessage(`Please periodically check your Application Status tab for status updates.`);
+                    if((activeStep !== steps.length - 1) && !clickNext) {
+                        showSavePopper();
+                    }
+
+                    setMessageTitle("Thank you for applying.");
+                    setMessage(`Your application is now Pending and will be reviewed by the Army Software Factory soon. Please periodically check your Application Status tab for status updates. You may continue to make changes while your application is in a 'Pending' or 'In Progress' status.`);
+
+                    // setMessageTitle("Your application has been updated successfully");
+                    // setMessage(`Please periodically check your Application Status tab for status updates.`);
 
                     if (clickNext) {
                         setActiveStep(activeStep + 1);
@@ -368,8 +380,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                 } else {
                     setAppId(r.apiData.id);
 
+                    showSavePopper();
+
                     setMessageTitle("Thank you for applying.");
-                    setMessage(`Please periodically check your Application Status tab for status updates.`);
+                    setMessage(`Your application is now Pending and will be reviewed by the Army Software Factory soon. Please periodically check your Application Status tab for status updates. You may continue to make changes while your application is in a 'Pending' or 'In Progress' status.`);
 
                     if (clickNext) {
                         setActiveStep(activeStep + 1);
@@ -384,22 +398,28 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
         }
     };
 
+    const showSavePopper = () => {
+        //console.log(popperRef);
+        setShowPopper(true);
+        setTimeout(() => setShowPopper(false), 2000);
+    }
+
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        setErrorMessageOnNext([]);
     };
 
     const handleStep = (step) => () => {
         setActiveStep(step);
     };
 
+    // const displaySnackBar = () => {
+    //     setSnackBarMessage("Saved");
+    //     setShowSnackBar(true);
+    // }
 
-    const displaySnackBar = () => {
-        setSnackBarMessage("Saved");
-        setShowSnackBar(true);
-    }
-
-    if(isLoading) {
-        return <></>;
+    if (isLoading) {
+        return <><CircularProgress/></>;
     } else if (alreadyHasPendingInProgressApp) {
         return (
             <Container component="main" maxWidth="md" sx={{mb: 4}}>
@@ -407,9 +427,10 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                     <Typography variant={"h5"}>
                         There is already a "Pending" or "In Progress" application for this account.
                     </Typography>
-                    <br />
+                    <br/>
                     <Typography variant={"h6"}>
-                        If you would like to make changes to your application, please select it from the Application Status menu to make edits. Thank you!
+                        If you would like to make changes to your application, please select it from the Application
+                        Status menu to make edits. Thank you!
                     </Typography>
                 </Paper>
             </Container>
@@ -419,16 +440,16 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
             <>
                 <Container component="main" maxWidth="md" sx={{mb: 4}}>
                     <Paper variant="outlined" sx={{my: {xs: 3, md: 6}, p: {xs: 2, md: 3}, boxShadow: 20}}>
-                        {/*<Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>*/}
-                            <Stepper nonLinear activeStep={activeStep} sx={{pt: 3, pb: 5}}>
-                                {steps.map((label, index) => (
-                                    <Step key={label} >
-                                        <StepButton color="inherit" onClick={handleStep(index)}>
-                                            {label}
-                                        </StepButton>
-                                    </Step>
-                                ))}
-                            </Stepper>
+                        <Stepper activeStep={activeStep} sx={{pt: 3, pb: 5}}>
+                            {/*    <Stepper nonLinear activeStep={activeStep} sx={{pt: 3, pb: 5}}>*/}
+                            {steps.map((label, index) => (
+                                <Step key={label}>
+                                    <StepButton color="inherit" onClick={handleStep(index)}>
+                                        {label}
+                                    </StepButton>
+                                </Step>
+                            ))}
+                        </Stepper>
                         <React.Fragment>
                             {/*<Button onClick={fillFields}>Auto-populate</Button>*/}
                             {activeStep === steps.length ? (
@@ -462,11 +483,12 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                                                 )}
                                                 {activeStep !== steps.length - 1 && (
                                                     <Button
+                                                        ref={popperRef}
                                                         variant="contained"
                                                         sx={{mt: 3, ml: 1}}
                                                         onClick={() => {
                                                             handleNext(false);
-                                                            displaySnackBar();
+                                                            // displaySnackBar();
                                                         }}
                                                     >
                                                         Save
@@ -485,9 +507,30 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                             )}
                         </React.Fragment>
                     </Paper>
-                    {showSnackBar &&
-                        <AppSnackBar isShown={showSnackBar} resetCallBack={setShowSnackBar} severity={"success"}
-                                     message={snackBarMessage}/>}
+                    {/*{showSnackBar &&*/}
+                    {/*    <AppSnackBar isShown={showSnackBar} resetCallBack={setShowSnackBar} severity={"success"}*/}
+                    {/*                 message={snackBarMessage}/>}*/}
+
+                    {activeStep !== steps.length - 1 &&
+                        <Popper id={popperId} open={showPopper} anchorEl={popperRef?.current}
+                                transition>
+                            {({TransitionProps}) => (
+                                <Fade {...TransitionProps} timeout={1000}>
+                                    <Container sx={{
+
+                                        border: '1px solid #fff',
+                                        p: 1,
+                                        m: 1,
+                                        bgcolor: 'green',
+                                        color: 'white',
+                                        borderRadius: 4
+                                    }}>
+                                        Saved. Application Status is now 'In Progress'.
+                                    </Container>
+                                </Fade>
+                            )}
+                        </Popper>}
+
                 </Container>
                 <br/><br/><br/><br/>
             </>

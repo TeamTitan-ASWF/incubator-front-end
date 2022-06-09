@@ -24,7 +24,7 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
     const handleRescind = (id) => {
         apiCall('application', 'update', {
             id: id,
-            status: (application.status === "rescinded") ? "pending" : "rescinded"
+            status: (application.status === "rescinded") ? "in progress" : "rescinded"
         }).then(r => {
             getApplication(id);
             getApplications();
@@ -36,14 +36,23 @@ export default function UserViewAddEditParent({id, setShowList, getApplications}
             <>
                 <Paper
                     variant="outlined"
-                    sx={{my: 3, p: 3, boxShadow: 20}}
+                    sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: '#444', color: 'white'}}
                 >
                     <StatusHeader
                         applicationInfo={application}
                     />
+                </Paper>
+
+
+                <Paper
+                    variant="outlined"
+                    sx={{mb: 3, p: 3, boxShadow: 20}}
+                >
+
                     <ApplicationView
                         applicationInfo={application}
                     />
+                    <br />
 
                     <Grid container sx={{m: 1}}>
                         <Grid item xs={6}>

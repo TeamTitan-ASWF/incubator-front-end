@@ -7,6 +7,7 @@ import UserViewAddEditParent from "../user/UserViewAddEditParent";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
+import {CircularProgress} from "@mui/material";
 
 
 export default function ApplicationStatus({setShowList, showList}) {
@@ -37,7 +38,7 @@ export default function ApplicationStatus({setShowList, showList}) {
     }, [getApplications]);
 
     if (isLoading) {
-        return <></>
+        return <><CircularProgress /></>
     } else {
         return (
             <Container component="main" sx={{mb: 4}}>

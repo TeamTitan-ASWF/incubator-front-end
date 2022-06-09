@@ -28,15 +28,22 @@ export default function ReviewerApplicationView({id, setShowList, getApplication
         <>
             <Paper
                 variant="outlined"
-                sx={{ my: 3, p: 3, boxShadow: 20 }}
+                sx={{mt: 3, p: 3, boxShadow: 20, backgroundColor: '#444', color: 'white'}}
             >
                 <StatusHeader
                     applicationInfo={application}
                 />
+            </Paper>
+
+
+            <Paper
+                variant="outlined"
+                sx={{mb: 3, p: 3, boxShadow: 20}}
+            >
                 <ApplicationView
                     applicationInfo={application}
                 />
-
+                <br />
                 <ReviewerButtons
                     status={application.status}
                     approveApplication={approveApplication}
