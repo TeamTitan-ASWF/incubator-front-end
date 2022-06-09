@@ -10,8 +10,9 @@ export default function StatusHeader({applicationInfo}) {
           background-color: white;
           color: orange;
           padding: 6px 12px;
-          border: 1px solid orange;
+          border: 2px solid orange;
           margin-left: 5px;
+          font-weight: bold;
           &:focus {
             background-color: white;
             color: orange;
@@ -31,8 +32,9 @@ export default function StatusHeader({applicationInfo}) {
           background-color: white;
           color: green;
           padding: 6px 12px;
-          border: 1px solid green;
+          border: 2px solid green;
           margin-left: 5px;
+          font-weight: bold;
           &:focus {
             background-color: white;
             color: green;
@@ -52,8 +54,9 @@ export default function StatusHeader({applicationInfo}) {
           background-color: white;
           color: red;
           padding: 6px 12px;
-          border: 1px solid red;
+          border: 2px solid red;
           margin-left: 5px;
+          font-weight: bold;
           &:focus {
             background-color: white;
             color: red;
@@ -73,8 +76,9 @@ export default function StatusHeader({applicationInfo}) {
           background-color: white;
           color: gray;
           padding: 6px 12px;
-          border: 1px solid gray;
+          border: 2px solid gray;
           margin-left: 5px;
+          font-weight: bold;
           &:focus {
             background-color: white;
             color: orange;
