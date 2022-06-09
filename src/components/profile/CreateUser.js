@@ -31,7 +31,7 @@ export default function CreateUser() {
         } else if (e.target.password.value !== e.target.confirmPassword.value) {
             setErrorMessage("Passwords do not match")
         } else if (!e.target.dodId.value.match(/^\d{10}$/)) {
-            setErrorMessage("DODID has incorrect format.");
+            setErrorMessage("DoD ID has incorrect format.");
         } else if (!dob) {
             setErrorMessage("Date of Birth is required.");
         } else {

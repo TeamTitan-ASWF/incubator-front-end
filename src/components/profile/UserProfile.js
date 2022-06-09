@@ -21,7 +21,7 @@ export default function UserProfile() {
         e.preventDefault();
 
         if (!e.target.dodId.value.match(/^\d{10}$/)) {
-            setErrorMessage("DODID has incorrect format.");
+            setErrorMessage("DoD ID has incorrect format.");
         } else if (!dob) {
             setErrorMessage("Date of Birth is required.");
         } else {

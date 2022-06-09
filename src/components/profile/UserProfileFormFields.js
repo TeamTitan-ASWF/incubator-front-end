@@ -51,7 +51,7 @@ const UserProfileFormFields = ({dob, setDob, userData, rank, setRank}) => {
                     id="dodId"
                     required
                     name="dodId"
-                    label="Dod ID"
+                    label="DoD ID"
                     type="number"
                     defaultValue={userData?.dodId ?? ''}
                     fullWidth
