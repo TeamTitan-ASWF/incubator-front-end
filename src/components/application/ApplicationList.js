@@ -265,6 +265,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                             variant="h6"
                             id="tableTitle"
                             component="div"
+                            fontWeight="bold"
                         >
                             Applications
                         </Typography>
@@ -332,7 +333,7 @@ export default function ApplicationList({setShowList, setCurrentApplicationId, a
                                                     scope="row"
                                                     padding="none"
                                                 >
-                                                    {row.fName + " " + row.mI + " " + row.lName}
+                                                    {row.fName + " " + row.lName}
                                                 </TableCell>
                                                 <TableCell align="left">{row.rank}</TableCell>
                                                 <TableCell align="left">{row.dob}</TableCell>

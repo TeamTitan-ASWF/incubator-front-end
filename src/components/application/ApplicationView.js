@@ -7,7 +7,7 @@ const ApplicationView = ({id, applicationInfo}) => {
 
     return (
         <>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom fontWeight='bold'>
                 Review
             </Typography>
 
