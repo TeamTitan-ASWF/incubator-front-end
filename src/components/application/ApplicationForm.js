@@ -207,21 +207,24 @@ export default function ApplicationForm({currentApplicationInfo, isEditing, curr
                 //to clear the warning shouldn't get here
                 break;
         }
+        let errorListCopy = JSON.parse(JSON.stringify(errorList));
 
         stepArray.forEach(element => {
             try {
                 if (inputValidation(applicationInfo[element], element).output) {
                     const handlerOutput = inputValidation(applicationInfo[element], element);
                     outputMessage.push(handlerOutput.reason); //If element is not validated, add the elements name to this list
+                    errorListCopy.push(handlerOutput.output)
                 }
             } catch (error) {
                 //console.log(error);
                 outputMessage.push(element + " required");
+                errorListCopy.push(element)
             }
         });
 
         setErrorMessageOnNext(cleanErrorMessage(outputMessage));
-        setErrorList(outputMessage)
+        setErrorList(errorListCopy)
 
     }
 
